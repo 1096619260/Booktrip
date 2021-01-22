@@ -5,38 +5,31 @@
  */
 package servlet;
 
-import com.sun.xml.fastinfoset.stax.events.Util;
-import controlador.inmueblesDAO;
-import controlador.solicitudinmueblesDAO;
+import controlador.estadosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.inmuebles;
-import modelo.solicitudinmuebles;
+import modelo.estados;
 
 /**
  *
  * @author oscar sanabria
  */
-@WebServlet(name = "controllerSolicitud", urlPatterns = {"/controllerSolicitud"})
-public class controllerSolicitud extends HttpServlet {
-
-    solicitudinmuebles p=new solicitudinmuebles();
-    solicitudinmueblesDAO dao=new solicitudinmueblesDAO();
+@WebServlet(name = "Controlador", urlPatterns = {"/Controlador"})
+public class Controlador extends HttpServlet {
+ estados p=new estados();
+    estadosDAO dao=new estadosDAO();
     
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
-        
+      
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,79 +56,49 @@ public class controllerSolicitud extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    @SuppressWarnings("IncompatibleEquals")
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-     
-        
-         String sid = request.getParameter("idSolicitud");
          String accion=request.getParameter("accion");
         switch (accion) {
             case "Listar":
-                List<solicitudinmuebles>lista=dao.listar();
+                List<estados>lista=dao.listar();
                 request.setAttribute("lista", lista);
-                request.getRequestDispatcher("vista/Dashboard/listaSolicitud.jsp").forward(request, response);
+                request.getRequestDispatcher("vista/Dashboard/listaEstado.jsp").forward(request, response);
                 break;
             case "Nuevo":                
-                request.getRequestDispatcher("vista/Dashboard/solicitud/add.jsp").forward(request, response);
+                request.getRequestDispatcher("vista/Dashboard/estado/add.jsp").forward(request, response);
                 break;
             case "Guardar":
-                int inmueble=Integer.parseInt(request.getParameter("txtInmueble"));
-                int usuario=Integer.parseInt(request.getParameter("txtUsuario"));
-                int estado=Integer.parseInt(request.getParameter("txtEstado"));
-                String fecha=request.getParameter("txtFecha");
+                String nom=request.getParameter("txtNom");
+                p.setNombre(nom);
+                dao.agregar(p);
                 
-                p.setIdInmueble(inmueble);
-                p.setIdUsuario(usuario);
-                p.setIdEstado(estado);
-                p.setFecha(fecha);
-               dao.agregar(p);
-            
-            
-           
-           
-               
-                
-               
-            
-            
-                
-               
-                request.getRequestDispatcher("controllerSolicitud?accion=Listar").forward(request, response);
+                request.getRequestDispatcher("Controlador?accion=Listar").forward(request, response);
                 break;
             case "Editar": 
                 int ide=Integer.parseInt(request.getParameter("id"));
-                solicitudinmuebles res=dao.listarId(ide);
+                estados res=dao.listarId(ide);
                 request.setAttribute("dato",res);
-                request.getRequestDispatcher("vista/Dashboard/solicitud/edit.jsp").forward(request, response);
+                request.getRequestDispatcher("vista/Dashboard/estado/edit.jsp").forward(request, response);
                 break;
             case "Actualizar":   
                 int id=Integer.parseInt(request.getParameter("id"));
-                int inmueble1=Integer.parseInt(request.getParameter("txtInmueble"));
-                int usuario1=Integer.parseInt(request.getParameter("txtUsuario"));
-                int estado1=Integer.parseInt(request.getParameter("txtEstado"));
-                String fecha1=request.getParameter("txtFecha");
-                 p.setIdSolicitud(id);
-                p.setIdInmueble(inmueble1);
-                p.setIdUsuario(usuario1);
-                p.setIdEstado(estado1);
-                p.setFecha(fecha1);
-           
-               
+                String nom1=request.getParameter("txtNom");
+                p.setIdEstado(id);
+                p.setNombre(nom1);
+             
                 dao.update(p);
-                request.getRequestDispatcher("controllerSolicitud?accion=Listar").forward(request, response);
+                request.getRequestDispatcher("Controlador?accion=Listar").forward(request, response);
                 break;
             case "Delete":      
                 int idd= Integer.parseInt(request.getParameter("id"));
                 dao.delete(idd);
-                request.getRequestDispatcher("controllerSolicitud?accion=Listar").forward(request, response);
+                request.getRequestDispatcher("Controlador?accion=Listar").forward(request, response);
                 break;
             default:
-                request.getRequestDispatcher("controllerSolicitud?accion=Listar").forward(request, response);;
+                request.getRequestDispatcher("Controlador?accion=Listar").forward(request, response);;
         }
-    
     }
 
     /**
