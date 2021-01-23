@@ -52,7 +52,7 @@
          <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
                  <h6 class="collapse-header">Opciones</h6>
-                 <a class="collapse-item" href="index1.php">Lista de inmuebles</a>
+                 <a class="collapse-item" href="index1.jsp">Lista de inmuebles</a>
                  <a class="collapse-item" href="indexTipoInmueble.jsp">Tipos de inmuebles</a>
                  <a class="collapse-item" href="indexListaEstado.jsp">Estados</a>
                 
@@ -98,7 +98,7 @@
              <div class="bg-white py-2 collapse-inner rounded">
                  <h6 class="collapse-header">Opciones</h6>
                  <a class="collapse-item" href="indexListaServicios.jsp">Servicios</a>
-                 <a class="collapse-item" href="indexSolicitudInmueble.jsp">Solicitudes</a>
+                 <a class="collapse-item" href="index1.jsp">Solicitudes</a>
                  <a class="collapse-item" href="indexListaPuntuaciones.jsp">Puntuaciones</a>
                  
 
