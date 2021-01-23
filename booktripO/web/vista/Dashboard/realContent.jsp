@@ -11,10 +11,9 @@
 </div>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Lista de usuarios</a>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"> Consultar usuario</a>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"> Actualizar usuario</a>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"> Eliminar usuario</a>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Listar</a>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"> Crear</a>
+   
 
 </div>
 
