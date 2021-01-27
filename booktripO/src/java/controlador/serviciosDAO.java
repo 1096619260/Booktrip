@@ -5,175 +5,123 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.servicios;
 
 public class serviciosDAO {
 
-    public serviciosDAO() {
-        
-    }
-    public String adicionarServicio(servicios servicio, String MiRespuesta) {
+    PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
+ 
+    public ArrayList<servicios> ConsultarListadoServicios( String nombre) {
+        ArrayList<servicios> milistaServicio = new ArrayList<servicios>();
 
-        String miRespuesta = "";
+        servicios miServicio;
         Conexion miConexion = new Conexion();
         Connection nuevaCon;
         nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
-        try {
-            String Query = "insert into servicios (idServicio,nombre,descrpcion)"
-                    + "values(?,?,?);";
-
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, servicio.getIdServicio());
-            sentencia.setString(2, servicio.getNombre());
-            sentencia.setString(3, servicio.getDescripcion());
-            sentencia.execute();
-
-        } catch (Exception ex) {
-            miRespuesta = "";
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en servicio\n" + ex.getMessage());
-
-        }
-        return MiRespuesta;
-    }
-
-    public String adicionarServicios(servicios miservicio) {
-        throw new UnsupportedOperationException("Not supported yet.");
-
-    }
-
-    /////
-    public String actualizarServicio(servicios servicio) {
-
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
-        try {
-            String Query = "update servicios  set idServicio=?, nombre=?, descripcion=?,";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, servicio.getIdServicio());
-            sentencia.setString(2, servicio.getNombre());
-            sentencia.setString(3, servicio.getDescripcion());
-            sentencia.executeUpdate();
-
-        } catch (Exception ex) {
-            miRespuesta = "";
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema servicio\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-
-    }
-
-    //////////
-    public servicios consultarServicio(int idServicio) {
-
-        servicios servicio = null;
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
+          // Se recibimos el parametro de consulta para recuperar la informacion
+        System.out.println("Buscar parametro:" + nombre);
         try {
             Statement sentencia = nuevaCon.createStatement();
 
-            String Query = "SELECT idServicio, nombre, descripcion FROM servicios WHERE idServicio = " + idServicio;
-
+            String Query = " select idServicio, nombre from servicios "
+                    + " where "
+                   + "nombre like '%"+ nombre + "%' ORDER BY idServicio;";
             ResultSet rs = sentencia.executeQuery(Query);
-            
-            while (rs.next()) {
 
-                servicio = new servicios();
-                servicio.setIdServicio(rs.getInt(1));
-                servicio.setNombre(rs.getString(2));
-                servicio.setDescripcion(rs.getString(3));
+            while (rs.next()) {
+                miServicio = new servicios();
+                miServicio.setIdServicio(rs.getInt(1));
+                miServicio.setNombre(rs.getString(2));
+                miServicio.setDescripcion(rs.getString(3));
+                milistaServicio.add(miServicio);
 
             }
+            return milistaServicio;
+        } catch (Exception e) {
+            System.out.println("Error el a consulta servicio" + e.getMessage());
+            return milistaServicio;
 
-            return servicio;
-
-        } catch (Exception ex) {
-
-            System.out.println(ex.getMessage());
-            return servicio;
-            
         }
 
     }
-
-    public String consultarServicio(servicios miservicio) {
-        return null;
-       
-    }
-    
-
-///////
-    public ArrayList<servicios> ConsultarListadoServicios(String criterio) {
-
-        ArrayList<servicios> milistaservicios = new ArrayList<servicios>();
-        servicios miservicios;
-
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        
+    public List listar() {
+        List<servicios> lista = new ArrayList<>();
+        String sql = "select * from servicios";
         try {
-            Statement sentencia = nuevaCon.createStatement();
-
-            String Query = "SELECT idServicio, nombre, descripcion " 
-                    + "FROM servicios where nombre like '%" + criterio + "%' ORDER BY nombre;";
-            ResultSet rs = sentencia.executeQuery(Query);
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
-             
-                miservicios = new servicios();
-                miservicios.setIdServicio(rs.getInt(1));
-                miservicios.setNombre(rs.getString(2));
-                miservicios.setDescripcion(rs.getString(3));
+                servicios p = new servicios();
+                p.setIdServicio(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                p.setDescripcion(rs.getString(3));
                 
-                milistaservicios.add(miservicios);
+                lista.add(p);
             }
-            
-            return milistaservicios;
-            
-        } catch (Exception ex) {
-            System.out.println("error consulta lista de servicios:" + ex.getMessage());
-            return milistaservicios;
+        } catch (Exception e) {
+        }
+        return lista;
+    }
 
+    public servicios listarId(int id) {
+        String sql = "select * from servicios where idServicio=" + id;
+        servicios pe = new servicios();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pe.setIdServicio(rs.getInt(1));
+                pe.setNombre(rs.getString(2));
+                pe.setDescripcion(rs.getString(3));
+            }
+        } catch (Exception e) {
+        }
+        return pe;
+    }
+
+    public void agregar(servicios p) {
+        String sql = "insert into servicios(nombre,descripcion)values(?,?)";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+            ps.setString(2, p.getDescripcion());
+          
+            ps.executeUpdate();
+        } catch (Exception e) {
         }
 
     }
-    
-    //////////////
-    public String EliminarServicio(servicios servicio){
-        String miRespuesta;
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        
-        PreparedStatement sentencia;
+    public void update(servicios p) {
+        String sql = "update servicios set nombre=?, descripcion=? where idServicio=?";
         try {
-            String Query ="delete from servicios where idServicio=? and nombre=? and descripcion=?;";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1,servicio.getIdServicio());
-            sentencia.setString(2,servicio.getNombre());
-            sentencia.setString(3,servicio.getDescripcion ());
-            
-            sentencia.execute();
-            miRespuesta = "";
-            
-        } catch (Exception ex){
-            miRespuesta = ex.getMessage();
-            System.err.println("Ocurrio un error en serviciosDAO.EliminarServicio" + ex.getMessage());
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+            ps.setString(2, p.getDescripcion());
+            ps.setInt(3, p.getIdServicio());
+            ps.executeUpdate();
+        } catch (Exception e) {
         }
-        
-        return miRespuesta;
-       
-    }    
+
+    }
+
+    public void delete(int id) {
+        String sql = "delete from servicios where idServicio=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
     
 }
 
