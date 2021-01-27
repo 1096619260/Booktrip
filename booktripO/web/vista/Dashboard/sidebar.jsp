@@ -98,7 +98,7 @@
              <div class="bg-white py-2 collapse-inner rounded">
                  <h6 class="collapse-header">Opciones</h6>
                  <a class="collapse-item" href="indexListaServicios.jsp">Servicios</a>
-                 <a class="collapse-item" href="index1.jsp">Solicitudes</a>
+                 <a class="collapse-item" href="indexListaSolicitud.jsp">Solicitudes</a>
                  <a class="collapse-item" href="indexListaPuntuaciones.jsp">Puntuaciones</a>
                  
 

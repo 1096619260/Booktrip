@@ -11,8 +11,8 @@
 </div>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Listar</a>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"> Crear</a>
+ <!--   <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Listar</a>
+  <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"> Crear</a>-->
    
 
 </div>
@@ -20,7 +20,7 @@
 
 <div class="contenedor">
 
-    <h1>Con toda la energia :)</h1>
+    
     
 
 
