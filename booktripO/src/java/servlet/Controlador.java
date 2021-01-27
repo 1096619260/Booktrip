@@ -8,6 +8,7 @@ package servlet;
 import controlador.estadosDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -67,7 +68,7 @@ public class Controlador extends HttpServlet {
                 request.getRequestDispatcher("vista/Dashboard/listaEstado.jsp").forward(request, response);
                 break;
             case "Nuevo":                
-                request.getRequestDispatcher("vista/Dashboard/estado/add.jsp").forward(request, response);
+               request.getRequestDispatcher("vista/Dashboard/estado/add.jsp").forward(request, response);
                 break;
             case "Guardar":
                 String nom=request.getParameter("txtNom");
