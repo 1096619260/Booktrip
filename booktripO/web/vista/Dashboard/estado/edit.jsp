@@ -11,7 +11,7 @@
         <h3>Actualizar estado</h3>
         <hr>
         <br>
-        <form action="/booktripO/Controlador" method="POST"  onsubmit="return validar()" >
+        <form action="/booktripO/controllerEstado" method="POST"  onsubmit="return validar()" >
             <label>Nombres:</label>
             <input type="text" name="txtNom" value="${dato.getNombre()}">
            

@@ -52,25 +52,7 @@ public class controllerSolicitud extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    @SuppressWarnings("IncompatibleEquals")
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-        
-     
-        
-         String sid = request.getParameter("idSolicitud");
+             
          String accion=request.getParameter("accion");
         switch (accion) {
             case "Listar":
@@ -92,17 +74,7 @@ public class controllerSolicitud extends HttpServlet {
                 p.setIdEstado(estado);
                 p.setFecha(fecha);
                dao.agregar(p);
-            
-            
-           
-           
-               
-                
-               
-            
-            
-                
-               
+ 
                 request.getRequestDispatcher("controllerSolicitud?accion=Listar").forward(request, response);
                 break;
             case "Editar": 
@@ -136,6 +108,25 @@ public class controllerSolicitud extends HttpServlet {
                 request.getRequestDispatcher("controllerSolicitud?accion=Listar").forward(request, response);;
         }
     
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    @SuppressWarnings("IncompatibleEquals")
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+        
+     
+        
+  
     }
 
     /**

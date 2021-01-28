@@ -21,8 +21,8 @@ import modelo.estados;
  *
  * @author oscar sanabria
  */
-@WebServlet(name = "Controlador", urlPatterns = {"/Controlador"})
-public class Controlador extends HttpServlet {
+@WebServlet(name = "controllerEstado", urlPatterns = {"/controllerEstado"})
+public class controllerEstado extends HttpServlet {
  estados p=new estados();
     estadosDAO dao=new estadosDAO();
     
@@ -30,7 +30,44 @@ public class Controlador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-      
+        String accion=request.getParameter("accion");
+        switch (accion) {
+            case "Listar":
+                List<estados>lista=dao.listar();
+                request.setAttribute("lista", lista);
+                request.getRequestDispatcher("vista/Dashboard/listaEstado.jsp").forward(request, response);
+                break;
+            case "Nuevo":                
+               request.getRequestDispatcher("vista/Dashboard/estado/add.jsp").forward(request, response);
+                break;
+            case "Guardar":
+                String nom=request.getParameter("txtNom");
+                p.setNombre(nom);
+                dao.agregar(p);
+                request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+                break;
+            case "Editar": 
+                int ide=Integer.parseInt(request.getParameter("id"));
+                estados res=dao.listarId(ide);
+                request.setAttribute("dato",res);
+                request.getRequestDispatcher("vista/Dashboard/estado/edit.jsp").forward(request, response);
+                break;
+            case "Actualizar":   
+                int id=Integer.parseInt(request.getParameter("id"));
+                String nom1=request.getParameter("txtNom");
+                p.setIdEstado(id);
+                p.setNombre(nom1); 
+                dao.update(p);
+                request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+                break;
+            case "Delete":      
+                int idd= Integer.parseInt(request.getParameter("id"));
+                dao.delete(idd);
+                request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+                break;
+            default:
+                request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);;
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -60,46 +97,7 @@ public class Controlador extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-         String accion=request.getParameter("accion");
-        switch (accion) {
-            case "Listar":
-                List<estados>lista=dao.listar();
-                request.setAttribute("lista", lista);
-                request.getRequestDispatcher("vista/Dashboard/listaEstado.jsp").forward(request, response);
-                break;
-            case "Nuevo":                
-               request.getRequestDispatcher("vista/Dashboard/estado/add.jsp").forward(request, response);
-                break;
-            case "Guardar":
-                String nom=request.getParameter("txtNom");
-                p.setNombre(nom);
-                dao.agregar(p);
-                
-                request.getRequestDispatcher("Controlador?accion=Listar").forward(request, response);
-                break;
-            case "Editar": 
-                int ide=Integer.parseInt(request.getParameter("id"));
-                estados res=dao.listarId(ide);
-                request.setAttribute("dato",res);
-                request.getRequestDispatcher("vista/Dashboard/estado/edit.jsp").forward(request, response);
-                break;
-            case "Actualizar":   
-                int id=Integer.parseInt(request.getParameter("id"));
-                String nom1=request.getParameter("txtNom");
-                p.setIdEstado(id);
-                p.setNombre(nom1);
-             
-                dao.update(p);
-                request.getRequestDispatcher("Controlador?accion=Listar").forward(request, response);
-                break;
-            case "Delete":      
-                int idd= Integer.parseInt(request.getParameter("id"));
-                dao.delete(idd);
-                request.getRequestDispatcher("Controlador?accion=Listar").forward(request, response);
-                break;
-            default:
-                request.getRequestDispatcher("Controlador?accion=Listar").forward(request, response);;
-        }
+       
     }
 
     /**

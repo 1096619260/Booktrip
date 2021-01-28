@@ -14,7 +14,7 @@
             <h3>Agregar nuevo estado</h3>
             <hr>
             <br>
-            <form action="/booktripO/Controlador" method="POST" onsubmit="return validar()">
+            <form action="/booktripO/controllerEstado" method="POST" onsubmit="return validar()">
                 <div col-md-6>
                     <div col-md-3><label>Nombres:</label></div>
                     <div col-md-3><input type="text" name="txtNom" id="txtNombre">

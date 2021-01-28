@@ -70,7 +70,7 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    <body>\r\n");
       out.write("    <center>\r\n");
       out.write("        <div>\r\n");
-      out.write("            <form action=\"/booktripO/Controlador\" method=\"POST\"  onsubmit=\"return validar()\">\r\n");
+      out.write("            <form action=\"/booktripO/controllerEstado\" method=\"POST\"  onsubmit=\"return validarEstado()\">\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Listar\" class=\"btn-primary\">\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Nuevo\" class=\"btn-success\">\r\n");
       out.write("            </form>\r\n");
@@ -141,7 +141,7 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
           out.write("</td>\r\n");
           out.write("                            \r\n");
           out.write("                            <td style=\"padding-left:25px;\">\r\n");
-          out.write("                                <form action=\"/booktripO/Controlador\" method=\"POST\">\r\n");
+          out.write("                                <form action=\"/booktripO/controllerEstado\" method=\"POST\">\r\n");
           out.write("                                    <input type=\"hidden\" name=\"id\" value=\"");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdEstado()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("\">\r\n");

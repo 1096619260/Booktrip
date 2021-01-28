@@ -16,7 +16,7 @@
     <body>
     <center>
         <div>
-            <form action="/booktripO/Controlador" method="POST"  onsubmit="return validar()">
+            <form action="/booktripO/controllerEstado" method="POST"  onsubmit="return validarEstado()">
                 <input type="submit" name="accion" value="Listar" class="btn-primary">
                 <input type="submit" name="accion" value="Nuevo" class="btn-success">
             </form>
@@ -38,7 +38,7 @@
                             <td style="padding-left:25px;">${dato.getNombre()}</td>
                             
                             <td style="padding-left:25px;">
-                                <form action="/booktripO/Controlador" method="POST">
+                                <form action="/booktripO/controllerEstado" method="POST">
                                     <input type="hidden" name="id" value="${dato.getIdEstado()}">
                                     <input type="submit" name="accion" value="Editar">
                                     <input type="submit" name="accion" value="Delete">
