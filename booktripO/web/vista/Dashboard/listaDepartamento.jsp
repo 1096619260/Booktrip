@@ -1,8 +1,7 @@
 
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="modelo.estados"%>
+
 
 <!DOCTYPE html> 
 <html>
@@ -15,7 +14,7 @@
     <body>
     <center>
         <div>
-            <form action="/booktripO/Controlador" method="POST"  onsubmit="return validar()">
+            <form action="/booktripO/controllerDepartamento" method="POST"  onsubmit="return validar()">
                 <input type="submit" name="accion" value="Listar" class="btn-primary">
                 <input type="submit" name="accion" value="Nuevo" class="btn-success">
             </form>
@@ -27,18 +26,18 @@
                     <tr>
                         <th>ID</th>
                         <th>NOMBRE</th>
-                        <th>ACCIONES</th>
+                        
                     </tr>
                 </thead>
                 <tbody style="height: 40px;">
                     <c:forEach var="dato" items="${lista}">
                         <tr>
-                            <td style="padding-left:25px;">${dato.getIdEstado()}</td>
+                            <td style="padding-left:25px;">${dato.getIdDepartamento()}</td>
                             <td style="padding-left:25px;">${dato.getNombre()}</td>
                             
                             <td style="padding-left:25px;">
-                                <form action="/booktripO/Controlador" method="POST">
-                                    <input type="hidden" name="id" value="${dato.getIdEstado()}">
+                                <form action="/booktripO/controllerDepartamento" method="POST">
+                                    <input type="hidden" name="id" value="${dato.getIdDepartamento()}">
                                     <input type="submit" name="accion" value="Editar">
                                     <input type="submit" name="accion" value="Delete">
                                 </form>

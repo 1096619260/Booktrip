@@ -11,7 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.departamento;
+import modelo.estados;
 
 /**
  *
@@ -19,186 +21,116 @@ import modelo.departamento;
  */
 public class municipiosDAO {
 
-    public static String miRespuesta = "";
-
-    public String adicionarMunicipios(municipios municipio) {
-
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
-        try {
-            String Query = "insert into municipios (idDepartamento,nombre) " + "values(?,?);";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, municipio.getIdDepartamento());
-            sentencia.setString(2, municipio.getNombre());
-            sentencia.execute();
-
-        } catch (Exception ex) {
-            miRespuesta = "";
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en el municipio\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-        //////////////////////////////////
-    }  
-    public String actualizarMunicipio(municipios municipio) {
-
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
-        try {
-            String Query = "update municipios set idDepartamento=?, nombre=? where idMunicipio =?";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, municipio.getIdDepartamento());
-            sentencia.setString(2, municipio.getNombre());
-            sentencia.setInt(3, municipio.getIdMunicipio());
-            sentencia.executeUpdate();
-
-        } catch (Exception ex) {
-            miRespuesta = "";
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en el municipio\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-
-    }
-
-    /*
-    metodo consultars
-     */
-        
-    public municipios ConsultarMunicipio(int idMunicipio) {
-
-        municipios miMunicipio = null;
-         Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        try {
-            Statement sentencia = nuevaCon.createStatement();
-            String Query = "select idMunicipio, idDepartamento, nombre  from municipios  where idMunicipio = " + idMunicipio;
-            ResultSet rs = sentencia.executeQuery(Query);
-            while (rs.next()) {
-
-                miMunicipio = new municipios();
-                miMunicipio.setIdMunicipio(rs.getInt(1));
-                miMunicipio.setIdDepartamento(rs.getInt(2));
-                miMunicipio.setNombre(rs.getString(3));
-
-            }
-
-            return miMunicipio;
-
-        } catch (Exception ex) {
-
-            System.out.println(ex.getMessage());
-            return miMunicipio;
-
-        }
-
-    }
-
-    /*
-     Listar 
-     */
-    public ArrayList<municipios> ConsularListaMunicipio(String criterio) {
-        ArrayList<municipios> milistamunicipio = new ArrayList<municipios>();
+   PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
+ 
+    public ArrayList<municipios> ConsultarListadoMunicipios( String nombre) {
+        ArrayList<municipios> milistamunicipios= new ArrayList<municipios>();
 
         municipios miMunicipio;
-
-          Conexion miConexion = new Conexion();
+        Conexion miConexion = new Conexion();
         Connection nuevaCon;
         nuevaCon = miConexion.getConn();
-
+          // Se recibimos el parametro de consulta para recuperar la informacion
+        System.out.println("Buscar parametro:" + nombre);
         try {
             Statement sentencia = nuevaCon.createStatement();
 
-            String Query = "SELECT idMunicipio, idDepartamento, nombre" + " FROM municipios  where nombre like '%" + criterio + "%' ORDER BY nombre;";
+            String Query = " select idDepart, nombre from municipios "
+                    + " where "
+                   + "nombre like '%"+ nombre + "%' ORDER BY idMunicipios;";
             ResultSet rs = sentencia.executeQuery(Query);
-            while (rs.next()) {
 
+            while (rs.next()) {
                 miMunicipio = new municipios();
-                miMunicipio.setIdMunicipio(rs.getInt(1));
-                miMunicipio.setIdDepartamento(rs.getInt(2));
-                miMunicipio.setNombre(rs.getString(3));
-                milistamunicipio.add(miMunicipio);
+                miMunicipio.setIdDepartamento(rs.getInt(1));
+                miEstado.setNombre(rs.getString(2));
+                
+                milistaestado.add(miEstado);
 
             }
+            return milistaestado;
+        } catch (Exception e) {
+            System.out.println("Error el a consulta inmueble" + e.getMessage());
+            return milistaestado;
 
-            return milistamunicipio;
-        } catch (Exception ex) {
-            System.out.println("errror en la consulta" + ex.getMessage());
-
-            return milistamunicipio;
         }
 
     }
-    
-    /*
-    eliminar
-     */
-
-    public String EliminarDepartamento(departamento departamento) {
-
-        String miRespuesta;
-          Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        PreparedStatement sentencia;
-
+    public List listar() {
+        List<estados> lista = new ArrayList<>();
+        String sql = "select * from estados";
         try {
-            String Query = "delete from departamentos  where idDepartamento=? and nombre=? ;";
-            sentencia = nuevaCon.prepareStatement(Query);
-
-            sentencia.setInt(1, departamento.getIdDepartamento());
-            sentencia.setString(2, departamento.getNombre());
-            sentencia.execute();
-            miRespuesta = "";
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println(ex.getMessage() + "ocurrio un error " + ex.getMessage());
-
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                estados p = new estados();
+                p.setIdEstado(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                
+                lista.add(p);
+            }
+        } catch (Exception e) {
         }
-        return miRespuesta;
-
+        return lista;
     }
-     /*
-    eliminar
-     */
 
-    public String EliminarMunicipio(municipios  municipio) {
-
-        String miRespuesta;
-          Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        PreparedStatement sentencia;
-
+    public estados listarId(int id) {
+        String sql = "select * from estados where idEstado=" + id;
+        estados pe = new estados();
         try {
-            String Query = "delete from municipios   where idMunicipio=? and  idDepartamento=? and nombre=? ;";
-            sentencia = nuevaCon.prepareStatement(Query);
-
-            sentencia.setInt(1, municipio.getIdMunicipio());
-            sentencia.setInt(2, municipio.getIdDepartamento());
-            sentencia.setString(3, municipio.getNombre());
-            sentencia.execute();
-            miRespuesta = "";
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println(ex.getMessage() + "ocurrio un error " + ex.getMessage());
-
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pe.setIdEstado(rs.getInt(1));
+                pe.setNombre(rs.getString(2));
+                
+            }
+        } catch (Exception e) {
         }
-        return miRespuesta;
+        return pe;
+    }
+
+    public void agregar(estados p) {
+        String sql = "insert into estados(nombre)values(?)";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+          
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
 
     }
-    
+    public void update(estados p) {
+        String sql = "update estados set nombre=? where idEstado=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+            ps.setInt(2, p.getIdEstado());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
 
+    }
+
+    public void delete(int id) {
+        String sql = "delete from estados where idEstado=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+   
+
+   
 }
