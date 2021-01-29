@@ -57,7 +57,7 @@ public final class add_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            <h3>Agregar nuevo estado</h3>\r\n");
       out.write("            <hr>\r\n");
       out.write("            <br>\r\n");
-      out.write("            <form action=\"/booktripO/Controlador\" method=\"POST\" onsubmit=\"return validar()\">\r\n");
+      out.write("            <form action=\"/booktripO/controllerEstado\" method=\"POST\" onsubmit=\"return validar()\">\r\n");
       out.write("                <div col-md-6>\r\n");
       out.write("                    <div col-md-3><label>Nombres:</label></div>\r\n");
       out.write("                    <div col-md-3><input type=\"text\" name=\"txtNom\" id=\"txtNombre\">\r\n");
