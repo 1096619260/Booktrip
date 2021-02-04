@@ -69,16 +69,20 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    </head>\r\n");
       out.write("    <body>\r\n");
       out.write("    <center>\r\n");
-      out.write("        <div>\r\n");
+      out.write("        <div class=\"container\" style=\"background: #4d80e4\">\r\n");
+      out.write("        <div class=\"col-md-6\">\r\n");
       out.write("            <form action=\"/booktripO/controllerEstado\" method=\"POST\"  onsubmit=\"return validarEstado()\">\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Listar\" class=\"btn-primary\">\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Nuevo\" class=\"btn-success\">\r\n");
       out.write("            </form>\r\n");
+      out.write("            <form action=\"reportEstado.jsp\">\r\n");
+      out.write("                   <input type=\"submit\" name=\"accion\" value=\"Reportes\" class=\"btn-success\">  \r\n");
+      out.write("             </form>\r\n");
       out.write("        </div>\r\n");
       out.write("        <hr>\r\n");
       out.write("        <div>\r\n");
-      out.write("        <h1>prueba de rama</h1>\r\n");
-      out.write("            <table class=\"table table-responsive\" style=\"width: 500px;\">\r\n");
+      out.write("        <h1>lista de estados</h1>\r\n");
+      out.write("            <table border=\"1\" class=\" bg-light table table-bordered my-5\"  style=\"width: 500px;\" >\r\n");
       out.write("                <thead>\r\n");
       out.write("                    <tr>\r\n");
       out.write("                        <th>ID</th>\r\n");
@@ -86,7 +90,7 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        <th>ACCIONES</th>\r\n");
       out.write("                    </tr>\r\n");
       out.write("                </thead>\r\n");
-      out.write("                <tbody style=\"height: 40px;\">\r\n");
+      out.write("                <tbody style=\"height:30px;\">\r\n");
       out.write("                    ");
       if (_jspx_meth_c_forEach_0(_jspx_page_context))
         return;
@@ -95,7 +99,8 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            </table>\r\n");
       out.write("\r\n");
       out.write("        </div>\r\n");
-      out.write("    </center>\r\n");
+      out.write("    </div>\r\n");
+      out.write("        </center>\r\n");
       out.write("    <script src=\"../js/jquery-1.11.0.min.js\"></script>\r\n");
       out.write("    <script src=\"../js/validaciones.js\"</script>\r\n");
       out.write("    <script src=\"https://code.jquery.com/jquery-3.5.1.slim.min.js\" integrity=\"sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj\" crossorigin=\"anonymous\"></script>\r\n");
@@ -134,6 +139,7 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
         do {
           out.write("\r\n");
           out.write("                        <tr>\r\n");
+          out.write("                \r\n");
           out.write("                            <td style=\"padding-left:25px;\">");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdEstado()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</td>\r\n");
@@ -146,8 +152,8 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
           out.write("                                    <input type=\"hidden\" name=\"id\" value=\"");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdEstado()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("\">\r\n");
-          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Editar\">\r\n");
-          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Delete\">\r\n");
+          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Editar\" class=\"btn-primary btn-block\">\r\n");
+          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Delete\" class=\"btn-danger btn-block\">\r\n");
           out.write("                                </form>\r\n");
           out.write("                            </td>\r\n");
           out.write("                        </tr>\r\n");

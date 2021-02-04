@@ -53,13 +53,15 @@ public final class add_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    </head>\r\n");
       out.write("    <body>\r\n");
       out.write("    <center>\r\n");
-      out.write("        <div class=\"container bg-primary col-md-6\">\r\n");
+      out.write("        <div class=\"container-fluid\" style=\"background: #4d80e4\">\r\n");
+      out.write("            \r\n");
+      out.write("        <div class=\"container  col-md-6 mt-5 bg-light\">\r\n");
       out.write("            <h3>Agregar nuevo estado</h3>\r\n");
       out.write("            <hr>\r\n");
       out.write("            <br>\r\n");
       out.write("            <form action=\"/booktripO/controllerEstado\" method=\"POST\" onsubmit=\"return validar()\">\r\n");
       out.write("                <div col-md-6>\r\n");
-      out.write("                    <div col-md-3><label>Nombres:</label></div>\r\n");
+      out.write("                    <div col-md-3><label>Nombre:</label></div>\r\n");
       out.write("                    <div col-md-3><input type=\"text\" name=\"txtNom\" id=\"txtNombre\">\r\n");
       out.write("                    </div>\r\n");
       out.write("                </div>\r\n");
@@ -69,6 +71,7 @@ public final class add_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                </div>\r\n");
       out.write("            </form>\r\n");
       out.write("        </div>\r\n");
+      out.write("         </div>\r\n");
       out.write("    </center>\r\n");
       out.write("    <script src=\"../js/jquery-1.11.0.min.js\"></script>\r\n");
       out.write("    <script src=\"../js/validaciones.js\"</script>\r\n");

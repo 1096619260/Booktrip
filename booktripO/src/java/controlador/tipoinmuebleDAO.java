@@ -10,181 +10,121 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.tipoinmuebles;
 
 public class tipoinmuebleDAO {
-    public String adicionarTipoInmueble(tipoinmuebles tipoinmueble) {
-
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
-
-        try {
-            String Query = "INSERT INTO tipoinmuebles (nombre)" + "values(?);";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setString(1, tipoinmueble.getNombre());
-            sentencia.execute();
-
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en tipoinmuebles\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-
-    }
-
-    ////////////////////////////////////////////////////////////
-    public String actualizarTipoInmueble(tipoinmuebles tipoinmueble) {
-
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
-
-        try {
-            String Query = "UPDATE tipoinmuebles set idTipo=?, nombre=? where idTipo=?";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setString(1, tipoinmueble.getNombre());
-            sentencia.setInt(2, tipoinmueble.getIdTipo());
-            sentencia.executeUpdate();
-
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en estados\n" + miRespuesta);
-
-        }
-        return miRespuesta;
-
-    }
- public tipoinmuebles consultarTipoInmuebles(String nombre){
-        
-        tipoinmuebles miTipoInmueble =null;
-        Conexion  miConexion= new Conexion();
-        Connection nuevaCon;
-        nuevaCon= miConexion.getConn();
-        
-        
-        try {
-            Statement sentencia = nuevaCon.createStatement();
-            String Query = "select idTipo, nombre" 
-                    + " FROM tipoinmuebles WHERE nombre = '" + nombre + "'";
-           ResultSet rs=sentencia.executeQuery(Query);
-            while (rs.next()) {                
-               miTipoInmueble = new tipoinmuebles();
-               miTipoInmueble.setIdTipo(rs.getInt(1));
-               miTipoInmueble.setNombre(rs.getString(2));
-               
-           }
-            
-            return miTipoInmueble;
-        } catch (Exception ex){
-            
-          
-            System.out.println(ex.getMessage());
-        }
-        
-        return miTipoInmueble;
-        
-    } 
- /////////////////////////////////////////////////////////////////////
-  public tipoinmuebles consultarTipoInmueblesId(int idTipo){
-        
-        tipoinmuebles miTipoInmueble =null;
-        Conexion  miConexion= new Conexion();
-        Connection nuevaCon;
-        nuevaCon= miConexion.getConn();
-        
-        
-        try {
-            Statement sentencia = nuevaCon.createStatement();
-            String Query = "select idTipo, nombre" 
-                    + " FROM tipoinmuebles WHERE idTipo = '" + idTipo + "'";
-           ResultSet rs=sentencia.executeQuery(Query);
-            while (rs.next()) {                
-               miTipoInmueble = new tipoinmuebles();
-               miTipoInmueble.setIdTipo(rs.getInt(1));
-               miTipoInmueble.setNombre(rs.getString(2));
-               
-           }
-            
-            return miTipoInmueble;
-        } catch (Exception ex){
-            
-          
-            System.out.println(ex.getMessage());
-        }
-        
-        return miTipoInmueble;
-        
-    } 
+     
+    PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
  
- ////////////////////////////////////////////////////////////////////////////////
-  public ArrayList<tipoinmuebles>ConsultarListadoTipoInmueble(String nombre){
-        ArrayList<tipoinmuebles>milistatipoinmueble =new ArrayList<tipoinmuebles>();
-        
-       tipoinmuebles mitipoinmueble;
-        Conexion  miConexion= new Conexion();
-        Connection nuevaCon;
-        nuevaCon= miConexion.getConn();
-        
-        try{
-            Statement sentencia = nuevaCon.createStatement();
-    
-              String Query = "select idTipo, nombre" 
-                      + " from  tipoinmuebles where"
-                      + " nombre like '%"+ nombre + "%' ORDER BY idTipo;";
-           
-            ResultSet rs=sentencia.executeQuery(Query);
-          
-            while (rs.next()) {                
-               mitipoinmueble= new tipoinmuebles();
-               mitipoinmueble.setIdTipo(rs.getInt(1));
-               mitipoinmueble.setNombre(rs.getString(2));
-                 milistatipoinmueble.add(mitipoinmueble);
-          
-            }
-              return milistatipoinmueble;
-              }catch (Exception e){
-           System.out.println("Error el a consulta estado"+e.getMessage());
-              return milistatipoinmueble;
-                
-        }
-    
-   }
-  
-  
-   //////////////////////////////////////////
-   public String eliminarTipoInmueble(tipoinmuebles tipoinmueble) {
+    public ArrayList<tipoinmuebles> ConsultarListadoTipos( String nombre) {
+        ArrayList<tipoinmuebles> milistatipo = new ArrayList<tipoinmuebles>();
 
-        String miRespuesta;
+        tipoinmuebles miTipo;
         Conexion miConexion = new Conexion();
         Connection nuevaCon;
         nuevaCon = miConexion.getConn();
+          // Se recibimos el parametro de consulta para recuperar la informacion
+        System.out.println("Buscar parametro:" + nombre);
+        try {
+            Statement sentencia = nuevaCon.createStatement();
 
-        PreparedStatement sentencia; 
-    
-   try{
-             String Query="delete from tipoinmuebles where idTipo=? and nombre=?;";
-           sentencia=nuevaCon.prepareStatement(Query);
-           sentencia.setInt(1, tipoinmueble.getIdTipo());
-           sentencia.setString(2, tipoinmueble.getNombre());
-           sentencia.execute();
-           
-            miRespuesta = "";
-            
-              }catch (Exception e){
-                  miRespuesta=e.getMessage();
-                  System.out.println("Error al eliminar tipo de inmueble" +e.getMessage());
-                  
-              }
-        return miRespuesta;
-      }
+            String Query = " select idTipo, nombre from tipoinmuebles "
+                    + " where "
+                   + "nombre like '%"+ nombre + "%' ORDER BY idTipo;";
+            ResultSet rs = sentencia.executeQuery(Query);
+
+            while (rs.next()) {
+                miTipo = new tipoinmuebles();
+                miTipo.setIdTipo(rs.getInt(1));
+                miTipo.setNombre(rs.getString(2));
+                
+                milistatipo.add(miTipo);
+
+            }
+            return milistatipo;
+        } catch (Exception e) {
+            System.out.println("Error en la  consulta" + e.getMessage());
+            return milistatipo;
+
+        }
+
+    }
+    public List listar() {
+        List<tipoinmuebles> lista = new ArrayList<>();
+        String sql = "select * from tipoinmuebles";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                tipoinmuebles p = new tipoinmuebles();
+                p.setIdTipo(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                
+                lista.add(p);
+            }
+        } catch (Exception e) {
+        }
+        return lista;
+    }
+
+    public tipoinmuebles listarId(int id) {
+        String sql = "select * from tipoinmuebles where idTipo=" + id;
+        tipoinmuebles pe = new tipoinmuebles();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pe.setIdTipo(rs.getInt(1));
+                pe.setNombre(rs.getString(2));
+                
+            }
+        } catch (Exception e) {
+        }
+        return pe;
+    }
+
+    public void agregar(tipoinmuebles p) {
+        String sql = "insert into tipoinmuebles(nombre)values(?)";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+          
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+    public void update(tipoinmuebles p) {
+        String sql = "update tipoinmuebles set nombre=? where idTipo=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+            ps.setInt(2, p.getIdTipo());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void delete(int id) {
+        String sql = "delete from tipoinmuebles where idTipo=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+   
+
+   
 }
