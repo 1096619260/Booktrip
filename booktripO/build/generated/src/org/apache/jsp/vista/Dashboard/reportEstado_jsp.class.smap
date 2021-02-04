@@ -1,0 +1,14 @@
+SMAP
+reportEstado_jsp.java
+JSP
+*S JSP
+*F
++ 0 reportEstado.jsp
+vista/Dashboard/reportEstado.jsp
+*L
+5,19:50
+24,9:70
+32:79
+34,12:81
+45,4:93
+*E

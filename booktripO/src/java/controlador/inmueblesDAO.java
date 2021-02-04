@@ -5,211 +5,126 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.inmuebles;
 
 public class inmueblesDAO {
 
-    public static String miRespuesta = "";
+    PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
 
-    public String adicionarInmueble(inmuebles inmueble) {
-
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
+    public List listar() {
+        List<inmuebles> lista = new ArrayList<>();
+        String sql = "select * from inmuebles";
         try {
-            String Query = "insert into inmuebles (idTipo, idDepartamento, idUsuario, idEstado, nombre, direccion, capacidad, "
-                    + "descripcion, precio, adjunto)" + "values(?,?,?,?,?,?,?,?,?,?);";
-            sentencia = nuevaCon.prepareStatement(Query);
-
-            sentencia.setInt(1, inmueble.getIdInmueble());
-            sentencia.setInt(2, inmueble.getIdDepartamento());
-            sentencia.setInt(3, inmueble.getIdUsuario());
-            sentencia.setInt(4, inmueble.getIdEstado());
-            sentencia.setString(5, inmueble.getNombre());
-            sentencia.setString(6, inmueble.getDireccion());
-            sentencia.setInt(7, inmueble.getCapacidad());
-            sentencia.setString(8, inmueble.getDescripcion());
-            sentencia.setInt(9, inmueble.getPrecio());
-            sentencia.setString(10, inmueble.getAdjunto());
-
-            sentencia.execute();
-
-        } catch (Exception ex) {
-            miRespuesta = "";
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en inmuebles\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-
-    }
-
-    //////////////////////////////////
-    public String actualizarInmueble(inmuebles inmueble) {
-
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
-
-        try {
-            String Query = "update inmuebles set idTipo=?, idDepartamento=?,"
-                    + "idUsuario=?, idEstado=?, nombre=?, direccion=?, capacidad=?, "
-                    + "descripcion=?, precio=? where idInmueble=?";
-            sentencia = nuevaCon.prepareStatement(Query);
-
-            sentencia.setInt(1, inmueble.getIdTipo());
-            sentencia.setInt(2, inmueble.getIdDepartamento());
-            sentencia.setInt(3, inmueble.getIdUsuario());
-            sentencia.setInt(4, inmueble.getIdEstado());
-            sentencia.setString(5, inmueble.getNombre());
-            sentencia.setString(6, inmueble.getDireccion());
-            sentencia.setInt(7, inmueble.getCapacidad());
-            sentencia.setString(8, inmueble.getDescripcion());
-            sentencia.setInt(9, inmueble.getPrecio());
-            sentencia.setString(10, inmueble.getAdjunto());
-
-            sentencia.setInt(11, inmueble.getIdInmueble());
-
-            sentencia.executeUpdate();
-        } catch (Exception ex) {
-            miRespuesta = "";
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en inmuebles\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-
-    }
-
-    public inmuebles consultarInmuebles(String nombre) {
-
-        inmuebles miInmueble = null;
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        try {
-            Statement sentencia = nuevaCon.createStatement();
-            String Query = "select idInmueble, idTipo, idDepartamento, idUsuario, idEstado, "
-                    + "nombre, direccion, capacidad, descripcion, precio, adjunto from inmuebles where nombre= " + nombre;
-            ResultSet rs = sentencia.executeQuery(Query);
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
-                miInmueble = new inmuebles();
+                inmuebles p = new inmuebles();
+                p.setIdInmueble(rs.getInt(1));
+                p.setIdTipo(rs.getInt(2));
+                p.setIdDepartamento(rs.getInt(3));
+                p.setIdUsuario(rs.getInt(4));
+                p.setIdEstado(rs.getInt(5));
+                p.setNombre(rs.getString(6));
+                p.setDireccion(rs.getString(7));
+                p.setCapacidad(rs.getInt(8));
+                p.setDescripcion(rs.getString(9));
+                p.setPrecio(rs.getInt(10));
+                p.setAdjunto(rs.getString(11));
 
-                miInmueble.setIdInmueble(rs.getInt(1));
-                miInmueble.setIdTipo(rs.getInt(2));
-                miInmueble.setIdDepartamento(rs.getInt(3));
-                miInmueble.setIdUsuario(rs.getInt(4));
-                miInmueble.setIdEstado(rs.getInt(5));
-                miInmueble.setNombre(rs.getString(6));
-                miInmueble.setDireccion(rs.getString(7));
-                miInmueble.setCapacidad(rs.getInt(8));
-                miInmueble.setDescripcion(rs.getString(9));
-                miInmueble.setPrecio(rs.getInt(10));
-                miInmueble.setAdjunto(rs.getString(11));
-                miInmueble.setIdInmueble(rs.getInt(12));
+                lista.add(p);
             }
-
-            return miInmueble;
-        } catch (Exception ex) {
-
-            System.out.println(ex.getMessage());
+        } catch (Exception e) {
         }
-
-        return miInmueble;
-
+        return lista;
     }
 
-    /////////////////////////////////////////////////////////////////
-    public ArrayList<inmuebles> ConsultarListadoInmueble( String nombre) {
-        ArrayList<inmuebles> milistainmueble = new ArrayList<inmuebles>();
-
-        inmuebles miInmueble;
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-          // Se recibimos el parametro de consulta para recuperar la informacion
-        System.out.println("Buscar parametro:" + nombre);
+    public inmuebles listarId(int id) {
+        String sql = "select * from inmuebles where idInmueble=" + id;
+        inmuebles pe = new inmuebles();
         try {
-            Statement sentencia = nuevaCon.createStatement();
-
-            String Query = " select idInmueble, idTipo, idDepartamento, idUsuario, idEstado, "
-                    + " nombre, direccion, capacidad, descripcion, precio, adjunto "
-                    + " from inmuebles "
-                    + " where "
-                   + "nombre like '%"+ nombre + "%' ORDER BY idInmueble;";
-            ResultSet rs = sentencia.executeQuery(Query);
-
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
-                miInmueble = new inmuebles();
-                miInmueble.setIdInmueble(rs.getInt(1));
-                miInmueble.setIdTipo(rs.getInt(2));
-                miInmueble.setIdDepartamento(rs.getInt(3));
-                miInmueble.setIdUsuario(rs.getInt(4));
-                miInmueble.setIdEstado(rs.getInt(5));
-                miInmueble.setNombre(rs.getString(6));
-                miInmueble.setDireccion(rs.getString(7));
-                miInmueble.setCapacidad(rs.getInt(8));
-                miInmueble.setDescripcion(rs.getString(9));
-                miInmueble.setPrecio(rs.getInt(10));
-                miInmueble.setAdjunto(rs.getString(11));
-                milistainmueble.add(miInmueble);
+                pe.setIdInmueble(rs.getInt(1));
+                pe.setIdTipo(rs.getInt(2));
+                pe.setIdDepartamento(rs.getInt(3));
+                pe.setIdUsuario(rs.getInt(4));
+                pe.setIdEstado(rs.getInt(5));
+                pe.setNombre(rs.getString(6));
+                pe.setDireccion(rs.getString(7));
+                pe.setCapacidad(rs.getInt(8));
+                pe.setDescripcion(rs.getString(9));
+                pe.setPrecio(rs.getInt(10));
+                pe.setAdjunto(rs.getString(11));
 
             }
-            return milistainmueble;
         } catch (Exception e) {
-            System.out.println("Error el a consulta inmueble" + e.getMessage());
-            return milistainmueble;
+        }
+        return pe;
+    }
 
+    public void agregar(inmuebles p) {
+        String sql = "insert into inmuebles(idTipo, idDepartamento, idUsuario, idEstado, nombre, direccion, capacidad, descripcion,"
+                + " precio, adjunto)values(?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, p.getIdTipo());
+            ps.setInt(2, p.getIdDepartamento());
+            ps.setInt(3, p.getIdUsuario());
+            ps.setInt(4, p.getIdEstado());
+            ps.setString(5, p.getNombre());
+            ps.setString(6, p.getDireccion());
+            ps.setInt(7, p.getCapacidad());
+            ps.setString(8, p.getDescripcion());
+            ps.setInt(9, p.getPrecio());
+            ps.setString(10, p.getAdjunto());
+
+            ps.executeUpdate();
+        } catch (Exception e) {
         }
 
     }
 
-    //////////////////////////////////////////
-
-    public String EliminarInmueble(inmuebles inmueble){
-        
-        String res;
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-        
-         PreparedStatement sentence;
-         
-         try {
-            String sql  = "DELETE FROM inmuebles WHERE idInmueble=? AND idTipo=? AND idDepartamento=?  "
-                    + "AND idUsuario=? AND idEstado =? AND nombre=? AND direccion=? AND capacidad=? "
-                    + "AND descripcion=? AND precio= ? AND adjunto=?;";
-           
-            sentence = newConexion.prepareStatement(sql);
+    public void update(inmuebles p) {
+        String sql = "update inmuebles set idTipo=?, idDepartamento=?, idUsuario=?, idEstado=?, nombre=?,"
+                + "direccion=?, capacidad=?, descripcion=?, precio=?, adjunto=? where idInmueble=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, p.getIdTipo());
+            ps.setInt(2, p.getIdDepartamento());
+            ps.setInt(3, p.getIdUsuario());
+            ps.setInt(4, p.getIdEstado());
+            ps.setString(5, p.getNombre());
+            ps.setString(6, p.getDireccion());
+            ps.setInt(7, p.getCapacidad());
+            ps.setString(8, p.getDescripcion());
+            ps.setInt(9, p.getPrecio());
+            ps.setString(10, p.getAdjunto());
+            ps.setInt(11, p.getIdInmueble());
             
-            sentence.setInt(1, inmueble.getIdInmueble());
-            sentence.setInt(2, inmueble.getIdTipo());
-            sentence.setInt(3, inmueble.getIdDepartamento());
-            sentence.setInt(4, inmueble.getIdUsuario());
-            sentence.setInt(5,inmueble.getIdEstado());
-            sentence.setString(6, inmueble.getNombre());
-            sentence.setString(7,inmueble.getDireccion());
-            sentence.setInt(8, inmueble.getCapacidad());
-            sentence.setString(9, inmueble.getDescripcion());
-            sentence.setInt(10, inmueble.getPrecio());
-            sentence.setString(11, inmueble.getAdjunto());
-            
-            
-            sentence.execute();
-            res= "";
-            
+            ps.executeUpdate();
         } catch (Exception e) {
-            
-            res = e.getMessage();
-            System.out.println("Ocurrio un error en el eliminar usuario " + e.getMessage());
         }
-             
-        return res;
-    
+
     }
+
+    public void delete(int id) {
+        String sql = "delete from inmuebles where idInmueble=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
 }

@@ -10,13 +10,15 @@
     </head>
     <body>
     <center>
-        <div class="container bg-primary col-md-6">
+        <div class="container" style="background: #4d80e4">
+            
+        <div class="container  col-md-6 mt-5 bg-light">
             <h3>Agregar nuevo estado</h3>
             <hr>
             <br>
             <form action="/booktripO/controllerEstado" method="POST" onsubmit="return validar()">
                 <div col-md-6>
-                    <div col-md-3><label>Nombres:</label></div>
+                    <div col-md-3><label>Nombre:</label></div>
                     <div col-md-3><input type="text" name="txtNom" id="txtNombre">
                     </div>
                 </div>
@@ -26,6 +28,7 @@
                 </div>
             </form>
         </div>
+         </div>
     </center>
     <script src="../js/jquery-1.11.0.min.js"></script>
     <script src="../js/validaciones.js"</script>

@@ -15,16 +15,20 @@
     </head>
     <body>
     <center>
-        <div>
+        <div class="container my-10" style="background: #4d80e4">
+        <div class="col-md-6">
             <form action="/booktripO/controllerEstado" method="POST"  onsubmit="return validarEstado()">
                 <input type="submit" name="accion" value="Listar" class="btn-primary">
                 <input type="submit" name="accion" value="Nuevo" class="btn-success">
             </form>
+            <form action="reportEstado.jsp">
+                   <input type="submit" name="accion" value="Reportes" class="btn-success">  
+             </form>
         </div>
         <hr>
         <div>
-        <h1>prueba de rama</h1>
-            <table class="table table-responsive" style="width: 500px;">
+        <h1>lista de estados</h1>
+            <table border="1" class=" bg-light table table-bordered "  style="width: 500px;" >
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -32,17 +36,18 @@
                         <th>ACCIONES</th>
                     </tr>
                 </thead>
-                <tbody style="height: 40px;">
+                <tbody style="height:30px;">
                     <c:forEach var="dato" items="${lista}">
                         <tr>
+                
                             <td style="padding-left:25px;">${dato.getIdEstado()}</td>
                             <td style="padding-left:25px;">${dato.getNombre()}</td>
                             
                             <td style="padding-left:25px;">
                                 <form action="/booktripO/controllerEstado" method="POST">
                                     <input type="hidden" name="id" value="${dato.getIdEstado()}">
-                                    <input type="submit" name="accion" value="Editar">
-                                    <input type="submit" name="accion" value="Delete">
+                                    <input type="submit" name="accion" value="Editar" class="btn-primary btn-block">
+                                    <input type="submit" name="accion" value="Delete" class="btn-danger btn-block">
                                 </form>
                             </td>
                         </tr>
@@ -51,7 +56,8 @@
             </table>
 
         </div>
-    </center>
+    </div>
+        </center>
     <script src="../js/jquery-1.11.0.min.js"></script>
     <script src="../js/validaciones.js"</script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

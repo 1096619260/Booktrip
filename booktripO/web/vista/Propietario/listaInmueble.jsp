@@ -12,7 +12,7 @@
     <body>
     <center>
         <div>
-            <form action="/booktripO/controllerSolicitud" method="POST">
+            <form action="/booktripO/controllerInmueble" method="POST">
                 <input type="submit" name="accion" value="Listar">
                 <input type="submit" name="accion" value="Nuevo">
             </form>
@@ -22,25 +22,39 @@
             <table border="1" style="width: 500px;">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>id inmueble</th>
-                        <th>idUsuario</th>
-                         <th>idEstado</th>
-                          <th>fecha</th>
+                        <th># inmueble</th>
+                        <th>Tipo de inmueble</th>
+                        <th>Departamento</th>
+                        <th>Usuario</th>
+                        <th>Estado</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th> 
+                        <th>Capacidad</th> 
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>Adjunto</th>
+
+
                         <th>ACCIONES</th>
                     </tr>
                 </thead>
                 <tbody style="height: 40px;">  
                     <c:forEach var="dato" items="${lista}">
                         <tr>
-                            <td style="padding-left:25px;">${dato.getIdSolicitud()}</td>
                             <td style="padding-left:25px;">${dato.getIdInmueble()}</td>
+                            <td style="padding-left:25px;">${dato.getIdTipo()}</td>
+                            <td style="padding-left:25px;">${dato.getIdDepartamento()}</td>
                             <td style="padding-left:25px;">${dato.getIdUsuario()}</td>
                             <td style="padding-left:25px;">${dato.getIdEstado()}</td>
-                            <td style="padding-left:25px;">${dato.getFecha()}</td>
+                            <td style="padding-left:25px;">${dato.getNombre()}</td>
+                             <td style="padding-left:25px;">${dato.getDireccion()}</td>
+                              <td style="padding-left:25px;">${dato.getCapacidad()}</td>
+                               <td style="padding-left:25px;">${dato.getDescripcion()}</td>
+                                <td style="padding-left:25px;">${dato.getPrecio()}</td>
+                                 <td style="padding-left:25px;">${dato.getAdjunto()}</td>
                             <td style="padding-left:25px;">
-                                <form action="/booktripO/controllerSolicitud" method="POST">
-                                    <input type="hidden" name="id" value="${dato.getIdSolicitud()}">
+                                <form action="/booktripO/controllerInmueble" method="POST">
+                                    <input type="hidden" name="id" value="${dato.getIdInmueble()}">
                                     <input type="submit" name="accion" value="Editar">
                                     <input type="submit" name="accion" value="Delete">
                                 </form>
