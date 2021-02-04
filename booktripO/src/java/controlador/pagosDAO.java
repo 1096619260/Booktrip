@@ -5,183 +5,112 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.pagos;
 
 public class pagosDAO {
     
-    public String adicionarPago(pagos pago) {
+    PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
 
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        
-        PreparedStatement sentencia;
-        
+    public List listar() {
+        List<pagos> lista = new ArrayList<>();
+        String sql = "select * from pagos";
         try {
-            String sql = "INSERT INTO pagos (idUsuario,idInmueble,adjunto,monto,fechaPago,fechaPago2)"
-            +"values(?,?,?,?,?,?);";
-
-            sentencia = nuevaCon.prepareStatement(sql);
-            sentencia.setInt(1, pago.getIdUsuario());
-            sentencia.setInt(2, pago.getIdInmueble());
-            sentencia.setString(3, pago.getAdjunto());
-            sentencia.setString(4, pago.getMonto());
-            sentencia.setString(5, pago.getFechaPago());
-            sentencia.setString(6, pago.getFechaPago2());
-            sentencia.execute();
-            
-            } catch (Exception ex) {
-                
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en pagos\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-
-    }
-        //////////////////////////////////
-    public String actualizarPago(pagos pago) {
-
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
-       try {
-            String Query = "insert into pagos (idUsuario,idInmueble,adjunto,monto,fechaPago,fechaPago2)" + "values"
-                    + "(?,?,?,?,?,?);";
-
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, pago.getIdUsuario());
-            sentencia.setInt(2, pago.getIdInmueble());
-            sentencia.setString(3, pago.getAdjunto());
-            sentencia.setString(4, pago.getMonto());
-            sentencia.setString(5, pago.getFechaPago());
-            sentencia.setString(6, pago.getFechaPago2());
-            sentencia.execute();
-            
-            } catch (Exception ex) {
-                
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en pagos\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-
-    }
-    
-    
-    //////////////
-    public pagos consultarPago(int idPago) {
-
-        pagos mipago = null;
-        
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        try {
-            Statement sentencia = nuevaCon.createStatement();
-
-            String Sql = "SELECT idPago, idUsuario, idInmueble, adjunto, monto, fechapago, fechapago2 FROM pagos WHERE idPago = " + idPago;
-
-            ResultSet rs = sentencia.executeQuery(Sql);
-            
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
+                pagos p = new pagos();
+                p.setIdPago(rs.getInt(1));
+                p.setIdUsuario(rs.getInt(2));
+                p.setIdInmueble(rs.getInt(3));
+                p.setAdjunto(rs.getString(4));
+                p.setMonto(rs.getInt(5));
+                p.setFechaPago(rs.getString(6));
+                p.setFechaPago2(rs.getString(7));
 
-                mipago = new pagos();
-                mipago.setIdPago(rs.getInt(1));
-                mipago.setIdUsuario(rs.getInt(2));
-                mipago.setIdInmueble(rs.getInt(3));
-                mipago.setAdjunto(rs.getString(4));
-                mipago.setMonto(rs.getString(5));
-                mipago.setFechaPago(rs.getString(6));
-                mipago.setFechaPago2(rs.getString(7));
-
+                lista.add(p);
             }
-
-            return mipago;
-
-        } catch (Exception ex) {
-
-            System.out.println(ex.getMessage());
-            return mipago;
-            
+        } catch (Exception e) {
         }
-       
+        return lista;
     }
-    
 
-///////
-    public ArrayList<pagos> ConsultarListadoPagos(String criterio) {
-
-        ArrayList<pagos> milistapagos = new ArrayList<pagos>();
-        pagos mipagos;
-
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        
+    public pagos listarId(int id) {
+        String sql = "select * from pagos where idPago=" + id;
+        pagos pe = new pagos();
         try {
-            Statement sentencia = nuevaCon.createStatement();
-
-            String sql = "SELECT idPago, idUsuario, idInmueble, adjunto, monto, fechaPago, fechaPago2 " 
-                    + "FROM pagos where idPago like '%" + criterio + "%' ORDER BY idPago;";
-            
-            ResultSet rs = sentencia.executeQuery(sql);
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
-             
-                mipagos = new pagos();
-                mipagos.setIdPago(rs.getInt(1));
-                mipagos.setIdUsuario(rs.getInt(2));
-                mipagos.setIdInmueble(rs.getInt(3));
-                mipagos.setAdjunto(rs.getString(4));
-                mipagos.setMonto(rs.getString(5));
-                mipagos.setFechaPago(rs.getString(6));
-                mipagos.setFechaPago2(rs.getString(7));
+                pe.setIdPago(rs.getInt(1));
+                 pe.setIdUsuario(rs.getInt(2));
+                  pe.setIdInmueble(rs.getInt(3));
+                  pe.setAdjunto(rs.getString(4));
+                   pe.setMonto(rs.getInt(5));
+                pe.setFechaPago(rs.getString(6));
+                pe.setFechaPago2(rs.getString(7));
                 
-                milistapagos.add(mipagos);
             }
-            
-            return milistapagos;
-            
-        } catch (Exception ex) {
-            System.out.println("error consulta lista de pagos:" + ex.getMessage());
-            return milistapagos;
-
+        } catch (Exception e) {
         }
+        return pe;
     }
-    
-    //////
-     public String EliminarPago(pagos pago){
-        String miRespuesta;
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        
-        PreparedStatement sentencia;
+
+    public void agregar(pagos p) {
+        String sql = "insert into pagos( idUsuario, idInmueble, adjunto, monto,"
+                + "fechaPago, fechaPago2)values(?,?,?,?,?,?)";
         try {
-            String Query ="delete from pagos where idPago=? and idUsuario=? and idInmueble=? and adjunto=?  and monto=? and fechaPago=? and fechaPago2=?;";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1,pago.getIdPago());
-            sentencia.setInt(2,pago.getIdUsuario());
-            sentencia.setInt(3,pago.getIdInmueble ());
-            sentencia.setString(4,pago.getAdjunto ());
-            sentencia.setString(5,pago.getMonto());
-            sentencia.setString(6,pago.getFechaPago());
-            sentencia.setString(7,pago.getFechaPago2 ());
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+             ps.setInt(1, p.getIdUsuario());
+             ps.setInt(2, p.getIdInmueble());
+             ps.setString(3, p.getAdjunto());
+              ps.setInt(4, p.getMonto());
+            ps.setString(5, p.getFechaPago());
+            ps.setString(6, p.getFechaPago2());
+           
             
-            sentencia.execute();
-            miRespuesta = "";
-            
-        } catch (Exception ex){
-            miRespuesta = ex.getMessage();
-            System.err.println("Ocurrio un error en pagosDAO.Eliminarpago" + ex.getMessage());
+            ps.executeUpdate();
+        } catch (Exception e) {
         }
-        
-        return miRespuesta;
-        
-     }
+
+    }
+
+    public void update(pagos p) {
+        String sql = "update pagos set idUsuario=?,idInmueble=?, adjunto=?, monto=?, fechaPago=?,"
+                + " fechaPago2=? where idPago=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
+            
+            ps.setInt(1, p.getIdUsuario());
+            ps.setInt(2, p.getIdInmueble());
+            ps.setString(3, p.getAdjunto());
+            ps.setInt(4, p.getMonto());
+            ps.setString(5, p.getFechaPago());
+            ps.setString(6, p.getFechaPago2());
+            ps.setInt(7, p.getIdPago());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void delete(int id) {
+        String sql = "delete from pagos where idPago=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
 }

@@ -14,6 +14,7 @@ public class inmueblesDAO {
     ResultSet rs;
     Connection con;
     Conexion c = new Conexion();
+    
 
     public List listar() {
         List<inmuebles> lista = new ArrayList<>();
@@ -42,7 +43,7 @@ public class inmueblesDAO {
         }
         return lista;
     }
-
+    
     public inmuebles listarId(int id) {
         String sql = "select * from inmuebles where idInmueble=" + id;
         inmuebles pe = new inmuebles();
@@ -126,5 +127,39 @@ public class inmueblesDAO {
         }
 
     }
+     
+    public ArrayList<inmuebles> ConsultarListadoInmuebles( String nombre) {
+        ArrayList<inmuebles> milistainmueble = new ArrayList<inmuebles>();
+
+        inmuebles miinmueble;
+        Conexion miConexion = new Conexion();
+        Connection nuevaCon;
+        nuevaCon = miConexion.getConn();
+          // Se recibimos el parametro de consulta para recuperar la informacion
+        System.out.println("Buscar parametro:" + nombre);
+        try {
+            Statement sentencia = nuevaCon.createStatement();
+
+            String Query = " select idInmueble, nombre from inmuebles "
+                    + " where "
+                   + "nombre like '%"+ nombre + "%' ORDER BY idInmueble;";
+            ResultSet rs = sentencia.executeQuery(Query);
+
+            while (rs.next()) {
+                miinmueble = new inmuebles();
+                miinmueble.setIdEstado(rs.getInt(1));
+                miinmueble.setNombre(rs.getString(2));
+                
+                milistainmueble.add(miinmueble);
+
+            }
+            return milistainmueble;
+        } catch (Exception e) {
+            System.out.println("Error el a consulta inmueble" + e.getMessage());
+            return milistainmueble;
+
+        }
+        
+ }
 
 }
