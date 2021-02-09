@@ -11,149 +11,122 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.rol;
 
 
 public class rolDAO {
 
-    public String adicionarRol(rol rol) {
+   PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
+ 
+    public ArrayList<rol> ConsultarListadoRoles( String nombre) {
+        ArrayList<rol> milistaestado = new ArrayList<rol>();
 
-        String Res = "";
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-        PreparedStatement sentence;
-
+        rol miRol;
+        Conexion miConexion = new Conexion();
+        Connection nuevaCon;
+        nuevaCon = miConexion.getConn();
+          // Se recibimos el parametro de consulta para recuperar la informacion
+        System.out.println("Buscar parametro:" + nombre);
         try {
-            String sql = "INSERT INTO roles(nombre)" + "VALUES(?);";
-            sentence = newConexion.prepareStatement(sql);
-            sentence.setString(1, rol.getNombre());
-            sentence.execute();
-        } catch (Exception e) {
-            Res = "";
-            Res = e.getMessage();
-            System.err.println("Ocurrio un problema" + Res);
-        }
-        return Res;
-    }
+            Statement sentencia = nuevaCon.createStatement();
 
-    public String actualizarRol(rol rol) {
-        String Res = "";
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-
-        PreparedStatement sentence;
-        try {
-            String sql = "UPDATE roles SET nombre=? WHERE idRol = ?";
-            sentence = newConexion.prepareStatement(sql);
-            sentence.setString(1, rol.getNombre());
-            sentence.setInt(2, rol.getIdRol());
-            sentence.executeUpdate();
-
-        } catch (Exception e) {
-
-            Res = e.getMessage();
-            System.err.println("Ocurrio un problema " + Res);
-
-        }
-        return Res;
-    }
-    
-    
-     //consultar
-    public rol consultarRol(int idRol) {
-
-        rol rol = null;
-
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-
-        try {
-            Statement sentencia = newConexion.createStatement();
-
-            String sql = "select idRol, nombre FROM roles WHERE idRol = " + idRol;
-            //filas columnas
-            ResultSet rs = sentencia.executeQuery(sql);
+            String Query = " select idRol, nombre from roles "
+                    + " where "
+                   + "nombre like '%"+ nombre + "%' ORDER BY idRol;";
+            ResultSet rs = sentencia.executeQuery(Query);
 
             while (rs.next()) {
-                rol = new rol();
-                rol.setIdRol(rs.getInt(1));
-                rol.setNombre(rs.getString(2));
+                miRol = new rol();
+                miRol.setIdRol(rs.getInt(1));
+                miRol.setNombre(rs.getString(2));
+                
+                milistaestado.add(miRol);
 
             }
-
-            return rol;
-
+            return milistaestado;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return rol;
+            System.out.println("Error el a consulta roles" + e.getMessage());
+            return milistaestado;
+
         }
+
     }
-
-    public ArrayList<rol> ConsultarListadoRol(String criterio) {
-
-        ArrayList<rol> listadoRol = new ArrayList<rol>();
-        rol rol;
-
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-
+    public List listar() {
+        List<rol> lista = new ArrayList<>();
+        String sql = "select * from roles";
         try {
-            Statement sentencia = newConexion.createStatement();
-
-            String sql = " SELECT idRol, nombre " + "  FROM roles where nombre like '%" + criterio + "%' ORDER BY idRol;";
-
-            ResultSet rs = sentencia.executeQuery(sql);
-
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
-                rol = new rol();
-                rol.setIdRol(rs.getInt(1));
-                rol.setNombre(rs.getString(2));
-                listadoRol.add(rol);
-
+                rol p = new rol();
+                p.setIdRol(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                
+                lista.add(p);
             }
-
-            return listadoRol;
-
         } catch (Exception e) {
-            System.out.println("Error en el listado " + e.getMessage());
-            return listadoRol;
+        }
+        return lista;
+    }
 
+    public rol listarId(int id) {
+        String sql = "select * from roles where idRol=" + id;
+        rol pe = new rol();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pe.setIdRol(rs.getInt(1));
+                pe.setNombre(rs.getString(2));
+                
+            }
+        } catch (Exception e) {
+        }
+        return pe;
+    }
+
+    public void agregar(rol p) {
+        String sql = "insert into roles(nombre)values(?)";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+          
+            ps.executeUpdate();
+        } catch (Exception e) {
         }
 
     }
-    
-    public String EliminarRol(rol rol){
-        
-        String res;
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-        
-         PreparedStatement sentence;
-         
-         try {
-            String sql  = "DELETE FROM roles WHERE idRol=? and nombre=?;";
-            sentence = newConexion.prepareStatement(sql);
-            sentence.setInt(1, rol.getIdRol());
-            sentence.setString(2, rol.getNombre());
-            
-            sentence.execute();
-            
-            res= "";
-            
+    public void update(rol p) {
+        String sql = "update rol set nombre=? where idRol=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+            ps.setInt(2, p.getIdRol());
+            ps.executeUpdate();
         } catch (Exception e) {
-            
-            res = e.getMessage();
-             System.out.println("Ocurrio un error el eliminar rol" + e.getMessage());
         }
-             
-        return res;
-    
-    }
-    
 
+    }
+
+    public void delete(int id) {
+        String sql = "delete from roles where idRol=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+   
+
+   
 }

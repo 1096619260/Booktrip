@@ -12,172 +12,121 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import modelo.tipoDocumentos;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class tipoDocumentosDAO {
     
-    public  String adicionarTipoDocumentos(tipoDocumentos tipoDocu){
-        
-        String Res = "";
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-        
-        PreparedStatement sentence;
-        
-        try {
-            String sql = "INSERT INTO tipodocumentos (nombre)" + "values(?);";
-            sentence = newConexion.prepareStatement(sql);
-            sentence.setString(1,tipoDocu.getNombre());
-            sentence.execute();
-            
-            
-        } catch (Exception e) {
-            
-            Res = e.getMessage();
-            System.err.println("Ocurrio un problema en tipo de documentoDAO" + Res);
-            
-        }
-        return Res;
-    }
-    
-    public String actualizarTipoDocumentos(tipoDocumentos tipoDocu){
-        
-        String Res = "";
-        Conexion  connect= new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-        
-        
-        PreparedStatement sentence;
-        try {
-            String sql ="UPDATE tipodocumentos SET nombre=? where idTipoDocumento = ?";
-            sentence = newConexion.prepareStatement(sql);
-            sentence.setString(1, tipoDocu.getNombre());
-            sentence.setInt(2, tipoDocu.getIdTipoDocumento());
-            sentence.executeUpdate();
-            
-            
-        } catch (SQLException e) {
-            
-            Res = e.getMessage();
-            System.err.println("Ocurrio un problema documentoDAO" + Res);
-        }
-        
-        return Res;
-        
-    }
-    
-    //////////////////////////
-    public tipoDocumentos consultarTipoDocumento(int id_tipo){
-        
-      tipoDocumentos miTipoDocumento =null;
-        Conexion  miConexion= new Conexion();
+     PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
+ 
+    public ArrayList<tipoDocumentos> ConsultarListadoTipos( String nombre) {
+        ArrayList<tipoDocumentos> milistatipo = new ArrayList<tipoDocumentos>();
+
+        tipoDocumentos miTipo;
+        Conexion miConexion = new Conexion();
         Connection nuevaCon;
-        nuevaCon= miConexion.getConn();
-        
-        
+        nuevaCon = miConexion.getConn();
+          // Se recibimos el parametro de consulta para recuperar la informacion
+        System.out.println("Buscar parametro:" + nombre);
         try {
             Statement sentencia = nuevaCon.createStatement();
-            String Query ="select idTipoDocumento, nombre from tipodocumentos where idTipoDocumento=" +id_tipo;
-           ResultSet rs=sentencia.executeQuery(Query);
-            while (rs.next()) {                
-               miTipoDocumento = new tipoDocumentos();
-               miTipoDocumento.setIdTipoDocumento(rs.getInt(1));
-               miTipoDocumento.setNombre(rs.getString(2));
-               
-            }
-            
-            
-        } catch (Exception e) {
-            
-          
-            System.out.println(e.getMessage());
-        }
-        
-        return miTipoDocumento;
-        
-    }
-    public ArrayList<tipoDocumentos> ConsultarListadoTiposDocumento(String criterio) {
 
-        ArrayList<tipoDocumentos> listadoTipoDocu = new ArrayList<tipoDocumentos>();
-        tipoDocumentos tipoDocu;
-
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-
-        try {
-            Statement sentencia = newConexion.createStatement();
-
-            String sql = " SELECT idTipoDocumento, nombre " + "  FROM tipoDocumentos where idTipoDocumento like '%" + criterio + "%' ORDER BY idTipoDocumento;";
-
-            ResultSet rs = sentencia.executeQuery(sql);
+            String Query = " select idTipoDocumento, nombre from tipodocumentos "
+                    + " where "
+                   + "nombre like '%"+ nombre + "%' ORDER BY idTipoDocumento;";
+            ResultSet rs = sentencia.executeQuery(Query);
 
             while (rs.next()) {
-                tipoDocu = new tipoDocumentos();
-                tipoDocu.setIdTipoDocumento(rs.getInt(1));
-                tipoDocu.setNombre(rs.getString(2));
-                listadoTipoDocu.add(tipoDocu);
+                miTipo = new tipoDocumentos();
+                miTipo.setIdTipoDocumento(rs.getInt(1));
+                miTipo.setNombre(rs.getString(2));
+                
+                milistatipo.add(miTipo);
 
             }
-
-            return listadoTipoDocu;
-
+            return milistatipo;
         } catch (Exception e) {
-            System.out.println("Error en el listado " + e.getMessage());
-            return listadoTipoDocu;
+            System.out.println("Error en la  consulta" + e.getMessage());
+            return milistatipo;
 
         }
 
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-     public String EliminarTipoDocumento(tipoDocumentos tipo){
-        
-        String res;
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-        
-         PreparedStatement sentence;
-         
-         try {
-            String sql  = "DELETE FROM tipodocumentos WHERE idTipoDocumento=? and nombre=?;";
-            sentence = newConexion.prepareStatement(sql);
-            sentence.setInt(1, tipo.getIdTipoDocumento());
-            sentence.setString(2, tipo.getNombre());
-            
-            sentence.execute();
-            
-            res= "";
-            
+    public List listar() {
+        List<tipoDocumentos> lista = new ArrayList<>();
+        String sql = "select * from tipodocumentos";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                tipoDocumentos p = new tipoDocumentos();
+                p.setIdTipoDocumento(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                
+                lista.add(p);
+            }
         } catch (Exception e) {
-            
-            res = e.getMessage();
-             System.out.println("Ocurrio un error en eliminar tipo documento" + e.getMessage());
         }
-             
-        return res;
-    
+        return lista;
     }
-    
-    
-    
-    
-    
-    
+
+    public tipoDocumentos listarId(int id) {
+        String sql = "select * from tipodocumentos where idTipoDocumento=" + id;
+        tipoDocumentos pe = new tipoDocumentos();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pe.setIdTipoDocumento(rs.getInt(1));
+                pe.setNombre(rs.getString(2));
+                
+            }
+        } catch (Exception e) {
+        }
+        return pe;
+    }
+
+    public void agregar(tipoDocumentos p) {
+        String sql = "insert into tipodocumentos(nombre)values(?)";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+          
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+    public void update(tipoDocumentos p) {
+        String sql = "update tipodocumentos set nombre=? where idTipoDocumento=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+            ps.setInt(2, p.getIdTipoDocumento());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void delete(int id) {
+        String sql = "delete from tipodocumentos where idTipoDocumento=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+   
+
+   
 }
-
-    
-    
-    

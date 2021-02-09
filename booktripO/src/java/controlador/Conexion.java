@@ -11,7 +11,7 @@ public class Conexion {
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String user = "root";
     private String password = "";
-    private String baseDatos = "booktrip";
+    private String baseDatos = "booktripn";
     private String url = "jdbc:mysql://localhost:3306/" + baseDatos + "?serverTimezone=UTC";
 
   

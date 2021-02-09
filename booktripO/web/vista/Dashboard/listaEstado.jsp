@@ -21,9 +21,7 @@
                 <input type="submit" name="accion" value="Listar" class="btn-primary">
                 <input type="submit" name="accion" value="Nuevo" class="btn-success">
             </form>
-            <form action="reportEstado.jsp">
-                   <input type="submit" name="accion" value="Reportes" class="btn-success">  
-             </form>
+           
         </div>
         <hr>
         <div>

@@ -101,6 +101,7 @@ public class pagosDAO {
         }
 
     }
+    
 
     public void delete(int id) {
         String sql = "delete from pagos where idPago=" + id;

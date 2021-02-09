@@ -128,29 +128,38 @@ public class inmueblesDAO {
 
     }
      
-    public ArrayList<inmuebles> ConsultarListadoInmuebles( String nombre) {
+        public ArrayList<inmuebles> ConsultarListadoInmueble(String criterio) {
         ArrayList<inmuebles> milistainmueble = new ArrayList<inmuebles>();
 
-        inmuebles miinmueble;
+        inmuebles miInmueble;
         Conexion miConexion = new Conexion();
         Connection nuevaCon;
         nuevaCon = miConexion.getConn();
-          // Se recibimos el parametro de consulta para recuperar la informacion
-        System.out.println("Buscar parametro:" + nombre);
+
         try {
             Statement sentencia = nuevaCon.createStatement();
 
-            String Query = " select idInmueble, nombre from inmuebles "
-                    + " where "
-                   + "nombre like '%"+ nombre + "%' ORDER BY idInmueble;";
+            String Query = "select idInmueble, idTipo, idDepartamento, idUsuario, idEstado,"
+                    + "nombre, direccion, capacidad, descripcion, precio, adjunto"
+                    + " from inmuebles where nombre like '%"
+                    + criterio + "%' ORDER BY nombre;";
+
             ResultSet rs = sentencia.executeQuery(Query);
 
             while (rs.next()) {
-                miinmueble = new inmuebles();
-                miinmueble.setIdEstado(rs.getInt(1));
-                miinmueble.setNombre(rs.getString(2));
-                
-                milistainmueble.add(miinmueble);
+                miInmueble = new inmuebles();
+                miInmueble.setIdInmueble(rs.getInt(1));
+                miInmueble.setIdTipo(rs.getInt(2));
+                miInmueble.setIdDepartamento(rs.getInt(3));
+                miInmueble.setIdUsuario(rs.getInt(4));
+                miInmueble.setIdEstado(rs.getInt(5));
+                miInmueble.setNombre(rs.getString(6));
+                miInmueble.setDireccion(rs.getString(7));
+                miInmueble.setCapacidad(rs.getInt(8));
+                miInmueble.setDescripcion(rs.getString(9));
+                miInmueble.setPrecio(rs.getInt(10));
+                miInmueble.setAdjunto(rs.getString(11));
+                milistainmueble.add(miInmueble);
 
             }
             return milistainmueble;
@@ -159,7 +168,6 @@ public class inmueblesDAO {
             return milistainmueble;
 
         }
-        
- }
 
+    }
 }

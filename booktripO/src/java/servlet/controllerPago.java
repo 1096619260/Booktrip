@@ -40,18 +40,20 @@ public class controllerPago extends HttpServlet {
                 request.getRequestDispatcher("vista/Viajero/pago/add.jsp").forward(request, response);
                 break;
             case "Guardar":
+
                 int usuario = Integer.parseInt(request.getParameter("txtUsuario"));
                 int inmueble = Integer.parseInt(request.getParameter("txtInmueble"));
                 String adjunto = request.getParameter("txtAdjunto");
                 int monto = Integer.parseInt(request.getParameter("txtMonto"));
-                String pago = request.getParameter("txtPago");
-                String pago2 = request.getParameter("txtPago2");
+                String fecha1 = request.getParameter("txtFechaPago");
+                String fecha2 = request.getParameter("txtFechaPago2");
+
                 p.setIdUsuario(usuario);
                 p.setIdInmueble(inmueble);
                 p.setAdjunto(adjunto);
                 p.setMonto(monto);
-                p.setFechaPago(pago);
-                p.setFechaPago2(pago2);
+                p.setFechaPago(fecha1);
+                p.setFechaPago2(fecha2);
                 dao.agregar(p);
 
                 request.getRequestDispatcher("controllerPago?accion=Listar").forward(request, response);
@@ -63,21 +65,20 @@ public class controllerPago extends HttpServlet {
                 request.getRequestDispatcher("vista/Viajero/pago/edit.jsp").forward(request, response);
                 break;
             case "Actualizar":
-                int id = Integer.parseInt(request.getParameter("id"));
 
-                int usuario1 = Integer.parseInt(request.getParameter("txtUsuario"));
-                int inmueble1 = Integer.parseInt(request.getParameter("txtInmueble"));
-                String adjunto1 = request.getParameter("txtAdjunto");
-                int monto1 = Integer.parseInt(request.getParameter("txtMonto"));
-                String Pago = request.getParameter("txtPago");
-                String Pago2 = request.getParameter("txtPago2");
-                p.setIdUsuario(usuario1);
-                p.setIdInmueble(inmueble1);
-                p.setAdjunto(adjunto1);
-                p.setMonto(monto1);
-                p.setFechaPago(Pago);
-                p.setFechaPago2(Pago2);
+                int usuario2 = Integer.parseInt(request.getParameter("txtUsuario"));
+                int inmueble2 = Integer.parseInt(request.getParameter("txtInmueble"));
+                String adjunto2 = request.getParameter("txtAdjunto");
+                int monto2 = Integer.parseInt(request.getParameter("txtMonto"));
+                String Fecha1 = request.getParameter("txtFechaPago");
+                String Fecha2 = request.getParameter("txtFechaPago2");
 
+                p.setIdUsuario(usuario2);
+                p.setIdInmueble(inmueble2);
+                p.setAdjunto(adjunto2);
+                p.setMonto(monto2);
+                p.setFechaPago(Fecha1);
+                p.setFechaPago2(Fecha2);
                 dao.update(p);
                 request.getRequestDispatcher("controllerPago?accion=Listar").forward(request, response);
                 break;

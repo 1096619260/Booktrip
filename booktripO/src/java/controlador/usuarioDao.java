@@ -24,10 +24,11 @@ public class usuarioDao {
         PreparedStatement sentence;
 
         try {
-            String sql = "INSERT INTO usuarios (idTipoDocumento,idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password) "
-                    + "VALUES(?,?,?,?,?,?,?,?,?);";
+            String sql = "INSERT INTO usuarios (idTipoDocumento, numDocu,idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password) "
+                    + "VALUES(?,?,?,?,?,?,?,?,?,?);";
             sentence = newConexion.prepareStatement(sql);
             sentence.setInt(1, user.getIdTipoDocumento());
+            sentence.setInt(3, user.getNumDocu());
             sentence.setInt(2, user.getIdRol());
             sentence.setString(3, user.getNombre());
             sentence.setString(4, user.getApellido());
@@ -133,7 +134,7 @@ public class usuarioDao {
         try {
             Statement sentencia = newConexion.createStatement();
 
-            String sql = " SELECT idUsuario, idTipoDocumento, idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password " 
+            String sql = " SELECT idUsuario, idTipoDocumento, numDocu, idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password " 
                     + "FROM usuarios where nombre like '%" + criterio + "%' ORDER BY idUsuario;";
 
             ResultSet rs = sentencia.executeQuery(sql);
@@ -143,14 +144,15 @@ public class usuarioDao {
                 
                 user.setIdUsuario(rs.getInt(1));
                 user.setIdTipoDocumento(rs.getInt(2));
-                user.setIdRol(rs.getInt(3));  
-                user.setNombre(rs.getString(4));
-                user.setApellido(rs.getString(5));
-                user.setDireccion(rs.getString(6));
-                user.setTelefono(rs.getString(7));
-                user.setFechaNacimiento(rs.getString(8));
-                user.setEmail(rs.getString(9));
-                user.setPassword(rs.getString(10));
+                 user.setNumDocu(rs.getInt(3));
+                user.setIdRol(rs.getInt(4));  
+                user.setNombre(rs.getString(5));
+                user.setApellido(rs.getString(6));
+                user.setDireccion(rs.getString(7));
+                user.setTelefono(rs.getString(8));
+                user.setFechaNacimiento(rs.getString(9));
+                user.setEmail(rs.getString(10));
+                user.setPassword(rs.getString(11));
                  listadoUsuarios.add(user);
 
             }

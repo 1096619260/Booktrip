@@ -48,7 +48,7 @@
                
                         <%
                             inmueblesDAO miinmuebleDAO = new inmueblesDAO();
-                            ArrayList<inmuebles>  listainmueble = miinmuebleDAO.ConsultarListadoInmuebles("");
+                            ArrayList<inmuebles>  listainmueble = miinmuebleDAO.ConsultarListadoInmueble("");
                         %> 
                         <select name="txtInmueble">
                             <%
@@ -62,22 +62,22 @@
                     </div>
                        <div col-md-6>
                     <div col-md-3><label>Adjunto</label></div>
-                    <div col-md-3><input type="text" name="txtAdjunto" id="txtAdjunto">
+                    <div col-md-3><input type="text" name="txtAdjunto">
                     </div>
                 </div>
                           <div col-md-6>
                     <div col-md-3><label>Monto</label></div>
-                    <div col-md-3><input type="text" name="txtMonto" id="txtMonto">
+                    <div col-md-3><input type="text" name="txtMonto">
                     </div>
                 </div>
                           <div col-md-6>
                     <div col-md-3><label>fecha</label></div>
-                    <div col-md-3><input type="text" name="txtPago1" id="txtPago2">
+                    <div col-md-3><input type="text" name="txtPago1">
                     </div>
                 </div>
                      <div col-md-6>
                     <div col-md-3><label>fecha2</label></div>
-                    <div col-md-3><input type="text" name="txtPago2" id="txtPago2">
+                    <div col-md-3><input type="text" name="txtPago2" >
                     </div>
                 </div>
                 <div col-md-6>
