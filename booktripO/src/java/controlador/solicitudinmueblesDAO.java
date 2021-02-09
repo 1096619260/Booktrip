@@ -110,5 +110,41 @@ public class solicitudinmueblesDAO {
         }
 
     }
+     ////////////////////////////////////////////////////////////////////77
+     public ArrayList<solicitudinmuebles>ConsultarListadoSolicitudInmueble(String criterio){
+        ArrayList<solicitudinmuebles>milistasolicitud =new ArrayList<solicitudinmuebles>();
+        
+        solicitudinmuebles miSolicitudInmueble;
+        Conexion  miConexion= new Conexion();
+        Connection nuevaCon;
+        nuevaCon= miConexion.getConn();
+        
+        try{
+            Statement sentencia = nuevaCon.createStatement();
+    
+            String Query="select idSolicitud, idInmueble, idUsuario, idEstado, fecha" 
+                    + " from  solicitudinmuebles where fecha like '%"+ 
+                    criterio +"%' ORDER BY fecha;";
+           
+            ResultSet rs=sentencia.executeQuery(Query);
+          
+            while (rs.next()) {                
+              miSolicitudInmueble= new solicitudinmuebles();
+              miSolicitudInmueble.setIdSolicitud(rs.getInt(1));
+             miSolicitudInmueble.setIdInmueble(rs.getInt(2));
+              miSolicitudInmueble.setIdUsuario(rs.getInt(3));
+               miSolicitudInmueble.setIdEstado(rs.getInt(4));
+                miSolicitudInmueble.setFecha(rs.getString(5));
+                 milistasolicitud.add(miSolicitudInmueble);
+          
+            }
+              return  milistasolicitud;
+              }catch (Exception e){
+           System.out.println("Error el a consulta solicitud"+e.getMessage());
+              return  milistasolicitud;
+                
+        }
+    
+   }
 
 }

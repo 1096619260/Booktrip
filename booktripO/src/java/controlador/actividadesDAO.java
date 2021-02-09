@@ -10,116 +10,112 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.actividades;
 
 public class actividadesDAO {
 
-    public String adicionarActividad(actividades actividad) {
+    PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
 
-        String miRespuesta = "";
-
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
+    public List listar() {
+        List<actividades> lista = new ArrayList<>();
+        String sql = "select * from actividades";
         try {
-            String Query = "insert into actividades (idActividad,idMunicipio,nombre,lugar,descripcion)" + "values(?,?,?,?,?);";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, actividad.getIdActividad());
-            sentencia.setInt(2, actividad.getIdMunicipio());
-            sentencia.setString(3, actividad.getNombre());
-            sentencia.setString(4, actividad.getLugar());
-            sentencia.setString(5, actividad.getDescripcion());
-            sentencia.execute();
-
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en las actividades\n" + miRespuesta);
-
-        }
-        return miRespuesta;
-
-    }
-
-    /*
-    ACTUALIZAR
-     */
-    public String actualizarActividad(actividades actividad) {
-
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
-
-        try {
-            String Query = "UPDATE actividades SET  idMunicipio=?, nombre=?  lugar=?  descripcion=? where idActividad = ?";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, actividad.getIdActividad());
-            sentencia.setInt(2, actividad.getIdMunicipio());
-            sentencia.setString(3, actividad.getNombre());
-            sentencia.setString(4, actividad.getLugar());
-            sentencia.setString(5, actividad.getDescripcion());
-            sentencia.executeUpdate();
-
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en las actividades \n" + miRespuesta);
-
-        }
-        return miRespuesta;
-
-    }
-
-    /*
-     consultar
-     */
-    public actividades ConsultarActividad(int idActividad) {
-
-        actividades miActividad = null;
-          Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        try {
-            Statement sentencia = nuevaCon.createStatement();
-
-            String Query = "SELECT idActividad, idMunicipio, nombre, lugar, descripcion from actividades where idActividad = " + idActividad;
-            ResultSet rs = sentencia.executeQuery(Query);
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
-
-                miActividad = new actividades();
-                miActividad.setIdActividad(rs.getInt(1));
-                miActividad.setIdMunicipio(rs.getInt(2));
-                miActividad.setNombre(rs.getString(3));
-                miActividad.setLugar(rs.getString(4));
-                miActividad.setDescripcion(rs.getString(5));
+                actividades p = new actividades();
+                p.setIdActividad(rs.getInt(1));
+                p.setIdMunicipio(rs.getInt(2));
+                p.setNombre(rs.getString(3));
+                p.setLugar(rs.getString(4));
+                p.setDescripcion(rs.getString(5));
+                lista.add(p);
             }
+        } catch (Exception e) {
+        }
+        return lista;
+    }
 
-            return miActividad;
+    public actividades listarId(int id) {
+        String sql = "select * from actividades where idActividad=" + id;
+        actividades pe = new actividades();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pe.setIdActividad(rs.getInt(1));
+                pe.setIdMunicipio(rs.getInt(2));
+                pe.setNombre(rs.getString(3));
+                pe.setLugar(rs.getString(4));
+                pe.setDescripcion(rs.getString(5));
 
-        } catch (Exception ex) {
+            }
+        } catch (Exception e) {
+        }
+        return pe;
+    }
 
-            System.out.println(ex.getMessage());
-            return miActividad;
+    public void agregar(actividades p) {
+        String sql = "insert into actividades(idActividad, idMunicipio, nombre, lugar, descripcion)values(?,?,?,?,?)";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, p.getIdActividad());
+            ps.setInt(2, p.getIdMunicipio());
+            ps.setString(3, p.getNombre());
+            ps.setString(4, p.getLugar());
+            ps.setString(5, p.getDescripcion());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
 
+    }
+
+    public void update(actividades p) {
+        String sql = "update actividades set idMunicipio=?,nombre=?, lugar=?, descripcion=? where idActividad=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
+
+            ps.setInt(1, p.getIdMunicipio());
+            ps.setString(2, p.getNombre());
+             ps.setString(3, p.getLugar());
+            ps.setString(4, p.getDescripcion());
+            
+            ps.setInt(5, p.getIdActividad());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void delete(int id) {
+        String sql = "delete from actividades where idActividad=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
         }
 
     }
 
     /*
-    Listas
+     Listas
      */
     public ArrayList<actividades> ConsularListaActividades(String criterio) {
         ArrayList<actividades> milistaActividades = new ArrayList<actividades>();
 
         actividades miActividad;
 
-         Conexion miConexion = new Conexion();
+        Conexion miConexion = new Conexion();
         Connection nuevaCon;
         nuevaCon = miConexion.getConn();
 
@@ -147,38 +143,6 @@ public class actividadesDAO {
             System.out.println("errror en la consulta" + ex.getMessage());
             return milistaActividades;
         }
-
-    }
-
-    /*
-    ELIMINAR
-     */
-    public String EliminarActividad(actividades actividad) {
-
-        String miRespuesta;
-    Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        PreparedStatement sentencia;
-
-        try {
-            String Query = "delete from actividades  where idActividad=? and idMunicipio=? and nombre=? and lugar=? and descripcion=?;";
-            sentencia = nuevaCon.prepareStatement(Query);
-
-            sentencia.setInt(1, actividad.getIdActividad());
-            sentencia.setInt(2, actividad.getIdMunicipio());
-            sentencia.setString(3, actividad.getNombre());
-            sentencia.setString(4, actividad.getLugar());
-            sentencia.setString(5, actividad.getDescripcion());
-            sentencia.execute();
-            miRespuesta = "";
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println(ex.getMessage() + "ocurrio un error " + ex.getMessage());
-
-        }
-        return miRespuesta;
 
     }
 
