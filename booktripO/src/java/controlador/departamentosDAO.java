@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.departamento;
 
 /**
@@ -19,85 +20,84 @@ import modelo.departamento;
  * @author 57321
  */
 public class departamentosDAO {
-
-    public String adicionarDepartamento(departamento departamento) {
-
-        String Res = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        
-        PreparedStatement sentence;
-
+PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
+ 
+    
+    public List listar() {
+        List<departamento> lista = new ArrayList<>();
+        String sql = "select * from departamentos";
         try {
-            String sql = "INSERT INTO departamentos(nombre)" + "VALUES(?);";
-            sentence = nuevaCon.prepareStatement(sql);
-            sentence.setString(1, departamento.getNombre());
-            sentence.execute();
-        } catch (SQLException e) {
-
-            Res = e.getMessage();
-            System.err.println("Ocurrio un problema" + Res);
-        }
-        return Res;
-    }
-
-    public String actualizarDepartamento(departamento departamento) {
-        String Res = "";
-          Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentence;
-        try {
-            String sql = "UPDATE departamentos SET nombre=? WHERE idDepartamento = ?";
-            sentence = nuevaCon.prepareStatement(sql);
-            sentence.setString(1, departamento.getNombre());
-            sentence.setInt(2, departamento.getIdDepartamento());
-            sentence.executeUpdate();
-
-        } catch (Exception e) {
-
-            Res = e.getMessage();
-            System.err.println("Ocurrio un problema " + Res);
-
-        }
-        return Res;
-
-    }
-
-    /*
-    Metodo Consultar
-     */
-    public departamento ConsultarDepartamento(int idDepartamento) {
-        departamento miDepartamento = null;
-          Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        try {
-            Statement sentencia = nuevaCon.createStatement();
-            String Query = "select idDepartamento, nombre  from departamentos where idDepartamento = " + idDepartamento;
-            ResultSet rs = sentencia.executeQuery(Query);
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
-
-                miDepartamento = new departamento();
-                miDepartamento.setIdDepartamento(rs.getInt(1));
-                miDepartamento.setNombre(rs.getString(2));
-
+               departamento p = new departamento();
+                p.setIdDepartamento(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                
+                lista.add(p);
             }
+        } catch (Exception e) {
+        }
+        return lista;
+    }
 
-            return miDepartamento;
+    public departamento listarId(int id) {
+        String sql = "select * from departamentos where idDepartamento=" + id;
+        departamento pe = new departamento();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pe.setIdDepartamento(rs.getInt(1));
+                pe.setNombre(rs.getString(2));
+                
+            }
+        } catch (Exception e) {
+        }
+        return pe;
+    }
 
-        } catch (Exception ex) {
+    public void agregar(departamento p) {
+        String sql = "insert into departamentos(nombre)values(?)";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+          
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
 
-            System.out.println(ex.getMessage());
-            return miDepartamento;
-
+    }
+    public void update(departamento p) {
+        String sql = "update departamentos set nombre=? where idDepartamento=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getNombre());
+            ps.setInt(2, p.getIdDepartamento());
+            ps.executeUpdate();
+        } catch (Exception e) {
         }
 
     }
 
+    public void delete(int id) {
+        String sql = "delete from departamentos where idDepartamento=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+   
     /*
      Listar 
      */
@@ -137,29 +137,5 @@ public class departamentosDAO {
     eliminar
      */
 
-    public String EliminarDepartamento(departamento departamento) {
 
-        String miRespuesta;
-         Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        PreparedStatement sentencia;
-
-        try {
-            String Query = "delete from departamentos  where idDepartamento=? and nombre=? ;";
-            sentencia = nuevaCon.prepareStatement(Query);
-
-            sentencia.setInt(1, departamento.getIdDepartamento());
-            sentencia.setString(2, departamento.getNombre());
-            sentencia.execute();
-            miRespuesta = "";
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println(ex.getMessage() + "ocurrio un error " + ex.getMessage());
-
-        }
-        return miRespuesta;
-
-    }
 }
