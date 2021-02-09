@@ -64,9 +64,12 @@ public final class listaInmueble_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("    <head>\r\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n");
       out.write("        <title>JSP Page</title>\r\n");
+      out.write("          <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">\r\n");
       out.write("    </head>\r\n");
+      out.write("    \r\n");
       out.write("    <body>\r\n");
       out.write("    <center>\r\n");
+      out.write("         <div class=\"container my-10\" style=\"background: #4d80e4\">\r\n");
       out.write("        <div>\r\n");
       out.write("            <form action=\"/booktripO/controllerInmueble\" method=\"POST\">\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Listar\">\r\n");
@@ -75,7 +78,7 @@ public final class listaInmueble_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("        </div>\r\n");
       out.write("        <hr>\r\n");
       out.write("        <div>\r\n");
-      out.write("            <table border=\"1\" style=\"width: 500px;\">\r\n");
+      out.write("            <table border=\"1\" class=\" bg-light table table-bordered\"  style=\"width: 500px;\">\r\n");
       out.write("                <thead>\r\n");
       out.write("                    <tr>\r\n");
       out.write("                        <th># inmueble</th>\r\n");
@@ -103,7 +106,14 @@ public final class listaInmueble_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("            </table>\r\n");
       out.write("\r\n");
       out.write("        </div>\r\n");
+      out.write("         </div>\r\n");
       out.write("    </center>\r\n");
+      out.write("    <script src=\"../js/jquery-1.11.0.min.js\"></script>\r\n");
+      out.write("    <script src=\"../js/validaciones.js\"</script>\r\n");
+      out.write("    <script src=\"https://code.jquery.com/jquery-3.5.1.slim.min.js\" integrity=\"sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj\" crossorigin=\"anonymous\"></script>\r\n");
+      out.write("    <script src=\"https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js\" integrity=\"sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN\" crossorigin=\"anonymous\"></script>\r\n");
+      out.write("    <script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js\" integrity=\"sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV\" crossorigin=\"anonymous\"></script>\r\n");
+      out.write("</body>\r\n");
       out.write("</body>\r\n");
       out.write("</html>\r\n");
     } catch (Throwable t) {
@@ -174,8 +184,8 @@ public final class listaInmueble_jsp extends org.apache.jasper.runtime.HttpJspBa
           out.write("                                    <input type=\"hidden\" name=\"id\" value=\"");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdInmueble()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("\">\r\n");
-          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Editar\">\r\n");
-          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Delete\">\r\n");
+          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Editar\" class=\"btn-primary btn-block\">\r\n");
+          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Delete\" class=\"btn-danger btn-block\">\r\n");
           out.write("                                </form>\r\n");
           out.write("                            </td>\r\n");
           out.write("                        </tr>\r\n");

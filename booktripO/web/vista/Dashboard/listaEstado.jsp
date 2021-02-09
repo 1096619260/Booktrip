@@ -10,12 +10,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-         <!-- CSS only -->
+        <!-- CSS only -->
+     <link rel="stylesheet" type="text/css" href="css/estilosBooktrip.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     </head>
     <body>
     <center>
-        <div class="container my-10" style="background: #4d80e4">
+        <div class="principal-estado">
+            
+        <div class="fondo-estado container my-10" style="background: #4d80e4">
+            
         <div class="col-md-6">
             <form action="/booktripO/controllerEstado" method="POST"  onsubmit="return validarEstado()">
                 <input type="submit" name="accion" value="Listar" class="btn-primary">
@@ -55,6 +59,7 @@
 
         </div>
     </div>
+            </div>
         </center>
     <script src="../js/jquery-1.11.0.min.js"></script>
     <script src="../js/validaciones.js"</script>

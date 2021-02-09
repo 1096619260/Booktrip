@@ -64,12 +64,16 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    <head>\r\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n");
       out.write("        <title>JSP Page</title>\r\n");
-      out.write("         <!-- CSS only -->\r\n");
+      out.write("        <!-- CSS only -->\r\n");
+      out.write("     <link rel=\"stylesheet\" type=\"text/css\" href=\"css/estilosBooktrip.css\">\r\n");
       out.write("        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">\r\n");
       out.write("    </head>\r\n");
       out.write("    <body>\r\n");
       out.write("    <center>\r\n");
-      out.write("        <div class=\"container my-10\" style=\"background: #4d80e4\">\r\n");
+      out.write("        <div class=\"principal-estado\">\r\n");
+      out.write("            \r\n");
+      out.write("        <div class=\"fondo-estado container my-10\" style=\"background: #4d80e4\">\r\n");
+      out.write("            \r\n");
       out.write("        <div class=\"col-md-6\">\r\n");
       out.write("            <form action=\"/booktripO/controllerEstado\" method=\"POST\"  onsubmit=\"return validarEstado()\">\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Listar\" class=\"btn-primary\">\r\n");
@@ -98,6 +102,7 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("        </div>\r\n");
       out.write("    </div>\r\n");
+      out.write("            </div>\r\n");
       out.write("        </center>\r\n");
       out.write("    <script src=\"../js/jquery-1.11.0.min.js\"></script>\r\n");
       out.write("    <script src=\"../js/validaciones.js\"</script>\r\n");

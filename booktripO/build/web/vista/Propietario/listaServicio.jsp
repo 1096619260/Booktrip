@@ -9,12 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
         <title>JSP Page</title>
-         <!-- CSS only -->
+        <!-- CSS only --><a href="css/estilosBooktrip.css"></a>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     </head>
     <body>
     <center>
+          <div class="container my-10" style="background: #4d80e4">
         <div>
             <form action="/booktripO/controllerServicio" method="POST"  onsubmit="return validar()">
                 <input type="submit" name="accion" value="Listar" class="btn-primary">
@@ -23,7 +25,7 @@
         </div>
         <hr>
         <div>
-            <table class="table table-responsive" style="width: 500px;">
+            <table border="1" class=" bg-light table table-bordered"  style="width: 500px;">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -52,6 +54,7 @@
             </table>
 
         </div>
+           </div>
     </center>
     <script src="../js/jquery-1.11.0.min.js"></script>
     <script src="../js/validaciones.js"</script>

@@ -1,13 +1,11 @@
-package org.apache.jsp.vista.Dashboard;
+package org.apache.jsp.vista.Propietario;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
-import modelo.inmuebles;
-import java.util.ArrayList;
-import controlador.inmueblesDAO;
+import modelo.estados;
 
-public final class listaSolicitud_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class listaServicio_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -59,36 +57,37 @@ public final class listaSolicitud_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("\r\n");
       out.write("\r\n");
       out.write("\r\n");
-      out.write("<!DOCTYPE html>\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("<!DOCTYPE html> \r\n");
       out.write("<html>\r\n");
       out.write("    <head>\r\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n");
       out.write("        <title>JSP Page</title>\r\n");
-      out.write("           <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">\r\n");
+      out.write("         <!-- CSS only -->\r\n");
+      out.write("        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">\r\n");
       out.write("    </head>\r\n");
       out.write("    <body>\r\n");
       out.write("    <center>\r\n");
-      out.write("         <div class=\"container my-10\" style=\"background: #4d80e4\">\r\n");
+      out.write("          <div class=\"container my-10\" style=\"background: #4d80e4\">\r\n");
       out.write("        <div>\r\n");
-      out.write("            <form action=\"/booktripO/controllerSolicitud\" method=\"POST\">\r\n");
+      out.write("            <form action=\"/booktripO/controllerServicio\" method=\"POST\"  onsubmit=\"return validar()\">\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Listar\" class=\"btn-primary\">\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Nuevo\" class=\"btn-success\">\r\n");
       out.write("            </form>\r\n");
       out.write("        </div>\r\n");
       out.write("        <hr>\r\n");
       out.write("        <div>\r\n");
-      out.write("            <table border=\"1\" class=\" bg-light table table-light\"  style=\"width: 500px;\">\r\n");
+      out.write("            <table class=\"table table-responsive\" style=\"width: 500px;\">\r\n");
       out.write("                <thead>\r\n");
       out.write("                    <tr>\r\n");
       out.write("                        <th>ID</th>\r\n");
-      out.write("                        <th>id inmueble</th>\r\n");
-      out.write("                        <th>idUsuario</th>\r\n");
-      out.write("                         <th>idEstado</th>\r\n");
-      out.write("                          <th>fecha</th>\r\n");
+      out.write("                        <th>NOMBRE</th>\r\n");
+      out.write("                        <th>DESCRIPCION</th>\r\n");
       out.write("                        <th>ACCIONES</th>\r\n");
       out.write("                    </tr>\r\n");
       out.write("                </thead>\r\n");
-      out.write("                <tbody style=\"height: 40px;\">  \r\n");
+      out.write("                <tbody style=\"height: 40px;\">\r\n");
       out.write("                    ");
       if (_jspx_meth_c_forEach_0(_jspx_page_context))
         return;
@@ -97,14 +96,14 @@ public final class listaSolicitud_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("            </table>\r\n");
       out.write("\r\n");
       out.write("        </div>\r\n");
-      out.write("        \r\n");
-      out.write("        </div>\r\n");
+      out.write("           </div>\r\n");
       out.write("    </center>\r\n");
-      out.write("        <script src=\"../js/jquery-1.11.0.min.js\"></script>\r\n");
+      out.write("    <script src=\"../js/jquery-1.11.0.min.js\"></script>\r\n");
       out.write("    <script src=\"../js/validaciones.js\"</script>\r\n");
       out.write("    <script src=\"https://code.jquery.com/jquery-3.5.1.slim.min.js\" integrity=\"sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj\" crossorigin=\"anonymous\"></script>\r\n");
       out.write("    <script src=\"https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js\" integrity=\"sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN\" crossorigin=\"anonymous\"></script>\r\n");
       out.write("    <script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js\" integrity=\"sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV\" crossorigin=\"anonymous\"></script>\r\n");
+      out.write("   \r\n");
       out.write("</body>\r\n");
       out.write("</html>\r\n");
     } catch (Throwable t) {
@@ -138,27 +137,22 @@ public final class listaSolicitud_jsp extends org.apache.jasper.runtime.HttpJspB
           out.write("\r\n");
           out.write("                        <tr>\r\n");
           out.write("                            <td style=\"padding-left:25px;\">");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdSolicitud()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdServicio()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</td>\r\n");
           out.write("                            <td style=\"padding-left:25px;\">");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdInmueble()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getNombre()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</td>\r\n");
-          out.write("                            <td style=\"padding-left:25px;\">");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdUsuario()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("                             <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getDescripcion()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</td>\r\n");
-          out.write("                            <td style=\"padding-left:25px;\">");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdEstado()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
-          out.write("</td>\r\n");
-          out.write("                            <td style=\"padding-left:25px;\">");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getFecha()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
-          out.write("</td>\r\n");
+          out.write("                            \r\n");
           out.write("                            <td style=\"padding-left:25px;\">\r\n");
-          out.write("                                <form action=\"/booktripO/controllerSolicitud\" method=\"POST\">\r\n");
+          out.write("                                <form action=\"/booktripO/controllerServicio\" method=\"POST\">\r\n");
           out.write("                                    <input type=\"hidden\" name=\"id\" value=\"");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdSolicitud()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdServicio()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("\">\r\n");
-          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Editar\" class=\"btn-primary btn-block my-1\">\r\n");
-          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Delete\" class=\"btn-danger btn-block\">\r\n");
+          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Editar\">\r\n");
+          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Delete\">\r\n");
           out.write("                                </form>\r\n");
           out.write("                            </td>\r\n");
           out.write("                        </tr>\r\n");
