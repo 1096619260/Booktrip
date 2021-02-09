@@ -7,19 +7,6 @@ package modelo;
 
 public class usuario {
 
-    private int idUsuario;
-    private int idTipoDocumento;
-    private int idRol;
-    private String nombre;
-    private String apellido;
-    private String direccion;
-    private String telefono;
-    private String fechaNacimiento;
-    private String email;
-    private String password;
-    public Object getPassword;
-    
-
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -34,6 +21,14 @@ public class usuario {
 
     public void setIdTipoDocumento(int idTipoDocumento) {
         this.idTipoDocumento = idTipoDocumento;
+    }
+
+    public int getNumDocu() {
+        return numDocu;
+    }
+
+    public void setNumDocu(int numDocu) {
+        this.numDocu = numDocu;
     }
 
     public int getIdRol() {
@@ -99,5 +94,28 @@ public class usuario {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Object getGetPassword() {
+        return getPassword;
+    }
+
+    public void setGetPassword(Object getPassword) {
+        this.getPassword = getPassword;
+    }
+
+ 
+    private int idUsuario;
+    private int idTipoDocumento;
+     private int numDocu;
+    private int idRol;
+    private String nombre;
+    private String apellido;
+    private String direccion;
+    private String telefono;
+    private String fechaNacimiento;
+    private String email;
+    private String password;
+    public Object getPassword;
+    
 
 }

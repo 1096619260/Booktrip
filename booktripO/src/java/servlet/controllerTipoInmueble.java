@@ -34,7 +34,7 @@ tipoinmuebles p=new tipoinmuebles();
          String accion=request.getParameter("accion");
         switch (accion) {
             case "Listar":
-                List<estados>lista=dao.listar();
+                List<tipoinmuebles>lista=dao.listar();
                 request.setAttribute("lista", lista);
                 request.getRequestDispatcher("vista/Dashboard/listaTipoInmueble.jsp").forward(request, response);
                 break;

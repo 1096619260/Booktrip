@@ -42,7 +42,7 @@
 
                 <%
                     inmueblesDAO miinmuebleDAO = new inmueblesDAO();
-                    ArrayList<inmuebles> listainmueble = miinmuebleDAO.ConsultarListadoInmuebles("");
+                    ArrayList<inmuebles> listainmueble = miinmuebleDAO.ConsultarListadoInmueble("");
                 %> 
                 <select name="txtInmueble">
                     <%
@@ -68,12 +68,12 @@
 
             <div col-md-6>
                 <div col-md-3><label>fecha</label></div>
-                <div col-md-3><input type="text" name="txtPago"value="${dato.getFechaPago()}" id="txtPago">
+                <div col-md-3><input type="text" name="txtFechaPago"value="${dato.getFechaPago()}" id="txtPago1">
                 </div>
             </div>  
                  <div col-md-6>
                 <div col-md-3><label>fecha2</label></div>
-                <div col-md-3><input type="text" name="txtPago2" value="${dato.getFechaPago2()}" id="txtPago2">
+                <div col-md-3><input type="text" name="txtFechaPago2" value="${dato.getFechaPago2()}" id="txtPago2">
                 </div>
             </div>  
 

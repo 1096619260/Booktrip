@@ -25,7 +25,7 @@
                         <th>ID</th>
                         <th>idUsuario</th>
                           <th>id inmueble</th>
-                         <th>anjunto</th>
+                         <th>adjunto</th>
                           <th>monto</th>
                            <th>fecha</th>
                             <th>fecha2</th>

@@ -81,7 +81,7 @@ public final class listaPago_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        <th>ID</th>\r\n");
       out.write("                        <th>idUsuario</th>\r\n");
       out.write("                          <th>id inmueble</th>\r\n");
-      out.write("                         <th>anjunto</th>\r\n");
+      out.write("                         <th>adjunto</th>\r\n");
       out.write("                          <th>monto</th>\r\n");
       out.write("                           <th>fecha</th>\r\n");
       out.write("                            <th>fecha2</th>\r\n");

@@ -75,9 +75,7 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Listar\" class=\"btn-primary\">\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Nuevo\" class=\"btn-success\">\r\n");
       out.write("            </form>\r\n");
-      out.write("            <form action=\"reportEstado.jsp\">\r\n");
-      out.write("                   <input type=\"submit\" name=\"accion\" value=\"Reportes\" class=\"btn-success\">  \r\n");
-      out.write("             </form>\r\n");
+      out.write("           \r\n");
       out.write("        </div>\r\n");
       out.write("        <hr>\r\n");
       out.write("        <div>\r\n");
