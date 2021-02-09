@@ -1,8 +1,9 @@
 
+//estilos de la tabla estados
 
 .principal {
     position: relative;
-    background: url(../imagenes/paisaje5.jpg);
+    background: url(../imagenes/paisaje2.jpg);
     background-size: cover;
    height: 100%;
 }
@@ -19,4 +20,8 @@
 .btn {
     border-radius: 3;
 }
+
+
+
+
 
