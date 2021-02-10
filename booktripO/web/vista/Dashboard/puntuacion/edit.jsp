@@ -24,7 +24,7 @@
                 <h3>Actualizar puntuacion</h3>
                 <hr>
                 <br>
-                <form action="controllerPuntuacion" method="POST">
+                <form action="booktripO/controllerPuntuacion" method="POST">
 
                     <label>id usuario</label>
                     <div class="col-sm-6">
@@ -61,7 +61,6 @@
                         </select>
 
                     </div>
-           <!-- <input type="text" name="txtInmueble" value="${dato.getIdInmueble()}">-->
 
                     <div class="col-sm-6">
                     <label>fechaCreada</label>
@@ -84,7 +83,7 @@
                     <input type="text" name="txtCalificacion" value="${dato.getCalificacion()}">
                     </div>
                     
-                    <input type="hidden" name="id" value="${dato.getIdSolicitud()}">
+                    <input type="hidden" name="id" value="${dato.getIdPuntuacion()}">
                     
 
                     <input type="submit" name="accion" value="Actualizar" class="btn btn-success btn-block mt-1">
