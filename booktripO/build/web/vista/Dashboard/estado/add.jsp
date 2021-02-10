@@ -20,7 +20,7 @@
             <form action="/booktripO/controllerEstado" method="POST" onsubmit="return validar()">
                 <div col-md-6>
                     <div col-md-3><label>Nombre:</label></div>
-                    <div col-md-3><input type="text" name="txtNom" id="txtNombre">
+                    <div col-md-3><input type="text" name="txtNom" id="txtNombre" >
                     </div>
                 </div>
                 <div col-md-6>

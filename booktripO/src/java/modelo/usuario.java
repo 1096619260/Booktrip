@@ -63,11 +63,11 @@ public class usuario {
         this.direccion = direccion;
     }
 
-    public String getTelefono() {
+    public int getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
 
@@ -103,6 +103,8 @@ public class usuario {
         this.getPassword = getPassword;
     }
 
+
+
  
     private int idUsuario;
     private int idTipoDocumento;
@@ -111,7 +113,7 @@ public class usuario {
     private String nombre;
     private String apellido;
     private String direccion;
-    private String telefono;
+    private int telefono;
     private String fechaNacimiento;
     private String email;
     private String password;

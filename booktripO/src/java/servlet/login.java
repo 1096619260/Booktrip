@@ -1,10 +1,10 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package servlet;
-import modelo.usuario;
+
 import controlador.usuarioDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,73 +13,61 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.usuario;
 
-/**
- *
- * @author oscar sanabria
- */
-@WebServlet(name = "IniciarSesion", urlPatterns = {"/IniciarSesion"})
-public class IniciarSesion extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+@WebServlet(name = "login", urlPatterns = {"/login"})
+public class login extends HttpServlet {
+
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         try (PrintWriter out = response.getWriter()) {
-            
-            String Email = request.getParameter("email");
-            String Password = request.getParameter("pass");
+        
+            String correo = request.getParameter("email");
+            String password = request.getParameter("pass");
             
             try {
-               
-                usuarioDao miUsuarioDAO = new usuarioDao(); 
-
-                usuario miUsuario = new usuario(); 
+                usuarioDao miusuariosDao = new usuarioDao();
+                usuario miusuario = new usuario();
+                miusuario = miusuariosDao.consultarUsuario(correo);
                 
-                miUsuario = miUsuarioDAO.consultarUsuario(Email);
-
-                if (miUsuario == null) {
-                    System.out.println(Email);
+                
+                if (miusuario == null){
+                    System.out.println(correo);
+                    
                     out.println("<script type=\"text/javascript\">");
-                    out.println("alert('" + "El email: " + Email + " no es correcto" + "');");
-                    out.println("window.location.href='/booktripO/login.jsp'");
+                    out.println( "alert('"+ "El correo no es correcto "+ correo +" ,no existe." + "');");
+                    out.println("window.location.href='/booktripG/vista/login.jsp'");
                     out.println("</script>");
                     
-                } else {
-                    System.out.println(miUsuario.getPassword());
-                    System.out.println(Password);
-                    if (miUsuario.getPassword().equals(Password)) {
-                         System.out.println("si entra");
-                       
+                }else {
+                    
+                    System.out.println(miusuario.getPassword());
+                    System.out.println(password);
+                    
+                    if (miusuario.getPassword().equals(password)) {
                         out.println("<script type=\"text/javascript\">");
-                        out.println("alert('" + "Bienvenido: " + miUsuario.getNombre() + " " + miUsuario.getApellido() + "');");
-                        out.println("window.location.href='/booktripO/vista/Dashboard/listaEstado.jsp'");
+                        out.println("alert('"+ "ah ingresado con exito " + miusuario.getNombre() + " " + miusuario.getApellido()+  "');");
+                        out.println("window.location.href ='/booktripG/vista/Dashboard/indexListaRol.jsp';");
                         out.println("</script>");
-                    } else {
-                        
+                    
+                    }else {
                         out.println("<script type=\"text/javascript\">");
-                        out.println("alert('" + "Error de contraseña" + "');");
-                          out.println("window.location.href='/booktripO/login.jsp'");
+                        out.println("alert('" + "Error" + "');");
+                        out.println("window.location.href ='/booktripG/vista/login.jsp';");
                         out.println("</script>");
-                      
-                        
                     }
                 }
-
-            } catch (NumberFormatException e) {
-               e.printStackTrace();
+                
+            }catch (Exception e){
+                e.printStackTrace();
             }
-
+            
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -120,5 +108,5 @@ public class IniciarSesion extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
 }

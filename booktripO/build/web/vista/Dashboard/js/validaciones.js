@@ -1,7 +1,7 @@
 
 //alert("Bienvenidos a BookTrip");
 
-function validarEstado(){
+function validar(){
     var nombre = document.getElementById('txtNombre').value;
 
     if (nombre === "") {

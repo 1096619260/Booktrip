@@ -11,13 +11,13 @@
 
     <title>Iniciar sesion</title>
 
-    <link rel="stylesheet" href="vista/bootstrap/css/bootstrap-grid.min.css">
-    <link rel="stylesheet" href="vista/bootstrap/css/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="vista/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="vista/css/estilosRegister.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilosRegister.css">
     <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@1,700&display=swap" rel="stylesheet">
-    <script src="vista/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vista/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -34,40 +34,32 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                          
                             <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                              
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Iniciar sesión</h1>
                                     </div>
-                                    <form class="user"  action="IniciarSesion" method="post">
+                                    <form class="user" action="/booktripG/login" method="post">
                                         <div class="form-group">
-                                            <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email">
+                                            <input type="email" class="form-control form-control-user" name="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email">
                                         </div>
-                                        <div class="form-group"> 
-                                            <input type="password" name="pass" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña">
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user" name="pass" id="exampleInputPassword" placeholder="Contraseña">
                                         </div>
-                              
-                                       
-                               
-                                        <a href="#" class="btn btn-primary btn-user btn-block"> Login </a>
-                                        <hr>
-                                <input type="submit" value="IniciarSesion" name=""class=" boton boton-rojo">
+
+                                        <input type="submit" class="btn btn-primary btn-user btn-block m-auto" value="login" style="width: 30%"><hr>
+
                                     </form>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="#">Olvidaste tu contraseña?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="#" >Crea una cuenta</a>
+                                        <a class="small" href="usuariosRegister.jsp">Crea una cuenta</a>
                                     </div>
                                 </div>
                             </div>
-                              
-                        
-                              
                         </div>
                     </div>
                 </div>
