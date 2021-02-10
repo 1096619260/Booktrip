@@ -1,4 +1,4 @@
-package org.apache.jsp.vista.Propietario;
+package org.apache.jsp.vista.Dashboard;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -7,7 +7,7 @@ import modelo.inmuebles;
 import java.util.ArrayList;
 import controlador.inmueblesDAO;
 
-public final class listaActividad_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class listaPuntuacion_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -70,7 +70,7 @@ public final class listaActividad_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("    <center>\n");
       out.write("         <div class=\"container my-10\" style=\"background: #4d80e4\">\n");
       out.write("        <div>\n");
-      out.write("            <form action=\"/booktripO/controllerActividad\" method=\"POST\">\n");
+      out.write("            <form action=\"/booktripO/controllerPuntuacion\" method=\"POST\">\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Listar\" class=\"btn-primary\">\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Nuevo\" class=\"btn-success\">\n");
       out.write("            </form>\n");
@@ -81,10 +81,12 @@ public final class listaActividad_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("                <thead>\n");
       out.write("                    <tr>\n");
       out.write("                        <th>ID</th>\n");
-      out.write("                        <th>id municipio</th>\n");
-      out.write("                        <th>nombre</th>\n");
-      out.write("                         <th>lugar</th>\n");
-      out.write("                          <th>descripcion</th>\n");
+      out.write("                        <th>idUsuario</th>\n");
+      out.write("                        <th>idInmueble</th>\n");
+      out.write("                        <th>fechaCreada</th>\n");
+      out.write("                        <th>descripcion</th>\n");
+      out.write("                        <th>calificacion</th>\n");
+      out.write("                        \n");
       out.write("                        <th>ACCIONES</th>\n");
       out.write("                    </tr>\n");
       out.write("                </thead>\n");
@@ -138,24 +140,27 @@ public final class listaActividad_jsp extends org.apache.jasper.runtime.HttpJspB
           out.write("\n");
           out.write("                        <tr>\n");
           out.write("                            <td style=\"padding-left:25px;\">");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdActividad()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdPuntuacion()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</td>\n");
           out.write("                            <td style=\"padding-left:25px;\">");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdMunicipio()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdUsuario()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</td>\n");
           out.write("                            <td style=\"padding-left:25px;\">");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getNombre()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdInmueble()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</td>\n");
           out.write("                            <td style=\"padding-left:25px;\">");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getLugar()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getFechaCreada()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</td>\n");
           out.write("                            <td style=\"padding-left:25px;\">");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getDescripcion()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</td>\n");
+          out.write("                            <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getCalificacion()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
           out.write("                            <td style=\"padding-left:25px;\">\n");
-          out.write("                                <form action=\"/booktripO/controllerActividad\" method=\"POST\">\n");
+          out.write("                                <form action=\"/booktripO/controllerPuntuacion\" method=\"POST\">\n");
           out.write("                                    <input type=\"hidden\" name=\"id\" value=\"");
-          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdActividad()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdPuntuacion()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("\">\n");
           out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Editar\" class=\"btn-primary btn-block my-1\">\n");
           out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Delete\" class=\"btn-danger btn-block\">\n");
