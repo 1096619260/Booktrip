@@ -1,119 +1,118 @@
-
 package controlador;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.reservas;
 
 
 public class reservasDAO {
     
-    public String adicionarReserva(reservas reserva) {
+    PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
 
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        
-        PreparedStatement sentencia;
-        
-    try {
-            String Query = "insert into reservas (idUsuario,idInmueble,idEstado,fechaReserva,checkIn,checkOut)"
-            +"values(?,?,?,?,?,?);";
-
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, reserva.getIdUsuario());
-            sentencia.setInt(2, reserva.getIdInmueble());
-            sentencia.setInt(3, reserva.getIdEstado());
-            sentencia.setString(4, reserva.getFechaReserva());
-            sentencia.setString(5, reserva.getCheckIn());
-            sentencia.setString(6, reserva.getCheckOut());
-            sentencia.execute();
-            
-            } catch (Exception ex) {
-            miRespuesta = "";
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en reservas\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-    }
-        
-     //////
-     
-        public String actualizarReservas (reservas reserva){
-
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
+    public List listar() {
+        List<reservas> lista = new ArrayList<>();
+        String sql = "select * from reservas";
         try {
-            String Query = "update reservas  set idUsuario=?,idInmueble=?,idEstado=?,fechaReserva=?,checkIn=?,checkOut=? where idReserva ";
-
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, reserva.getIdUsuario());
-            sentencia.setInt(2, reserva.getIdInmueble());
-            sentencia.setInt(3, reserva.getIdEstado());
-            sentencia.setString(4, reserva.getFechaReserva());
-            sentencia.setString(5, reserva.getCheckIn());
-            sentencia.setString(6, reserva.getCheckOut());
-            sentencia.executeUpdate();
-
-        } catch (Exception ex) {
-            miRespuesta = "";
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en reserva\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-
-    }
-        //////////////
-    public reservas consultarReserva(int idReserva) {
-
-        reservas reserva = null;
-        
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        try {
-            Statement sentencia = nuevaCon.createStatement();
-
-            String sql = "SELECT idReserva, idUsuario, idInmueble, idEstado, fechaReserva, checkIn, checkOut"
-                    + " FROM reservas WHERE idReserva = " + idReserva;
-
-            ResultSet rs = sentencia.executeQuery(sql);
-            
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
+                reservas p = new reservas();
+                p.setIdReserva(rs.getInt(1));
+                p.setIdUsuario(rs.getInt(2));
+                p.setIdInmueble(rs.getInt(3));
+                p.setIdEstado(rs.getInt(4));
+                p.setFechaReserva(rs.getString(5));
+                p.setCheckIn(rs.getString(6));
+                p.setCheckOut(rs.getString(7));
 
-                reserva = new reservas();
-                reserva.setIdReserva(rs.getInt(1));
-                reserva.setIdUsuario(rs.getInt(2));
-                reserva.setIdInmueble(rs.getInt(3));
-                reserva.setIdEstado(rs.getInt(4));
-                reserva.setFechaReserva(rs.getString(5));
-                reserva.setCheckIn(rs.getString(6));
-                reserva.setCheckOut(rs.getString(7));
-
+                lista.add(p);
             }
-
-            return reserva;
-
-        } catch (Exception ex) {
-
-            System.out.println(ex.getMessage());
-            return reserva;
-           
-       
+        } catch (Exception e) {
+        }
+        return lista;
     }
-   
-}
-    
+
+    public reservas listarId(int id) {
+        String sql = "select * from reservas where idReserva=" + id;
+        reservas pe = new reservas();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pe.setIdReserva(rs.getInt(1));
+                pe.setIdUsuario(rs.getInt(2));
+                pe.setIdInmueble(rs.getInt(3));
+                pe.setIdEstado(rs.getInt(4));
+                pe.setFechaReserva(rs.getString(5));
+                pe.setCheckIn(rs.getString(6));
+                pe.setCheckOut(rs.getString(7));
+                
+            }
+        } catch (Exception e) {
+        }
+        return pe;
+    }
+
+     public void agregar(reservas p) {
+        String sql = "insert into reservas( idUsuario, idInmueble,idEstado, fechaReserva, checkIn, checkOut)values(?,?,?,?,?,?)";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+             
+             ps.setInt(1, p.getIdUsuario());
+             ps.setInt(2, p.getIdInmueble());
+             ps.setInt(3, p.getIdEstado());
+             ps.setString(4, p.getFechaReserva());
+            ps.setString(5, p.getCheckIn());
+             ps.setString(6, p.getCheckOut());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void update(reservas p) {
+        String sql = "update reservas set idUsuario=?,idInmueble=?,idEstado=?, fechaReserva=?, "
+                + "checkIn=?,checkOut=? where idReserva=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
+            
+             ps.setInt(1, p.getIdUsuario());
+             ps.setInt(2, p.getIdInmueble());
+             ps.setInt(3, p.getIdEstado());
+             ps.setString(4, p.getFechaReserva());
+             ps.setString(5, p.getCheckIn());
+             ps.setString(6, p.getCheckOut());
+          
+            ps.setInt(7, p.getIdReserva());
+             
+             ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void delete(int id) {
+        String sql = "delete from reservas where idReserva=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
 
 ///////
     public ArrayList<reservas> ConsultarListadoReservas(String criterio) {
@@ -153,38 +152,6 @@ public class reservasDAO {
 
         }
     }
-
-///////////
-
-public String EliminarReserva(reservas reserva){
-        String miRespuesta;
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        
-        PreparedStatement sentencia;
-        try {
-            String Query ="delete from reservas where idReserva=? and idUsuario=? and idInmueble=? and idEstado=?  and fechaReserva=? and checkIn=? and checkOut=?;";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1,reserva.getIdReserva());
-            sentencia.setInt(2,reserva.getIdUsuario());
-            sentencia.setInt(3,reserva.getIdInmueble ());
-            sentencia.setInt(4,reserva.getIdEstado ());
-            sentencia.setString(5,reserva.getFechaReserva());
-            sentencia.setString(6,reserva.getCheckIn ());
-            sentencia.setString(7,reserva.getCheckOut ());
-            
-            sentencia.execute();
-            miRespuesta = "";
-            
-        } catch (Exception ex){
-            miRespuesta = ex.getMessage();
-            System.err.println("Ocurrio un error en reservasDAO.Eliminarreserva" + ex.getMessage());
-        }
-        
-        return miRespuesta;
-        
-     }
 
 }
 
