@@ -29,7 +29,6 @@ function checkInputRol(){
     
 }
 
-
 function setErrorFor(input, message) {
     const formGroup = input.parentElement;
     const small = formGroup.querySelector('small');
