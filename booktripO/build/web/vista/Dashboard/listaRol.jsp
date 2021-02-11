@@ -17,7 +17,7 @@
     <center>
         <div class="container my-10" style="background: #4d80e4">
         <div class="col-md-6">
-            <form action="/booktripO/controllerRol" method="POST"  onsubmit="return validarEstado()">
+            <form action="/booktripO/controllerRol" method="POST"  onsubmit="return validarRol()">
                 <input type="submit" name="accion" value="Listar" class="btn-primary">
                 <input type="submit" name="accion" value="Nuevo" class="btn-success">
             </form>
