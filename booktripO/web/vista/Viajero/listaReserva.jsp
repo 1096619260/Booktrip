@@ -20,7 +20,8 @@
             </form>
         </div>
         <hr>
-        <div>
+        <div> 
+            
             <table border="1" class=" bg-light table table-light"  style="width: 500px;">
                 <thead>
                     <tr>

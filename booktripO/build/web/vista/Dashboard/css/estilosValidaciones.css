@@ -1,0 +1,21 @@
+
+
+.form-group  small {
+    color: #e74c3c;
+    visibility: hidden;
+    padding: 25px;
+   
+}
+
+.form-group.error small {
+
+    visibility: visible;
+    padding: 25px;
+    margin-left: 12px;
+}
+.form-control.error input {
+    border-color: #e74c3c;
+}
+.form-group.success input {
+    border-color: #2ecc71;
+}
