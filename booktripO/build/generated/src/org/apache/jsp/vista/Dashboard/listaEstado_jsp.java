@@ -3,6 +3,7 @@ package org.apache.jsp.vista.Dashboard;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import controlador.estadosDAO;
 import modelo.estados;
 
 public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
@@ -59,6 +60,7 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("\r\n");
       out.write("\r\n");
+      out.write("\r\n");
       out.write("<!DOCTYPE html> \r\n");
       out.write("<html>\r\n");
       out.write("    <head>\r\n");
@@ -82,6 +84,13 @@ public final class listaEstado_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("           \r\n");
       out.write("        </div>\r\n");
       out.write("        <hr>\r\n");
+      out.write("        ");
+ 
+        estados m =new estados();
+        estadosDAO dao = new estadosDAO();
+        dao.listar();
+        
+      out.write("\r\n");
       out.write("        <div>\r\n");
       out.write("        <h1>lista de estados</h1>\r\n");
       out.write("            <table border=\"1\" class=\" bg-light table table-bordered \"  style=\"width: 500px;\" >\r\n");

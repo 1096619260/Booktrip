@@ -1,6 +1,7 @@
 
 
 
+<%@page import="controlador.estadosDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="modelo.estados"%>
@@ -28,6 +29,7 @@
            
         </div>
         <hr>
+        
         <div>
         <h1>lista de estados</h1>
             <table border="1" class=" bg-light table table-bordered "  style="width: 500px;" >
@@ -41,7 +43,10 @@
                 <tbody style="height:30px;">
                     <c:forEach var="dato" items="${lista}">
                         <tr>
-                
+                <% 
+        estadosDAO dao = new estadosDAO();
+        dao.listar();
+        %>
                             <td style="padding-left:25px;">${dato.getIdEstado()}</td>
                             <td style="padding-left:25px;">${dato.getNombre()}</td>
                             

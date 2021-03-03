@@ -4,7 +4,9 @@ JSP
 *S JSP
 *F
 + 0 login.jsp
-login.jsp
+vista/login.jsp
 *L
-1,85:44
+3,4:46
+6,83:50
+88,5:133
 *E
