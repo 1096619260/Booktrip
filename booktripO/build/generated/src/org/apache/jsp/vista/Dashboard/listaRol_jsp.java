@@ -137,6 +137,8 @@ public final class listaRol_jsp extends org.apache.jasper.runtime.HttpJspBase
         do {
           out.write("\r\n");
           out.write("                        <tr>\r\n");
+          out.write("                            <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdDepartamento()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("                \r\n");
           out.write("                            <td style=\"padding-left:25px;\">");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdRol()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
@@ -146,6 +148,12 @@ public final class listaRol_jsp extends org.apache.jasper.runtime.HttpJspBase
           out.write("</td>\r\n");
           out.write("                            \r\n");
           out.write("                            <td style=\"padding-left:25px;\">\r\n");
+          out.write("                                <form action=\"/booktripO/controllerDepartamento\" method=\"POST\">\r\n");
+          out.write("                                    <input type=\"hidden\" name=\"id\" value=\"");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdDepartamento()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("\">\r\n");
+          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Editar\">\r\n");
+          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Delete\">\r\n");
           out.write("                                <form action=\"/booktripO/controllerRol\" method=\"POST\">\r\n");
           out.write("                                    <input type=\"hidden\" name=\"id\" value=\"");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdRol()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
