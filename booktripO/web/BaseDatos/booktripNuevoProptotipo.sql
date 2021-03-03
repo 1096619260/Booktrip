@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-09-2020 a las 15:35:05
+-- Tiempo de generación: 09-02-2021 a las 03:15:03
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.2.31
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `booktrip`
+-- Base de datos: `booktripn`
 --
 
 -- --------------------------------------------------------
@@ -91,9 +91,12 @@ INSERT INTO `estados` (`idEstado`, `nombre`) VALUES
 (2, 'no disponible'),
 (3, 'aprobado'),
 (4, 'no aprobado'),
+(5, 'reserva activa'),
 (6, 'reserva cancelada'),
-(41, 'muy-bueno'),
-(42, 'buenas');
+(11, 'pendiente'),
+(12, 'no-pendiente'),
+(13, 'visible'),
+(14, 'no disponibles');
 
 -- --------------------------------------------------------
 
@@ -142,14 +145,16 @@ CREATE TABLE `inmuebles` (
 --
 
 INSERT INTO `inmuebles` (`idInmueble`, `idTipo`, `idDepartamento`, `idUsuario`, `idEstado`, `nombre`, `direccion`, `capacidad`, `descripcion`, `precio`, `adjunto`) VALUES
-(1, 1, 2, 1, 2, 'el-oasis', 'calle-80', 8, 'regular', 800000, 'img'),
-(2, 2, 1, 2, 2, 'la llanera', '', 5, 'sadfkjhfguok', 20000, 'img'),
-(6, 1, 2, 2, 3, 'la riivera', '', 5, ' hay servicio de carro compades', 20000, 'img'),
-(33, 1, 3, 1, 1, 'agua blanca', 'calle-40-21', 15, 'buena', 50000, 'img'),
-(34, 1, 3, 2, 2, 'casablanca', 'calle-40-21', 5, 'regular', 20000, 'img'),
-(35, 1, 1, 1, 3, 'la-puerta-del-sol', 'calle-40-21', 15, 'buena', 20000, 'img'),
-(36, 33, 7, 2, 2, 'meta', 'calle-40-21', 5, 'buena', 20000, 'img'),
-(37, 2, 1, 4, 3, 'Villaliuz', 'calle-15-20', 5, 'buena', 300000, 'img');
+(1, 1, 2, 1, 2, 'el-oasis', 'calle-80', 8, 'regular', 800000, NULL),
+(2, 2, 1, 2, 2, 'la llanera', '', 5, 'sadfkjhfguok', 20000, NULL),
+(6, 1, 2, 2, 3, 'la riivera', '', 5, ' hay servicio de carro compades', 20000, NULL),
+(7, 2, 2, 1, 4, 'el resopaldor', '', 20, 'sdafgtytui', 50000, NULL),
+(9, 1, 2, 1, 2, 'la sabana', '', 5, 'Se puede entrenar día y noche', 10000000, NULL),
+(10, 1, 8, 2, 3, 'oasis', '', 6, 'frgtyu', 50000, NULL),
+(11, 2, 1, 2, 1, 'pedro', 'via', 9, 'regular', 60000, NULL),
+(12, 2, 1, 2, 1, 'aguasturvias', 'nose', 9, 'foco', 500000, NULL),
+(13, 2, 1, 2, 1, 'el-rio', 'carrera-78-12', 15, 'buena', 150000, NULL),
+(14, 1, 2, 1, 2, 'canaveral', 'calle-15-20', 8, 'regularmente', 20000, NULL);
 
 -- --------------------------------------------------------
 
@@ -291,22 +296,7 @@ CREATE TABLE `solicitudinmuebles` (
 --
 
 INSERT INTO `solicitudinmuebles` (`idSolicitud`, `idInmueble`, `idUsuario`, `idEstado`, `fecha`) VALUES
-(2, NULL, NULL, NULL, '12-10-19'),
-(3, NULL, NULL, NULL, '18-05-20'),
-(4, 1, 2, 3, '30-20-3000'),
-(5, 2, 1, 2, '20-12-2000'),
-(6, 1, 1, 1, '12-15-2014'),
-(7, 1, 2, 1, '20-20-4000'),
-(8, 1, 2, 2, '10-50-5000'),
-(9, 1, 1, 1, '30-20-20'),
-(10, 1, 2, 1, '12-15-20188'),
-(11, 1, 2, 3, '30-20-3020'),
-(12, 1, 1, 1, '10-15-20'),
-(13, 2, 2, 1, 'prueba'),
-(14, 34, 1, 3, 'hola'),
-(15, 1, 2, 3, '20-12-2000'),
-(16, 1, 1, 3, '20-12-2000'),
-(17, 1, 2, 2, '20-12-2001');
+(1, 12, 1, 1, '20-20-2050');
 
 -- --------------------------------------------------------
 
@@ -346,10 +336,9 @@ INSERT INTO `tipoinmuebles` (`idTipo`, `nombre`) VALUES
 (1, 'fila'),
 (2, 'apartamento'),
 (3, 'casa quinta'),
-(6, 'chalet'),
-(31, 'casa'),
-(33, 'cabana-grande'),
-(34, 'mundo');
+(4, 'cabana'),
+(5, 'finca'),
+(6, 'chalet');
 
 -- --------------------------------------------------------
 
@@ -360,6 +349,7 @@ INSERT INTO `tipoinmuebles` (`idTipo`, `nombre`) VALUES
 CREATE TABLE `usuarios` (
   `idUsuario` int(255) NOT NULL,
   `idTipoDocumento` int(255) DEFAULT NULL,
+  `numDocu` int(255) DEFAULT NULL,
   `idRol` int(225) DEFAULT NULL,
   `nombre` varchar(40) DEFAULT NULL,
   `apellido` varchar(60) DEFAULT NULL,
@@ -374,10 +364,10 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`idUsuario`, `idTipoDocumento`, `idRol`, `nombre`, `apellido`, `direccion`, `telefono`, `fechaNacimiento`, `email`, `password`) VALUES
-(1, 1, 2, 'juan', 'sanches', 'wadsfdghytyuj', '78867', '24/12/1993', 'dsfghjhgfds@ghjku', '123456'),
-(2, 1, 2, 'cristian', 'sanchez', 'calle-40', '3125460', '12-12-23', 'sanchez@gmail.com', '123'),
-(4, NULL, NULL, 'paola', 'saavedra', 'carrera-12', '541', '10-10-1995', 'saavedra@gmai.com', '123456');
+INSERT INTO `usuarios` (`idUsuario`, `idTipoDocumento`, `numDocu`, `idRol`, `nombre`, `apellido`, `direccion`, `telefono`, `fechaNacimiento`, `email`, `password`) VALUES
+(1, 1, NULL, 2, 'juan', 'sanches', 'wadsfdghytyuj', '78867', '24/12/1993', 'dsfghjhgfds@ghjku', '123456'),
+(2, 2, NULL, 1, 'julio', 'jaramillo', 'wadsfdghytyuj', '541852', '14/7/1900', 'sdfghjdfgtyui', '654123'),
+(3, 1, NULL, 1, 'jeison ', 'pinzon', 'wadsfdghytyuj', '7755', '24/12/1993', 'wqewregtryhgfvghjtyki', '123456');
 
 --
 -- Índices para tablas volcadas
@@ -519,7 +509,7 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `idEstado` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `idEstado` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `galerias`
@@ -531,7 +521,7 @@ ALTER TABLE `galerias`
 -- AUTO_INCREMENT de la tabla `inmuebles`
 --
 ALTER TABLE `inmuebles`
-  MODIFY `idInmueble` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `idInmueble` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `municipios`
@@ -573,7 +563,7 @@ ALTER TABLE `servicios`
 -- AUTO_INCREMENT de la tabla `solicitudinmuebles`
 --
 ALTER TABLE `solicitudinmuebles`
-  MODIFY `idSolicitud` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idSolicitud` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `tipodocumentos`
@@ -585,13 +575,13 @@ ALTER TABLE `tipodocumentos`
 -- AUTO_INCREMENT de la tabla `tipoinmuebles`
 --
 ALTER TABLE `tipoinmuebles`
-  MODIFY `idTipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `idTipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idUsuario` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idUsuario` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -621,9 +611,9 @@ ALTER TABLE `galerias`
 --
 ALTER TABLE `inmuebles`
   ADD CONSTRAINT `fk_inmueble_departamento` FOREIGN KEY (`idDepartamento`) REFERENCES `departamentos` (`idDepartamento`),
+  ADD CONSTRAINT `fk_inmueble_estado` FOREIGN KEY (`idEstado`) REFERENCES `estados` (`idEstado`),
   ADD CONSTRAINT `fk_inmueble_tipoInmueble` FOREIGN KEY (`idTipo`) REFERENCES `tipoinmuebles` (`idTipo`),
-  ADD CONSTRAINT `inmuebles_ibfk_1` FOREIGN KEY (`idEstado`) REFERENCES `estados` (`idEstado`),
-  ADD CONSTRAINT `inmuebles_ibfk_2` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`);
+  ADD CONSTRAINT `fk_inmueble_usuarios` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`);
 
 --
 -- Filtros para la tabla `municipios`
