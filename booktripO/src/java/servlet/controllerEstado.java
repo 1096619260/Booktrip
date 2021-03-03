@@ -30,7 +30,9 @@ public class controllerEstado extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+         try (PrintWriter out = response.getWriter()) {
         String accion=request.getParameter("accion");
+        
         switch (accion) {
             case "Listar":
                 List<estados>lista=dao.listar();
@@ -43,8 +45,9 @@ public class controllerEstado extends HttpServlet {
             case "Guardar":
                 String nom=request.getParameter("txtNom");
                 p.setNombre(nom);
-                dao.agregar(p);
-                request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+                    dao.agregar(p);   
+                     request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+               
                 break;
             case "Editar": 
                 int ide=Integer.parseInt(request.getParameter("id"));
@@ -69,6 +72,7 @@ public class controllerEstado extends HttpServlet {
                 request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);;
         }
     }
+          }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

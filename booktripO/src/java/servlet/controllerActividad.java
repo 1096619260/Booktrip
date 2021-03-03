@@ -22,7 +22,8 @@ import modelo.actividades;
  */
 @WebServlet(name = "controllerActividad", urlPatterns = {"/controllerActividad"})
 public class controllerActividad extends HttpServlet {
-actividades p=new actividades();
+
+    actividades p=new actividades();
     actividadesDAO dao=new actividadesDAO();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

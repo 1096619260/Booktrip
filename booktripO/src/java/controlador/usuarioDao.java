@@ -17,7 +17,72 @@ import modelo.usuario;
 public class usuarioDao {
 
     //consultar
-    public usuario consultarUsuario(String email) {
+    
+    public usuario consultarUsuario(String email, String password) {
+
+        usuario user = null;
+
+        Conexion connect = new Conexion();
+        Connection newConexion;
+        newConexion = connect.getConn();
+
+        try {
+            Statement sentencia = newConexion.createStatement();
+
+            String sql = "select idUsuario, idTipoDocumento, numDocu, idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password" 
+                    + " FROM usuarios WHERE email = '" + email + "' AND password=md5('"+ password+ "')";
+            
+            //password=md5('"+ password+ "');
+            //filas columnas
+            ResultSet rs = sentencia.executeQuery(sql);
+
+            while (rs.next()) {
+                user = new usuario();
+                user.setIdUsuario(rs.getInt(1));
+                user.setIdTipoDocumento(rs.getInt(2));
+                user.setNumDocu(rs.getInt(3));
+                user.setIdRol(rs.getInt(4));  
+                user.setNombre(rs.getString(5));
+                user.setApellido(rs.getString(6));
+                user.setDireccion(rs.getString(7));
+                user.setTelefono(rs.getInt(8));
+                user.setFechaNacimiento(rs.getString(9));
+                user.setEmail(rs.getString(10));
+                user.setPassword(rs.getString(11));
+
+            }
+
+            return user;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return user;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public usuario consultarUsuario2(String email) {
 
         usuario user = null;
 
@@ -162,7 +227,7 @@ public class usuarioDao {
 
     public void agregar(usuario p) {
         String sql = "insert into usuarios(idTipoDocumento, numDocu, idRol, nombre, apellido, direccion,"
-                + " telefono, fechaNacimiento, email, password)values(?,?,?,?,?,?,?,?,?,?)";
+                + " telefono, fechaNacimiento, email, password)values(?,?,?,?,?,?,?,?,?,md5(?));";
         try {
             con = c.getConn();
             ps = con.prepareStatement(sql);

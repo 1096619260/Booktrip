@@ -20,11 +20,12 @@
             </form>
         </div>
         <hr>
-        <div>
+        <div> 
+            
             <table border="1" class=" bg-light table table-light"  style="width: 500px;">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>ID ojo prueba</th>
                          <th>idUsuario</th>
                         <th>id inmueble</th>
                        

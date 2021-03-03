@@ -44,7 +44,7 @@ public class IniciarSesion extends HttpServlet {
 
                 usuario miUsuario = new usuario(); 
                 
-                miUsuario = miUsuarioDAO.consultarUsuario(Email);
+                miUsuario = miUsuarioDAO.consultarUsuario2(Email);
 
                 if (miUsuario == null) {
                     System.out.println(Email);

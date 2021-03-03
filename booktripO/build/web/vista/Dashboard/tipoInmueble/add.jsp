@@ -16,14 +16,14 @@
             <h3>Agregar nuevo tipo de inmueble</h3>
             <hr>
             <br>
-            <form action="/booktripO/controllerTipoInmueble" method="POST" onsubmit="return validar()">
+            <form action="/booktripO/controllerTipoInmueble" method="POST" onsubmit="return validarTipoInmueble()">
                 <div col-md-6>
                     <div col-md-3><label>Nombre:</label></div>
-                    <div col-md-3><input type="text" name="txtNom" id="txtNombre">
+                    <div col-md-3><input type="text" name="txtNom" id="txtNom">
                     </div>
                 </div>
                 <div col-md-6>
-                    <div col-md-3><input type="submit" name="accion" value="Guardar" class="btn btn-success btn-block mt-1"></div>
+                    <div col-md-3><input type="submit" name="accion" value="Guardar" class="btnGuardar btn btn-success btn-block mt-1"></div>
                     <div col-md-3> <input type="submit" name="accion" value="Regresar" class="btn btn-danger btn-block mt-1 my-4"></div>
                 </div>
             </form>

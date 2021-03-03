@@ -48,6 +48,7 @@ public class controllerUsuario extends HttpServlet {
                 int telefono = Integer.parseInt(request.getParameter("txtTelefono"));
                 String fecha = request.getParameter("txtFecha");
                 String email = request.getParameter("txtEmail");
+                
                 String password = request.getParameter("txtPassword");
 
                 p.setIdTipoDocumento(idTipo);

@@ -12,6 +12,21 @@
     </head>
     
     <body>
+          <%
+           HttpSession sesion = request.getSession();
+           String usuario;
+           String nivel;
+           
+           if (sesion.getAttribute("user")!=null && sesion.getAttribute("nivel")!=null) {
+               usuario=sesion.getAttribute("user").toString();
+               nivel=sesion.getAttribute("nivel").toString();
+               out.print("<a href='login.jsp?cerrar=true'><h5> Cerrar Sesion" + usuario + "</h5> </a>");
+           }
+           else
+           {
+               out.print("<script>location.replace(‘login.jsp');</script>");
+           }
+   %>    
     <center>
          <div class="container my-10" style="background: #4d80e4">
         <div>
