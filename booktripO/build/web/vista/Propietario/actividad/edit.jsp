@@ -1,5 +1,4 @@
 
-
 <%@page import="modelo.municipios"%>
 <%@page import="controlador.municipiosDAO"%>
 <%@page import="java.util.ArrayList"%>
