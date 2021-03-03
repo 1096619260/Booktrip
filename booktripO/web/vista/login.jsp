@@ -1,3 +1,9 @@
+<%
+/* Evitamos que la página se guarde en el caché del navegador y en los proxys */
+response.setHeader("Cache-Control","no-store"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader("Expires", 0); // prevents caching at the proxy server
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,7 +56,7 @@
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" name="password" id="exampleInputPassword" placeholder="Contraseña">
                                         </div>
-                                         <input type="submit" class="btn btn-primary btn-user btn-block" value="Login">
+                                        <input type="submit" class="btn btn-primary btn-user btn-block" value="Login" name="btnIngresar">
                                        <!-- <a href="index.html" class="btn btn-primary btn-user btn-block"> Login </a>-->
                                         <hr>
 
@@ -60,7 +66,7 @@
                                         <a class="small" href="#">Olvidaste tu contraseña?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="usuariosRegister.jsp">Crea una cuenta</a>
+                                        <a class="small" href="Dashboard/usuario/add.jsp">Crea una cuenta</a>
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +81,11 @@
 
     </div>
 
-
+<%
+      if(request.getParameter("cerrar")!=null) {
+                session.invalidate();
+            }
+    %>  
 
 </body>
 

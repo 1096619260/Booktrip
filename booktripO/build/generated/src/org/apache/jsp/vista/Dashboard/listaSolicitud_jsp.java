@@ -67,6 +67,23 @@ public final class listaSolicitud_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("           <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">\r\n");
       out.write("    </head>\r\n");
       out.write("    <body>\r\n");
+      out.write("          ");
+
+           HttpSession sesion = request.getSession();
+           String usuario;
+           String nivel;
+           
+           if (sesion.getAttribute("user")!=null && sesion.getAttribute("nivel")!=null) {
+               usuario=sesion.getAttribute("user").toString();
+               nivel=sesion.getAttribute("nivel").toString();
+               out.print("<a href='login.jsp?cerrar=true'><h5> Cerrar Sesion" + usuario + "</h5> </a>");
+           }
+           else
+           {
+               out.print("<script>location.replace(‘login.jsp');</script>");
+           }
+   
+      out.write("    \r\n");
       out.write("    <center>\r\n");
       out.write("         <div class=\"container my-10\" style=\"background: #4d80e4\">\r\n");
       out.write("        <div>\r\n");

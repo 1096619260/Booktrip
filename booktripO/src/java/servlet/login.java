@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import controlador.Conexion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,6 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.usuario;
 import controlador.usuarioDao;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,14 +28,44 @@ import controlador.usuarioDao;
 public class login extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
-            String email = request.getParameter("email");
+ String email = request.getParameter("email");
             String password = request.getParameter("password");
+            Conexion u = new Conexion();
+            u.getConn();
+            usuario l=null;
+            if (request.getParameter("btnIngresar")!=null ) {
+               
+               
+                l = new usuario(email, password);
+                
+                HttpSession sesion = request.getSession();
+                switch(u.loguear(l)) {
+                    case 1:
+                        sesion.setAttribute("user", email);
+                        sesion.setAttribute("nivel", 1);
+                        response.sendRedirect("vista/Dashboard/listaSolicitud.jsp");
+                     break;
+                    
+                     case 2:
+                        sesion.setAttribute("user", email);
+                        sesion.setAttribute("nivel", 2);
+                        response.sendRedirect("vista/Propietario/listaInmueble.jsp");
+                     break;
+                     
+                     default:
+                         response.sendRedirect("vista/error.jsp");
+                      break;   
+                }
+            
+                
+            }
+            
+            
 
             try {
                 usuarioDao userC = new usuarioDao();
@@ -74,7 +109,13 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -88,7 +129,13 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -11,6 +11,21 @@
            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     </head>
     <body>
+          <%
+           HttpSession sesion = request.getSession();
+           String usuario;
+           String nivel;
+           
+           if (sesion.getAttribute("user")!=null && sesion.getAttribute("nivel")!=null) {
+               usuario=sesion.getAttribute("user").toString();
+               nivel=sesion.getAttribute("nivel").toString();
+               out.print("<a href='login.jsp?cerrar=true'><h5> Cerrar Sesion" + usuario + "</h5> </a>");
+           }
+           else
+           {
+               out.print("<script>location.replace(‘login.jsp');</script>");
+           }
+   %>    
     <center>
          <div class="container my-10" style="background: #4d80e4">
         <div>

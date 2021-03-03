@@ -6,30 +6,33 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <!-- CSS only -->
-        <link rel="stylesheet" type="text/css" href="css/estilosBooktrip.css">
+        <link rel="stylesheet" type="text/css" href="../css/estiloValidacion.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     </head>
     <body>
     <center>
         <div class="container" style="background: #4d80e4">
             
-        <div class="container  col-md-6 mt-5 bg-light">
+        <div class="container  col-md-6 mt-5 bg-light form-group">
             <h3>Agregar nuevo estado</h3>
             <hr>
             <br>
-            <form action="/booktripO/controllerEstado" method="POST" onsubmit="return validar()">
+            <form id="formularioEstado" action="/booktripO/controllerEstado"
+                  method="POST" onsubmit="return validarEstado()">
                 <div col-md-6>
                     <div col-md-3><label>Nombre:</label></div>
-                    <div col-md-3><input type="text" name="txtNom" id="txtNombre">
+                    <div col-md-3><input type="text" name="txtNom" id="txtNom">
                     </div>
                 </div>
                 <div col-md-6>
-                    <div col-md-3><input type="submit" name="accion" value="Guardar" class="btn btn-success btn-block mt-1"></div>
+                    <div col-md-3><input id="btnRegistrar" type="submit" name="accion" value="Guardar"
+                                         class="btnGuardar btn btn-success btn-block mt-1"></div>
                     <div col-md-3> <input type="submit" name="accion" value="Regresar" class="btn btn-danger btn-block mt-1 my-4"></div>
                 </div>
             </form>
-        </div>
+           
          </div>
+          
     </center>
     <script src="../js/jquery-1.11.0.min.js"></script>
     <script src="../js/validaciones.js"</script>
