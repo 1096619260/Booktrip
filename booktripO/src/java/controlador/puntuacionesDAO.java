@@ -5,116 +5,111 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.puntuaciones;
 
 public class puntuacionesDAO {
+    
+    PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
 
-    public String adicionarPuntuacion(puntuaciones puntuacion) {
-
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
+    public List listar() {
+        List<puntuaciones> lista = new ArrayList<>();
+        String sql = "select * from puntuaciones";
         try {
-            String Sql = "INSERT INTO puntuaciones (idUsuario,idInmueble,fechaCreada,descripcion,calificacion)"
-            + "values(?,?,?,?,?);";
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                puntuaciones p = new puntuaciones();
+                p.setIdPuntuacion(rs.getInt(1));
+                p.setIdUsuario(rs.getInt(2));
+                p.setIdInmueble(rs.getInt(3));
+                p.setFechaCreada(rs.getString(4));
+                p.setDescripcion(rs.getString(5));
+                p.setCalificacion(rs.getString(6));
 
-            sentencia = nuevaCon.prepareStatement(Sql);
-            sentencia.setInt(1, puntuacion.getIdUsuario());
-            sentencia.setInt(2, puntuacion.getIdInmueble());
-            sentencia.setString(3, puntuacion.getFechaCreada());
-            sentencia.setString(4, puntuacion.getDescripcion());
-            sentencia.setString(5, puntuacion.getCalificacion());
-            sentencia.execute();
-            
-
-            } 
-        
-            catch (Exception ex) {
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en puntuacion\n" + ex.getMessage());
-
+                lista.add(p);
+            }
+        } catch (Exception e) {
         }
-        return miRespuesta;
-
+        return lista;
     }
 
-    /////
-    public String actualizarPuntuacion(puntuaciones puntuacion) {
-
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
+    public puntuaciones listarId(int id) {
+        String sql = "select * from puntuaciones where idPuntuacion=" + id;
+        puntuaciones pe = new puntuaciones();
         try {
-            String Query = "update puntuaciones  set idUsuario=?, idInmueble=?, fechaCreada=?,descripcion=?, calificacion=? where idPuntuacion =?";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, puntuacion.getIdUsuario());
-            sentencia.setInt(2, puntuacion.getIdInmueble());
-            sentencia.setString(3, puntuacion.getFechaCreada());
-            sentencia.setString(4, puntuacion.getDescripcion());
-            sentencia.setString(5, puntuacion.getCalificacion());
-            sentencia.setInt(6, puntuacion.getIdPuntuacion());
-            sentencia.executeUpdate();
-
-        } catch (Exception ex) {
-            miRespuesta = "";
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema puntuaciones\n" + ex.getMessage());
-
-        }
-        return miRespuesta;
-        
-    }
-        
-        //////////
-        
-       public puntuaciones consultarPuntuacion(int idPuntuacion) {
-
-        puntuaciones puntuacion =null;
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        
-        try {
-            Statement sentencia = nuevaCon.createStatement();
-        
-            String Query = "select idPuntuacion, idUsuario, idInmueble, fechaCreada, descripcion, calificacion FROM puntuaciones where idPuntuacion = " + idPuntuacion;
-            
-            ResultSet rs = sentencia.executeQuery(Query);
-            while (rs.next())
-            {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pe.setIdPuntuacion(rs.getInt(1));
+                pe.setIdUsuario(rs.getInt(2));
+                pe.setIdInmueble(rs.getInt(3));
+                pe.setFechaCreada(rs.getString(4));
+                pe.setDescripcion(rs.getString(5));
+                pe.setCalificacion(rs.getString(6));
                 
-                puntuacion = new puntuaciones();
-                puntuacion.setIdPuntuacion(rs.getInt(1));
-                puntuacion.setIdUsuario(rs.getInt(2));
-                puntuacion.setIdInmueble(rs.getInt(3));
-                puntuacion.setFechaCreada(rs.getString(4));
-                puntuacion.setDescripcion(rs.getString(5));
-                puntuacion.setCalificacion(rs.getString(6));
+            }
+        } catch (Exception e) {
         }
-        
-        return puntuacion;
-                    
-        } 
-        
-        catch (Exception ex) {
+        return pe;
+    }
+
+     public void agregar(puntuaciones p) {
+        String sql = "insert into puntuaciones( idUsuario, idInmueble,fechaCreada, descripcion, calificacion)values(?,?,?,?,?)";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+             
+             ps.setInt(1, p.getIdUsuario());
+             ps.setInt(2, p.getIdInmueble());
+             ps.setString(3, p.getFechaCreada());
+            ps.setString(4, p.getDescripcion());
+             ps.setString(5, p.getCalificacion());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void update(puntuaciones p) {
+        String sql = "update puntuaciones set idUsuario=?,idInmueble=?, fechaCreada=?, "
+                + "descripcion=?,calificacion=? where idPuntuacion=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             
-            System.out.println(ex.getMessage());
-            return puntuacion;
+             ps.setInt(1, p.getIdUsuario());
+             ps.setInt(2, p.getIdInmueble());
+             ps.setString(3, p.getFechaCreada());
+             ps.setString(4, p.getDescripcion());
+             ps.setString(5, p.getCalificacion());
+          
+            ps.setInt(6, p.getIdPuntuacion());
+             
+             ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
     }
-        
-  }
-    public String consultarPuntuacion (puntuaciones mipuntuaciones) {
-        return null;
-       
+
+    public void delete(int id) {
+        String sql = "delete from puntuaciones where idPuntuacion=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
     }
-       ///////
+
+    
     public ArrayList<puntuaciones> ConsultarListadoPuntuaciones(String criterio) {
 
         ArrayList<puntuaciones> milistapuntuaciones = new ArrayList<puntuaciones>();
@@ -150,37 +145,7 @@ public class puntuacionesDAO {
             return milistapuntuaciones;
 
         }
-    }
-    /////////////    
-        public String EliminarPuntuacion(puntuaciones puntuacion){
-        String miRespuesta;
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        
-        PreparedStatement sentencia;
-        try {
-            String sql ="delete from puntuaciones where idPuntuacion=? and idUsuario=? and idInmueble=? and fechaCreada=? and descripcion=? and calificacion=?;";
-            sentencia = nuevaCon.prepareStatement(sql);
-            sentencia.setInt(1,puntuacion.getIdPuntuacion());
-            sentencia.setInt(2,puntuacion.getIdUsuario());
-            sentencia.setInt(3,puntuacion.getIdInmueble ());
-            sentencia.setString(4,puntuacion.getFechaCreada());
-            sentencia.setString(5,puntuacion.getDescripcion());
-            sentencia.setString(6,puntuacion.getCalificacion());
-            
-            
-            sentencia.execute();
-            miRespuesta = "";
-            
-        } catch (Exception ex){
-            miRespuesta = ex.getMessage();
-            System.err.println("Ocurrio un error en puntuacionesDAO.EliminarPuntuacion" + ex.getMessage());
-        }
-        
-        return miRespuesta;
-        
-    }
        
 
+    }
 }

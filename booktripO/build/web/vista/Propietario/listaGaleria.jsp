@@ -12,6 +12,7 @@
     </head>
     <body>
     <center>
+        <p>prueba error en git</p>
          <div class="container my-10" style="background: #4d80e4">
         <div>
             <form action="/booktripO/controllerGaleria" method="POST">

@@ -1,4 +1,4 @@
-package org.apache.jsp.vista.Propietario;
+package org.apache.jsp.vista.Dashboard;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -7,7 +7,7 @@ import modelo.inmuebles;
 import java.util.ArrayList;
 import controlador.inmueblesDAO;
 
-public final class listaActividad_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class listaUsuario_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -54,6 +54,7 @@ public final class listaActividad_jsp extends org.apache.jasper.runtime.HttpJspB
       _jspx_out = out;
       _jspx_resourceInjector = (org.glassfish.jsp.api.ResourceInjector) application.getAttribute("com.sun.appserv.jsp.resource.injector");
 
+<<<<<<< HEAD:booktripO/build/generated/src/org/apache/jsp/vista/Propietario/listaActividad_jsp.java
       out.write("\r\n");
       out.write("\r\n");
       out.write("\r\n");
@@ -89,6 +90,48 @@ public final class listaActividad_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("                    </tr>\r\n");
       out.write("                </thead>\r\n");
       out.write("                <tbody style=\"height: 40px;\">  \r\n");
+=======
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
+      out.write("<!DOCTYPE html>\n");
+      out.write("<html>\n");
+      out.write("    <head>\n");
+      out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
+      out.write("        <title>JSP Page</title>\n");
+      out.write("           <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">\n");
+      out.write("    </head>\n");
+      out.write("    <body>\n");
+      out.write("    <center>\n");
+      out.write("         <div class=\"container my-10\" style=\"background: #4d80e4\">\n");
+      out.write("        <div>\n");
+      out.write("            <form action=\"/booktripO/controllerUsuario\" method=\"POST\">\n");
+      out.write("                <input type=\"submit\" name=\"accion\" value=\"Listar\" class=\"btn-primary\">\n");
+      out.write("                <input type=\"submit\" name=\"accion\" value=\"Nuevo\" class=\"btn-success\">\n");
+      out.write("            </form>\n");
+      out.write("        </div>\n");
+      out.write("        <hr>\n");
+      out.write("        <div>\n");
+      out.write("            <table border=\"1\" class=\" bg-light table table-light\"  style=\"width: 500px;\">\n");
+      out.write("                <thead>\n");
+      out.write("                    <tr>\n");
+      out.write("                        <th>ID</th>\n");
+      out.write("                        <th>id tipo</th>\n");
+      out.write("                        <th>numero</th>\n");
+      out.write("                        <th>nombre</th>\n");
+      out.write("                         <th>apellido</th>\n");
+      out.write("                          <th>direcion</th>\n");
+      out.write("                          <th>telefono</th>\n");
+      out.write("                          <th>fecha</th>\n");
+      out.write("                          <th>email</th>\n");
+      out.write("                          <th>contrasena</th>\n");
+      out.write("                        <th>ACCIONES</th>\n");
+      out.write("                    </tr>\n");
+      out.write("                </thead>\n");
+      out.write("                <tbody style=\"height: 40px;\">  \n");
+>>>>>>> master:booktripO/build/generated/src/org/apache/jsp/vista/Dashboard/listaUsuario_jsp.java
       out.write("                    ");
       if (_jspx_meth_c_forEach_0(_jspx_page_context))
         return;
@@ -138,6 +181,7 @@ public final class listaActividad_jsp extends org.apache.jasper.runtime.HttpJspB
           out.write("\r\n");
           out.write("                        <tr>\r\n");
           out.write("                            <td style=\"padding-left:25px;\">");
+<<<<<<< HEAD:booktripO/build/generated/src/org/apache/jsp/vista/Propietario/listaActividad_jsp.java
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdActividad()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</td>\r\n");
           out.write("                            <td style=\"padding-left:25px;\">");
@@ -162,6 +206,50 @@ public final class listaActividad_jsp extends org.apache.jasper.runtime.HttpJspB
           out.write("                                </form>\r\n");
           out.write("                            </td>\r\n");
           out.write("                        </tr>\r\n");
+=======
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdUsuario()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                            <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdTipoDocumento()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                            <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getNumDocu()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                            <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdRol()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                            <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getNombre()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                             <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getApellido()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                              <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getDireccion()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                               <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getTelefono()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                                <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getFechaNacimiento()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                                 <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getEmail()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                                  <td style=\"padding-left:25px;\">");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getPassword()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("</td>\n");
+          out.write("                            <td style=\"padding-left:25px;\">\n");
+          out.write("                                <form action=\"/booktripO/controllerUsuario\" method=\"POST\">\n");
+          out.write("                                    <input type=\"hidden\" name=\"id\" value=\"");
+          out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${dato.getIdUsuario()}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+          out.write("\">\n");
+          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Editar\" class=\"btn-primary btn-block my-1\">\n");
+          out.write("                                    <input type=\"submit\" name=\"accion\" value=\"Delete\" class=\"btn-danger btn-block\">\n");
+          out.write("                                </form>\n");
+          out.write("                            </td>\n");
+          out.write("                        </tr>\n");
+>>>>>>> master:booktripO/build/generated/src/org/apache/jsp/vista/Dashboard/listaUsuario_jsp.java
           out.write("                    ");
           int evalDoAfterBody = _jspx_th_c_forEach_0.doAfterBody();
           if (evalDoAfterBody != javax.servlet.jsp.tagext.BodyTag.EVAL_BODY_AGAIN)

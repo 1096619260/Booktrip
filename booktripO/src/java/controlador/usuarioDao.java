@@ -11,79 +11,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.usuario;
 
 public class usuarioDao {
 
-    public String adicionarUsuario(usuario user) {
-        String Res = "";
-
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-        PreparedStatement sentence;
-
-        try {
-            String sql = "INSERT INTO usuarios (idTipoDocumento, numDocu,idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password) "
-                    + "VALUES(?,?,?,?,?,?,?,?,?,?);";
-            sentence = newConexion.prepareStatement(sql);
-            sentence.setInt(1, user.getIdTipoDocumento());
-            sentence.setInt(3, user.getNumDocu());
-            sentence.setInt(2, user.getIdRol());
-            sentence.setString(3, user.getNombre());
-            sentence.setString(4, user.getApellido());
-            sentence.setString(5, user.getDireccion());
-            sentence.setString(6, user.getTelefono());
-            sentence.setString(7, user.getFechaNacimiento());
-            sentence.setString(8, user.getEmail());
-            sentence.setString(9, user.getPassword());
-            sentence.execute();
-
-        } catch (Exception e) {
-
-            Res = e.getMessage();
-            System.err.println("Ocurrio un problema" + Res);
-
-        }
-
-        return Res;
-
-    }
-
-    public String actualizarUsuario(usuario user) {
-
-        String Res = "";
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-        PreparedStatement sentence;
-
-        try {
-            String sql = "update usuarios set idTipoDocumento = ?, idRol = ?, nombre = ?, apellido = ?, direccion = ?, telefono = ?, fechaNacimiento = ?, email = ?, password = ? where idUsuario =?";
-            sentence = newConexion.prepareStatement(sql);
-           sentence.setInt(1, user.getIdTipoDocumento());
-            sentence.setInt(2, user.getIdRol());
-            sentence.setString(3, user.getNombre());
-            sentence.setString(4, user.getApellido());
-            sentence.setString(5, user.getDireccion());
-            sentence.setString(6, user.getTelefono());
-            sentence.setString(7, user.getFechaNacimiento());
-            sentence.setString(8, user.getEmail());
-            sentence.setString(9, user.getPassword());
-            sentence.setInt(10, user.getIdUsuario());
-            sentence.executeUpdate();
-        } catch (Exception ex) {
-            
-            Res = ex.getMessage();
-            System.err.println("ocurrió un problema en estados\n" + Res);
-
-        }
-        return Res;
-
-    }
-    
     //consultar
-    public usuario consultarUsuario(String email) {
+    
+    public usuario consultarUsuario(String email, String password) {
 
         usuario user = null;
 
@@ -94,8 +29,10 @@ public class usuarioDao {
         try {
             Statement sentencia = newConexion.createStatement();
 
-            String sql = "select idUsuario, idTipoDocumento, idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password "
-                    + " FROM usuarios WHERE email = +'"+email+"'";
+            String sql = "select idUsuario, idTipoDocumento, numDocu, idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password" 
+                    + " FROM usuarios WHERE email = '" + email + "' AND password=md5('"+ password+ "')";
+            
+            //password=md5('"+ password+ "');
             //filas columnas
             ResultSet rs = sentencia.executeQuery(sql);
 
@@ -103,14 +40,77 @@ public class usuarioDao {
                 user = new usuario();
                 user.setIdUsuario(rs.getInt(1));
                 user.setIdTipoDocumento(rs.getInt(2));
-                user.setIdRol(rs.getInt(3));  
-                user.setNombre(rs.getString(4));
-                user.setApellido(rs.getString(5));
-                user.setDireccion(rs.getString(6));
-                user.setTelefono(rs.getString(7));
-                user.setFechaNacimiento(rs.getString(8));
-                user.setEmail(rs.getString(9));
-                user.setPassword(rs.getString(10));
+                user.setNumDocu(rs.getInt(3));
+                user.setIdRol(rs.getInt(4));  
+                user.setNombre(rs.getString(5));
+                user.setApellido(rs.getString(6));
+                user.setDireccion(rs.getString(7));
+                user.setTelefono(rs.getInt(8));
+                user.setFechaNacimiento(rs.getString(9));
+                user.setEmail(rs.getString(10));
+                user.setPassword(rs.getString(11));
+
+            }
+
+            return user;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return user;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public usuario consultarUsuario2(String email) {
+
+        usuario user = null;
+
+        Conexion connect = new Conexion();
+        Connection newConexion;
+        newConexion = connect.getConn();
+
+        try {
+            Statement sentencia = newConexion.createStatement();
+
+            String sql = "select idUsuario, idTipoDocumento,numDocu, idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password "
+                    + " FROM usuarios WHERE email = +'" + email + "'";
+            //filas columnas
+            ResultSet rs = sentencia.executeQuery(sql);
+
+            while (rs.next()) {
+                user = new usuario();
+                user.setIdUsuario(rs.getInt(1));
+                user.setIdTipoDocumento(rs.getInt(2));
+                user.setNumDocu(rs.getInt(3));
+                user.setIdRol(rs.getInt(4));
+                user.setNombre(rs.getString(5));
+                user.setApellido(rs.getString(6));
+                user.setDireccion(rs.getString(7));
+                user.setTelefono(rs.getInt(8));
+                user.setFechaNacimiento(rs.getString(9));
+                user.setEmail(rs.getString(10));
+                user.setPassword(rs.getString(11));
 
             }
 
@@ -122,7 +122,7 @@ public class usuarioDao {
         }
     }
 
-    public ArrayList<usuario>ListadoUsuarios(String criterio) {
+    public ArrayList<usuario> ListadoUsuarios(String criterio) {
 
         ArrayList<usuario> listadoUsuarios = new ArrayList<usuario>();
         usuario user;
@@ -134,26 +134,26 @@ public class usuarioDao {
         try {
             Statement sentencia = newConexion.createStatement();
 
-            String sql = " SELECT idUsuario, idTipoDocumento, numDocu, idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password " 
+            String sql = " SELECT idUsuario, idTipoDocumento, numDocu, idRol, nombre, apellido, direccion, telefono, fechaNacimiento, email, password "
                     + "FROM usuarios where nombre like '%" + criterio + "%' ORDER BY idUsuario;";
 
             ResultSet rs = sentencia.executeQuery(sql);
 
             while (rs.next()) {
                 user = new usuario();
-                
+
                 user.setIdUsuario(rs.getInt(1));
                 user.setIdTipoDocumento(rs.getInt(2));
-                 user.setNumDocu(rs.getInt(3));
-                user.setIdRol(rs.getInt(4));  
+                user.setNumDocu(rs.getInt(3));
+                user.setIdRol(rs.getInt(4));
                 user.setNombre(rs.getString(5));
                 user.setApellido(rs.getString(6));
                 user.setDireccion(rs.getString(7));
-                user.setTelefono(rs.getString(8));
+                user.setTelefono(rs.getInt(8));
                 user.setFechaNacimiento(rs.getString(9));
                 user.setEmail(rs.getString(10));
                 user.setPassword(rs.getString(11));
-                 listadoUsuarios.add(user);
+                listadoUsuarios.add(user);
 
             }
 
@@ -166,52 +166,124 @@ public class usuarioDao {
         }
 
     }
-    
-    
-     public String EliminarUsuario(usuario user){
-        
-        String res;
-        Conexion connect = new Conexion();
-        Connection newConexion;
-        newConexion = connect.getConn();
-        
-         PreparedStatement sentence;
-         
-         try {
-            String sql  = "DELETE FROM usuarios WHERE idUsuario=? AND idTipoDocumento=? AND idRol=?  AND nombre=? AND apellido =? AND direccion=? AND telefono=? AND fechaNacimiento=? AND email=? AND password = ?;";
-           
-            sentence = newConexion.prepareStatement(sql);
-            
-            sentence.setInt(1, user.getIdUsuario());
-            sentence.setInt(2, user.getIdTipoDocumento());
-            sentence.setInt(3, user.getIdRol());
-            sentence.setString(4, user.getNombre());
-            sentence.setString(5, user.getApellido());
-            sentence.setString(6, user.getDireccion());
-            sentence.setString(7, user.getTelefono());
-            sentence.setString(8, user.getFechaNacimiento());
-            sentence.setString(9, user.getEmail());
-            sentence.setString(10, user.getPassword());
-            
-            
-            sentence.execute();
-            res= "";
-            
+
+    PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
+
+    public List listar() {
+        List<usuario> lista = new ArrayList<>();
+        String sql = "select * from usuarios";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                usuario p = new usuario();
+                p.setIdUsuario(rs.getInt(1));
+                p.setIdTipoDocumento(rs.getInt(2));
+                p.setNumDocu(rs.getInt(3));
+                p.setIdRol(rs.getInt(4));
+                p.setNombre(rs.getString(5));
+                p.setApellido(rs.getString(6));
+                p.setDireccion(rs.getString(7));
+                p.setTelefono(rs.getInt(8));
+                p.setFechaNacimiento(rs.getString(9));
+                p.setEmail(rs.getString(10));
+                p.setPassword(rs.getString(11));
+
+                lista.add(p);
+            }
         } catch (Exception e) {
-            
-            res = e.getMessage();
-            System.out.println("Ocurrio un error en el eliminar usuario " + e.getMessage());
         }
-             
-        return res;
-    
+        return lista;
     }
-       
-     
-     
-     
-     
-    
-     
-     
+
+    public usuario listarId(int id) {
+        String sql = "select * from usuarios where idUsuario=" + id;
+        usuario pe = new usuario();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pe.setIdUsuario(rs.getInt(1));
+                pe.setIdTipoDocumento(rs.getInt(2));
+                pe.setNumDocu(rs.getInt(3));
+                pe.setIdRol(rs.getInt(4));
+                pe.setNombre(rs.getString(5));
+                pe.setApellido(rs.getString(6));
+                pe.setDireccion(rs.getString(7));
+                pe.setTelefono(rs.getInt(8));
+                pe.setFechaNacimiento(rs.getString(9));
+                pe.setEmail(rs.getString(10));
+                pe.setPassword(rs.getString(11));
+            }
+        } catch (Exception e) {
+        }
+        return pe;
+    }
+
+    public void agregar(usuario p) {
+        String sql = "insert into usuarios(idTipoDocumento, numDocu, idRol, nombre, apellido, direccion,"
+                + " telefono, fechaNacimiento, email, password)values(?,?,?,?,?,?,?,?,?,md5(?));";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, p.getIdTipoDocumento());
+            ps.setInt(2, p.getNumDocu());
+            ps.setInt(3, p.getIdRol());
+            ps.setString(4, p.getNombre());
+            ps.setString(5, p.getApellido());
+            ps.setString(6, p.getDireccion());
+            ps.setInt(7, p.getTelefono());
+            ps.setString(8, p.getFechaNacimiento());
+            ps.setString(9, p.getEmail());
+            ps.setString(10, p.getPassword());
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void update(usuario p) {
+        String sql = "update usuarios set idTipoDocumento=?,numDocu=?, idRol=?, "
+                + "nombre=?,apellido=?,direccion=?,telefono=?, fechaNacimiento=?,"
+                + " email=?, password=? where idUsuario=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
+
+            ps.setInt(1, p.getIdTipoDocumento());
+            ps.setInt(2, p.getNumDocu());
+            ps.setInt(3, p.getIdRol());
+            ps.setString(4, p.getNombre());
+            ps.setString(5, p.getApellido());
+            ps.setString(6, p.getDireccion());
+            ps.setInt(7, p.getTelefono());
+            ps.setString(8, p.getFechaNacimiento());
+            ps.setString(9, p.getEmail());
+            ps.setString(10, p.getPassword());
+            ps.setInt(11, p.getIdUsuario());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void delete(int id) {
+        String sql = "delete from usuarios where idUsuario=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+   
 }

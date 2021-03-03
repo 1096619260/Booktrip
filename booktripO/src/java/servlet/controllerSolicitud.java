@@ -23,7 +23,7 @@ import modelo.solicitudinmuebles;
 
 /**
  *
- * @author oscar sanabria
+ * @author gabob
  */
 @WebServlet(name = "controllerSolicitud", urlPatterns = {"/controllerSolicitud"})
 public class controllerSolicitud extends HttpServlet {
