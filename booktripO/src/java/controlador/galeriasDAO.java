@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import modelo.galeria;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.actividades;
+import modelo.galerias;
 
 /**
  *
@@ -20,162 +22,127 @@ import modelo.actividades;
  */
 public class galeriasDAO {
 
-    public String adicionarGaleria(galeria galeria) {
+    PreparedStatement ps;
+    ResultSet rs;
+    Connection con;
+    Conexion c = new Conexion();
 
-        String miRespuesta = "";
-
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
+    public List listar() {
+        List<galerias> lista = new ArrayList<>();
+        String sql = "select * from galerias";
         try {
-            String Query = "insert into galerias (idInmueble,imagen,url)" + "values(?,?,?);";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, galeria.getIdInmueble());
-            sentencia.setString(2, galeria.getImagen());
-            sentencia.setString(3, galeria.getUrl());
-            sentencia.execute();
-
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en la galeria\n" + miRespuesta);
-
-        }
-        return miRespuesta;
-
-    }
-
-    //////////////////////////////////
-    public String actualizarGaleria(galeria galeria) {
-
-        String miRespuesta = "";
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        PreparedStatement sentencia;
-
-        try {
-            String Query = "UPDATE galerias SET idInmueble=?, imagen=?, url=? where idGaleria = ? ";
-            sentencia = nuevaCon.prepareStatement(Query);
-            sentencia.setInt(1, galeria.getIdInmueble());
-            sentencia.setString(2, galeria.getImagen());
-            sentencia.setString(3, galeria.getUrl());
-            sentencia.setInt(4, galeria.getIdGaleria());
-            sentencia.executeUpdate();
-
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println("ocurrió un problema en la galeria \n" + miRespuesta);
-
-        }
-        return miRespuesta;
-
-    }
-
-    /*
-    metodo consultar
-   
-     */
-    public galeria ConsultarGalerias(int idGaleria) {
-        galeria miGaleria = null;
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
-        try {
-            Statement sentencia = nuevaCon.createStatement();
-            String Query = "select idGaleria, idInmueble, imagen, url from galerias where idGaleria = " + idGaleria;
-            ResultSet rs = sentencia.executeQuery(Query);
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
+                galerias p = new galerias();
+                p.setIdGaleria(rs.getInt(1));
+                p.setIdInmueble(rs.getInt(2));
+                p.setImagen(rs.getString(3));
+                 p.setUrl(rs.getString(4));
 
-                miGaleria = new galeria();
-                miGaleria.setIdGaleria(rs.getInt(1));
-                miGaleria.setIdInmueble(rs.getInt(2));
-                miGaleria.setImagen(rs.getString(3));
-                miGaleria.setUrl(rs.getString(4));
+                lista.add(p);
             }
-
-            return miGaleria;
-
-        } catch (Exception ex) {
-
-            System.out.println(ex.getMessage());
-            return miGaleria;
-
+        } catch (Exception e) {
         }
-
+        return lista;
     }
 
-    /*
-    listas
-   
-     */
-    public ArrayList<galeria> ConsularListaGaleria(String criterio) {
-        ArrayList<galeria> milistagalerias = new ArrayList<galeria>();
-
-        galeria miGaleria;
-
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-
+    public galerias listarId(int id) {
+        String sql = "select * from galerias where idGaleria=" + id;
+        galerias pe = new galerias();
         try {
-            Statement sentencia = nuevaCon.createStatement();
-
-            String Query = "SELECT idGaleria, idInmueble, imagen, url" + " FROM galerias  where idGaleria like '%" + criterio + "%' ORDER BY idGaleria;";
-            ResultSet rs = sentencia.executeQuery(Query);
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
-
-                miGaleria = new galeria();
-                miGaleria.setIdGaleria(rs.getInt(1));
-                miGaleria.setIdInmueble(rs.getInt(2));
-                miGaleria.setImagen(rs.getString(3));
-                miGaleria.setUrl(rs.getString(4));
-                milistagalerias.add(miGaleria);
+                pe.setIdGaleria(rs.getInt(1));
+                 pe.setIdInmueble(rs.getInt(2));
+                pe.setImagen(rs.getString(3));
+                pe.setUrl(rs.getString(4));
+                
             }
-            return milistagalerias;
-        } catch (Exception ex) {
-            System.out.println("error en la consulta" + ex.getMessage());
-            return milistagalerias;
+        } catch (Exception e) {
         }
-
+        return pe;
     }
 
-    /*
-    eliminar
-     */
-
-    public String EliminarGaleria(galeria galerias) {
-
-        String miRespuesta;
-        Conexion miConexion = new Conexion();
-        Connection nuevaCon;
-        nuevaCon = miConexion.getConn();
-        PreparedStatement sentencia;
-
+    public void agregar(galerias p) {
+        String sql = "insert into galerias(idInmueble, imagen, url)values(?,?,?)";
         try {
-            String Query = "delete from galerias  where idGaleria=? and idInmueble=?  and imagen=? and url=?  ;";
-            sentencia = nuevaCon.prepareStatement(Query);
-
-            sentencia.setInt(1, galerias.getIdGaleria());
-            sentencia.setInt(2, galerias.getIdInmueble());
-            sentencia.setString(3, galerias.getImagen());
-            sentencia.setString(4, galerias.getUrl());
-
-            sentencia.execute();
-            miRespuesta = "";
-        } catch (Exception ex) {
-
-            miRespuesta = ex.getMessage();
-            System.err.println(ex.getMessage() + "ocurrio un error " + ex.getMessage());
-
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+             ps.setInt(1, p.getIdInmueble());
+            ps.setString(2, p.getImagen());
+             ps.setString(3, p.getUrl());
+            ps.executeUpdate();
+        } catch (Exception e) {
         }
-        return miRespuesta;
 
     }
+
+    public void update(galerias p) {
+        String sql = "update galerias set idInmueble=?,imagen=?, url=? where idGaleria=?";
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
+            
+             ps.setInt(1, p.getIdInmueble());
+             ps.setString(4, p.getImagen());
+            ps.setString(4, p.getUrl());
+            ps.setInt(5, p.getIdGaleria());
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void delete(int id) {
+        String sql = "delete from galerias where idGaleria=" + id;
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+     ////////////////////////////////////////////////////////////////////77
+     public ArrayList<galerias>ConsultarListadoGalerias(String criterio){
+        ArrayList<galerias>milista =new ArrayList<galerias>();
+        
+        galerias miGaleria;
+        Conexion  miConexion= new Conexion();
+        Connection nuevaCon;
+        nuevaCon= miConexion.getConn();
+        
+        try{
+            Statement sentencia = nuevaCon.createStatement();
+    
+            String Query="select idGaleria, idInmueble, imagen, urlfecha" 
+                    + " from  galerias where fecha like '%"+ 
+                    criterio +"%' ORDER BY fecha;";
+           
+            ResultSet rs=sentencia.executeQuery(Query);
+          
+            while (rs.next()) {                
+              miGaleria= new galerias();
+              miGaleria.setIdGaleria(rs.getInt(1));
+             miGaleria.setIdInmueble(rs.getInt(2));
+ miGaleria.setImagen(rs.getString(5));
+                miGaleria.setUrl(rs.getString(5));
+                
+                milista.add(miGaleria);
+          
+            }
+              return  milista;
+              }catch (Exception e){
+           System.out.println("Error el a consulta solicitud"+e.getMessage());
+              return  milista;
+                
+        }
+    
+   }
 
 }

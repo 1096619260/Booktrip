@@ -1,5 +1,6 @@
 
-<%@page import="modelo.municipios"%>
+<%@page import="modelo.departamento"%>
+<%@page import="controlador.departamentosDAO"%>
 <%@page import="controlador.municipiosDAO"%>
 <%@page import="java.util.ArrayList"%>
 
@@ -22,19 +23,19 @@
         <hr>
         <br>
         <form action="controllerActividad" method="POST">
-            <label>id Municipio</label>
+            <label>DEPARTAMENTO</label>
 
             
             <div class="col-sm-6">
                
-                        <%
-                           municipiosDAO miMDAO = new municipiosDAO();
-                            ArrayList<municipios>  listaM = miMDAO.ConsularListaMunicipio("");
+                         <%
+                            departamentosDAO miMDAO = new departamentosDAO();
+                            ArrayList<departamento> listaD = miMDAO.ConsularListaDepartamento("");
                         %> 
-                        <select name="txtMunicipio">
+                        <select name="txtDepartamento">
                             <%
-                        for (municipios i : listaM) {%>
-                            <option value="<%=i.getIdMunicipio()%>"><%=i.getNombre()%> </option>
+                                for (departamento i : listaD) {%>
+                            <option value="<%=i.getIdDepartamento()%>"><%=i.getNombre()%> </option>
                             <%
                                 }
                             %>
@@ -45,17 +46,10 @@
             <label>nombre</label>
             <input type="text" name="txtNombre" value="${dato.getNombre()}">
             </div>
-             <div class="col-sm-6">
-            <label>lugar</label>
-            <input type="text" name="txtLugar" value="${dato.getLugar()}">
-            </div>
-             <div class="col-sm-6">
-            <label>descripcion</label>
-            <input type="text" name="txtDescripcion" value="${dato.getDescripcion()}">
-            </div>
             
             
-            <input type="hidden" name="id" value="${dato.getIdActividad()}">
+            
+            <input type="hidden" name="id" value="${dato.getMunicipio()}">
             
             <input type="submit" name="accion" value="Actualizar" class="btn btn-success btn-block mt-1">
             <input type="submit" name="accion" value="Regresar" class="btn btn-danger btn-block mt-1">
