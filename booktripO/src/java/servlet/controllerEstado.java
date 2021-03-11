@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.estados;
 
 /**
@@ -23,50 +24,67 @@ import modelo.estados;
  */
 @WebServlet(name = "controllerEstado", urlPatterns = {"/controllerEstado"})
 public class controllerEstado extends HttpServlet {
- estados p=new estados();
-    estadosDAO dao=new estadosDAO();
+
+    estados p = new estados();
+    estadosDAO dao = new estadosDAO();
     
-   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String accion=request.getParameter("accion");
-        switch (accion) {
-            case "Listar":
-                List<estados>lista=dao.listar();
-                request.setAttribute("lista", lista);
-                request.getRequestDispatcher("vista/Dashboard/listaEstado.jsp").forward(request, response);
-                break;
-            case "Nuevo":                
-               request.getRequestDispatcher("vista/Dashboard/estado/add.jsp").forward(request, response);
-                break;
-            case "Guardar":
-                String nom=request.getParameter("txtNom");
-                p.setNombre(nom);
-                dao.agregar(p);
-                request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
-                break;
-            case "Editar": 
-                int ide=Integer.parseInt(request.getParameter("id"));
-                estados res=dao.listarId(ide);
-                request.setAttribute("dato",res);
-                request.getRequestDispatcher("vista/Dashboard/estado/edit.jsp").forward(request, response);
-                break;
-            case "Actualizar":   
-                int id=Integer.parseInt(request.getParameter("id"));
-                String nom1=request.getParameter("txtNom");
-                p.setIdEstado(id);
-                p.setNombre(nom1); 
-                dao.update(p);
-                request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
-                break;
-            case "Delete":      
-                int idd= Integer.parseInt(request.getParameter("id"));
-                dao.delete(idd);
-                request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
-                break;
-            default:
-                request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);;
+        try (PrintWriter out = response.getWriter()) {
+
+            String accion = request.getParameter("accion");
+
+            switch (accion) {
+
+                case "Listar":
+                    List<estados> lista = dao.listar();
+                    request.setAttribute("lista", lista);
+                    request.getRequestDispatcher("vista/Dashboard/listaEstado.jsp").forward(request, response);
+                    break;
+                case "Nuevo":
+                    request.getRequestDispatcher("vista/Dashboard/estado/add.jsp").forward(request, response);
+                    break;
+                case "Guardar":
+                    String nom = request.getParameter("txtNom");
+                    p.setNombre(nom);
+                    dao.agregar(p);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("copiaU", dao);
+                    request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+
+                    break;
+                case "Editar":
+                    int ide = Integer.parseInt(request.getParameter("id"));
+                    estados res = dao.listarId(ide);
+                    request.setAttribute("dato", res);
+                    request.getRequestDispatcher("vista/Dashboard/estado/edit.jsp").forward(request, response);
+                    break;
+                case "Actualizar":
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    String nom1 = request.getParameter("txtNom");
+                    p.setIdEstado(id);
+                    p.setNombre(nom1);
+                    dao.update(p);
+                    HttpSession sesion = request.getSession();
+                    request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+                    break;
+                case "Delete":
+                    int idd = Integer.parseInt(request.getParameter("id"));
+                    dao.delete(idd);
+                    request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+                    break;
+                case "Buscar":
+                    String dato = request.getParameter("txtBuscar");
+                 List<estados> list = dao.buscar(dato);
+                    request.setAttribute("lista", list);
+                    request.getRequestDispatcher("vista/Dashboard/listaEstado.jsp").forward(request, response);
+
+                    break;
+                default:
+                    request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+                    ;
+            }
         }
     }
 
@@ -97,7 +115,7 @@ public class controllerEstado extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-       
+
     }
 
     /**

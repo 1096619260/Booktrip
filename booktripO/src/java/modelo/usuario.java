@@ -7,6 +7,11 @@ package modelo;
 
 public class usuario {
 
+    public usuario() {
+    }
+
+   
+
     public int getIdUsuario() {
         return idUsuario;
     }

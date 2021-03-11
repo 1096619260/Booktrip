@@ -11,16 +11,22 @@
            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     </head>
     <body>
+         
     <center>
          <div class="container my-10" style="background: #4d80e4">
         <div>
-            <form action="/booktripO/controllerSolicitud" method="POST">
+            <form action="/booktripO/controllerSolicitud" method="POST" >
                 <input type="submit" name="accion" value="Listar" class="btn-primary">
                 <input type="submit" name="accion" value="Nuevo" class="btn-success">
             </form>
+              <form class="form-inline">
+               <input type="search" name="txtBuscar" class="form-control">
+                <input type="submit" name="accion"  value="Buscar" class="btn-outline-success">
+              </form>
         </div>
         <hr>
         <div>
+            <p>prueba</p>
             <table border="1" class=" bg-light table table-light"  style="width: 500px;">
                 <thead>
                     <tr>

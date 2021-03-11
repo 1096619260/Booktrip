@@ -3,4 +3,4 @@
 <%@include file="content.jsp" %>
 <%@include file="realContent.jsp" %>
 <%@include file="listaEstado.jsp" %>
-<%@include file="footer.jsp" %>
+<%@include file="footer.jsp" %>}

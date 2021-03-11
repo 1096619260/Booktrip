@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.usuario;
 
 /**
@@ -28,6 +29,7 @@ public class controllerUsuario extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         String accion = request.getParameter("accion");
         switch (accion) {
             case "Listar":
@@ -48,6 +50,7 @@ public class controllerUsuario extends HttpServlet {
                 int telefono = Integer.parseInt(request.getParameter("txtTelefono"));
                 String fecha = request.getParameter("txtFecha");
                 String email = request.getParameter("txtEmail");
+                
                 String password = request.getParameter("txtPassword");
 
                 p.setIdTipoDocumento(idTipo);
@@ -62,7 +65,7 @@ public class controllerUsuario extends HttpServlet {
                 p.setPassword(password);
 
                 dao.agregar(p);
-
+ HttpSession session =request.getSession();
                 request.getRequestDispatcher("controllerUsuario?accion=Listar").forward(request, response);
                 break;
             case "Editar":
@@ -96,6 +99,7 @@ public class controllerUsuario extends HttpServlet {
                 p.setPassword(password2);
 
                 dao.update(p);
+                 HttpSession sesion =request.getSession();
                 request.getRequestDispatcher("controllerUsuario?accion=Listar").forward(request, response);
                 break;
             case "Delete":

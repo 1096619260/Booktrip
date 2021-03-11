@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <p>parrafo</p>
         <h1>reportes</h1>
         <form action="reportPago.jsp" method="POST">
             <label>codigo</label>

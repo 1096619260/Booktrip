@@ -12,6 +12,7 @@
     </head>
     
     <body>
+          
     <center>
          <div class="container my-10" style="background: #4d80e4">
         <div>
@@ -19,6 +20,10 @@
                 <input type="submit" name="accion" value="Listar">
                 <input type="submit" name="accion" value="Nuevo">
             </form>
+             <form class="form-inline">
+               <input type="search" name="txtBuscar" class="form-control">
+                <input type="submit" name="accion"  value="Buscar" class="btn-outline-success">
+              </form>
         </div>
         <hr>
         <div>

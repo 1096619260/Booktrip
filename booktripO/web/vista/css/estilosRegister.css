@@ -23,7 +23,7 @@
 }
 
 .bg-login-image {
-    background: url("../imagenes/peñol.jpg");
+    background: url("../imagenes/fondo2.jpg");
     background-position: center;
     background-size: cover;
 }
@@ -34,6 +34,7 @@ input[type=password] {
     padding: 25px;
     border-radius: 25px;
     margin: 9px;
+   
 }
 
 form .cajaCombobox {
@@ -43,4 +44,27 @@ form .cajaCombobox {
 form .btn-user {
     border-radius: 10rem;
     padding: 0.75rem 1rem;
+}
+
+
+
+
+.form-group  small {
+    color: #e74c3c;
+    visibility: hidden;
+    padding: 25px;
+   
+}
+
+.form-group.error small {
+    
+    visibility: visible;
+    padding: 25px;
+    margin-left: 12px;
+}
+.form-control.error input {
+    border-color: #e74c3c;
+}
+.form-group.success input {
+    border-color: #2ecc71;
 }

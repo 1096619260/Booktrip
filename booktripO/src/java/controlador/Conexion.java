@@ -3,7 +3,10 @@ package controlador;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import modelo.usuario;
 
 
 public class Conexion {
@@ -41,6 +44,24 @@ public class Conexion {
             conn.close();
         }
     }
+    public int loguear(usuario log1) throws ClassNotFoundException, SQLException {
+        PreparedStatement pst;
+        ResultSet rs;
+        int cont=0;
+        int rol=0;
+        
+        String sql = "select rol from usuarios where "
+                + "email = '" +log1.getEmail() + "' and password=md5'" + log1.getPassword()+ "'";
+       
+                  
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()) {
+                rol = rs.getInt(1);
+            }
+            conn.close();
+        return rol;
+    } 
 }
       
 
