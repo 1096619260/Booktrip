@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import controlador.Conexion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,6 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.usuario;
 import controlador.usuarioDao;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,7 +28,7 @@ import controlador.usuarioDao;
 public class login extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
@@ -46,10 +51,48 @@ public class login extends HttpServlet {
                 } else {
                     System.out.println(user.getPassword());
                     System.out.println(password);
-
+                    
+        int res=0;
+        Conexion c = new Conexion();
+            usuarioDao op = new usuarioDao(email, password);
+            c.getConn();
+            usuarioDao l=null;
+            if (request.getParameter("btnIngresar")!=null ) {
+                email=request.getParameter("email");
+                password=request.getParameter("password");
+                l = new usuarioDao(email, password);
+                
+                HttpSession sesion = request.getSession();
+                switch(op.loguear(user)) {
+                    case 1:
+                        sesion.setAttribute("user", email);
+                        sesion.setAttribute("nivel", 1);
+                        response.sendRedirect("vista/Dashboard/indexDashboard.jsp");
+                     break;
+                    
+                     case 2:
+                        sesion.setAttribute("user", email);
+                        sesion.setAttribute("nivel", 2);
+                        response.sendRedirect("vista/Propietario/indexPropietario.jsp");
+                     break;
+                          case 3:
+                        sesion.setAttribute("user", email);
+                        sesion.setAttribute("nivel", 3);
+                        response.sendRedirect("vista/Viajero/indexViajero.jsp");
+                     break;
+                     
+                     default:
+                         response.sendRedirect("error.jsp");
+                      break;   
+                }
+            
+                
+            }
+        
+//////////////////////////////////////////////////////////
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('" + "Bienvenido: " + user.getNombre() + "  " + user.getApellido() + "');");
-                    out.println("window.location.href='/booktripO/vista/Dashboard/usuario/add.jsp';");
+                    out.println("window.location.href='/booktripOvista/Dashboard/usuario/add.jsp';");
                     out.println("</script>");
 
                 }
@@ -59,8 +102,7 @@ public class login extends HttpServlet {
                 System.out.println("este es el catch");
             }
 
-        }
-    }
+        }    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -74,7 +116,11 @@ public class login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -88,7 +134,11 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

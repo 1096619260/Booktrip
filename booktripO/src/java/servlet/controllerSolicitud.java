@@ -86,6 +86,11 @@ public class controllerSolicitud extends HttpServlet {
                 dao.delete(idd);
                 request.getRequestDispatcher("controllerSolicitud?accion=Listar").forward(request, response);
                 break;
+                case "Buscar":
+                    String dato = request.getParameter("txtBuscar");
+                 List<solicitudinmuebles> list = dao.buscar(dato);
+                    request.setAttribute("lista", list);
+                    request.getRequestDispatcher("vista/Dashboard/listaSolicitud.jsp").forward(request, response);
             default:
                 request.getRequestDispatcher("controllerSolicitud?accion=Listar").forward(request, response);;
         }

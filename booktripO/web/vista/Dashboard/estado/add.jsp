@@ -1,4 +1,10 @@
-
+<%
+/* Evitamos que la página se guarde en el caché del navegador y en los proxys */
+response.setHeader("Cache-Control","no-store"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader("Expires", 0); // prevents caching at the proxy server
+%>
+<%@page import="controlador.estadosDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -6,17 +12,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <!-- CSS only -->
-        <link rel="stylesheet" type="text/css" href="../css/estiloValidacion.css">
+          <link rel="stylesheet" type="text/css" href="../css/estilosBooktri.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     </head>
-    <body>
+    <body >
     <center>
-        <div class="container" style="background: #4d80e4">
+        <div class="principal">
+        <div class="container principal" style="background: #4d8e4">
             
         <div class="container  col-md-6 mt-5 bg-light form-group">
             <h3>Agregar nuevo estado</h3>
             <hr>
             <br>
+           
+        
             <form id="formularioEstado" action="/booktripO/controllerEstado"
                   method="POST" onsubmit="return validarEstado()">
                 <div col-md-6>
@@ -32,7 +41,7 @@
             </form>
            
          </div>
-          
+          </div>
     </center>
     <script src="../js/jquery-1.11.0.min.js"></script>
     <script src="../js/validaciones.js"</script>

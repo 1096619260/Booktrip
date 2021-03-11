@@ -72,7 +72,7 @@ public class estadosDAO {
         }
         return lista;
     }
-
+   
     public estados listarId(int id) {
         String sql = "select * from estados where idEstado=" + id;
         estados pe = new estados();
@@ -89,7 +89,24 @@ public class estadosDAO {
         }
         return pe;
     }
-
+     public List buscar(String texto) {
+        String sql ="select * from estados where idEstado LIKE'%"+texto+"%'or nombre LIKE'%"+texto+"%'";
+      List<estados> lista= new ArrayList<>();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                estados pe= new estados();
+                pe.setIdEstado(rs.getInt("idEstado"));
+                pe.setNombre(rs.getString("nombre"));
+                 lista.add(pe);
+                
+            }
+        } catch (Exception e) {
+        }
+        return lista;
+    }
     public void agregar(estados p) {
         String sql = "insert into estados(nombre)values(?)";
         try {

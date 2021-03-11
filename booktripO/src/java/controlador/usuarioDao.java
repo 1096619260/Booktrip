@@ -16,6 +16,29 @@ import modelo.usuario;
 
 public class usuarioDao {
 
+    public usuarioDao(String email, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public usuarioDao() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+public int loguear(usuario log1) throws ClassNotFoundException, SQLException {
+        PreparedStatement pst;
+        ResultSet rs;
+        int cont=0;
+        int nivel=0;
+        
+        String sql = "select idRol usuarios  where email = '" + log1.getEmail()+ "' and password =md5 '" + log1.getPassword()+ "'";
+                  
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()) {
+                nivel = rs.getInt(1);
+            }
+            con.close();
+        return nivel;
+    } 
     //consultar
     
     public usuario consultarUsuario(String email, String password) {

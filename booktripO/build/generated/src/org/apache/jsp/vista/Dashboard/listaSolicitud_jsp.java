@@ -67,33 +67,22 @@ public final class listaSolicitud_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("           <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">\r\n");
       out.write("    </head>\r\n");
       out.write("    <body>\r\n");
-      out.write("          ");
-
-           HttpSession sesion = request.getSession();
-           String usuario;
-           String nivel;
-           
-           if (sesion.getAttribute("user")!=null && sesion.getAttribute("nivel")!=null) {
-               usuario=sesion.getAttribute("user").toString();
-               nivel=sesion.getAttribute("nivel").toString();
-               out.print("<a href='login.jsp?cerrar=true'><h5> Cerrar Sesion" + usuario + "</h5> </a>");
-           }
-           else
-           {
-               out.print("<script>location.replace(‘login.jsp');</script>");
-           }
-   
-      out.write("    \r\n");
+      out.write("         \r\n");
       out.write("    <center>\r\n");
       out.write("         <div class=\"container my-10\" style=\"background: #4d80e4\">\r\n");
       out.write("        <div>\r\n");
-      out.write("            <form action=\"/booktripO/controllerSolicitud\" method=\"POST\">\r\n");
+      out.write("            <form action=\"/booktripO/controllerSolicitud\" method=\"POST\" >\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Listar\" class=\"btn-primary\">\r\n");
       out.write("                <input type=\"submit\" name=\"accion\" value=\"Nuevo\" class=\"btn-success\">\r\n");
       out.write("            </form>\r\n");
+      out.write("              <form class=\"form-inline\">\r\n");
+      out.write("               <input type=\"search\" name=\"txtBuscar\" class=\"form-control\">\r\n");
+      out.write("                <input type=\"submit\" name=\"accion\"  value=\"Buscar\" class=\"btn-outline-success\">\r\n");
+      out.write("              </form>\r\n");
       out.write("        </div>\r\n");
       out.write("        <hr>\r\n");
       out.write("        <div>\r\n");
+      out.write("            <p>prueba</p>\r\n");
       out.write("            <table border=\"1\" class=\" bg-light table table-light\"  style=\"width: 500px;\">\r\n");
       out.write("                <thead>\r\n");
       out.write("                    <tr>\r\n");
