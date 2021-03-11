@@ -18,10 +18,14 @@
     <center>
          
         <div>
-            <form action="/booktripO/controllerTipoInmueble" method="POST"  onsubmit="return validarEstado()">
+            <form action="/booktripO/controllerTipoInmueble" method="POST"  onsubmit="return validarTipoInmueble()">
                 <input type="submit" name="accion" value="Listar" class="btn-primary">
                 <input type="submit" name="accion" value="Nuevo" class="btn-success">
             </form>
+            <form class="form-inline">
+               <input type="search" name="txtBuscar" class="form-control">
+                <input type="submit" name="accion"  value="Buscar" class="btn-outline-success">
+              </form>
         </div>
         <hr>
       <div class="container my-5">

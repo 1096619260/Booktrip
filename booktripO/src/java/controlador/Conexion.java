@@ -50,7 +50,9 @@ public class Conexion {
         int cont=0;
         int rol=0;
         
-        String sql = "select rol from usuarios where email = '" + log1.getEmail()+ "' and password = '" + log1.getPassword()+ "'";
+        String sql = "select rol from usuarios where "
+                + "email = '" +log1.getEmail() + "' and password=md5'" + log1.getPassword()+ "'";
+       
                   
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();

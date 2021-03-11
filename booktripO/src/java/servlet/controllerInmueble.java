@@ -24,7 +24,7 @@ import modelo.inmuebles;
 public class controllerInmueble extends HttpServlet {
 
     inmuebles p = new inmuebles();
-    inmueblesDAO Idao = new inmueblesDAO();
+    inmueblesDAO dao = new inmueblesDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,7 +33,7 @@ public class controllerInmueble extends HttpServlet {
          String accion = request.getParameter("accion");
         switch (accion) {
             case "Listar":
-                List<inmuebles> lista = Idao.listar();
+                List<inmuebles> lista = dao.listar();
                 request.setAttribute("lista", lista);
                 request.getRequestDispatcher("vista/Propietario/listaInmueble.jsp").forward(request, response);
                 break;
@@ -62,18 +62,18 @@ public class controllerInmueble extends HttpServlet {
                 p.setDescripcion(descripcion);
                 p.setPrecio(precio);
                 p.setAdjunto(adjunto);
-                Idao.agregar(p);
+                dao.agregar(p);
 
                 request.getRequestDispatcher("controllerInmueble?accion=Listar").forward(request, response);
                 break;
             case "Editar":
                 int ide = Integer.parseInt(request.getParameter("id"));
-                inmuebles res = Idao.listarId(ide);
+                inmuebles res = dao.listarId(ide);
                 request.setAttribute("dato", res);
                 request.getRequestDispatcher("vista/Propietario/inmueble/edit.jsp").forward(request, response);
                 break;
             case "Actualizar":
-                 int id=Integer.parseInt(request.getParameter("id"));
+                 int id2=Integer.parseInt(request.getParameter("id"));
                   int tipo1=Integer.parseInt(request.getParameter("txtTipo"));
                 int departamento1=Integer.parseInt(request.getParameter("txtDepartamento"));
                 int usuario1=Integer.parseInt(request.getParameter("txtUsuario"));
@@ -84,7 +84,7 @@ public class controllerInmueble extends HttpServlet {
                 String descripcion1 = request.getParameter("txtDescripcion");
                 int precio1 = Integer.parseInt(request.getParameter("txtPrecio"));
                 String adjunto1 = request.getParameter("txtAdjunto");
-                 p.setIdInmueble(id);
+                 p.setIdInmueble(id2);
                 p.setIdTipo(tipo1);
                 p.setIdDepartamento(departamento1);
                 p.setIdUsuario(usuario1);
@@ -97,14 +97,20 @@ public class controllerInmueble extends HttpServlet {
                 p.setAdjunto(adjunto1);
            
                
-                Idao.update(p);
+                dao.update(p);
                 request.getRequestDispatcher("controllerInmueble?accion=Listar").forward(request, response);
                 break;
             case "Delete":
                 int idd = Integer.parseInt(request.getParameter("id"));
-                Idao.delete(idd);
+                dao.delete(idd);
                 request.getRequestDispatcher("controllerInmueble?accion=Listar").forward(request, response);
                 break;
+                case "Buscar":
+                    String dato = request.getParameter("txtBuscar");
+                 List<inmuebles> list = dao.buscar(dato);
+                    request.setAttribute("lista", list);
+                    request.getRequestDispatcher("vista/Propietario/listaInmueble.jsp").forward(request, response);
+                     break;
             default:
                 request.getRequestDispatcher("controllerInmueble?accion=Listar").forward(request, response);
                 ;

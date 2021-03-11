@@ -1,4 +1,6 @@
 
+<%@page import="modelo.tipoinmuebles"%>
+<%@page import="controlador.tipoinmuebleDAO"%>
 <%@page import="modelo.usuario"%>
 <%@page import="controlador.usuarioDao"%>
 <%@page import="modelo.estados"%>
@@ -28,17 +30,17 @@
          <h3>esto es una prueba de recuperacion</h3>
         <hr>
         <br>
-        <form action="/booktripO/controllerSolicitud" method="POST">
+        <form action="/booktripO/controllerSolicitud" method="POST" onsubmit="return validarSolicitud()">
             <label>id inmueble</label>
 
-            
-            <div class="col-sm-6">
+          <div class="col-sm-6">
                
                         <%
                             inmueblesDAO miinmuebleDAO = new inmueblesDAO();
                             ArrayList<inmuebles>  listainmueble = miinmuebleDAO.ConsultarListadoInmueble("");
                         %> 
                         <select name="txtInmueble">
+                             <option value="">--selecione el inmubele-- </option>
                             <%
                         for (inmuebles i : listainmueble) {%>
                             <option value="<%=i.getIdInmueble()%>"><%=i.getNombre()%> </option>
@@ -48,17 +50,16 @@
                         </select>
 
                     </div>
-                    <label>id usuario</label>
-                   
-                     <div class="col-sm-6">
+                 <div class="col-sm-6">
                
                         <%
-                            usuarioDao miusuarioDAO = new usuarioDao();
-                            ArrayList<usuario>  listausuario = miusuarioDAO.ListadoUsuarios("");
+                            usuarioDao DAO = new usuarioDao();
+                            ArrayList<usuario>  lista = DAO.ConsultarListadoUsuarios("");
                         %> 
                         <select name="txtUsuario">
+                             <option value="">--selecione el usuario-- </option>
                             <%
-                        for (usuario i : listausuario) {%>
+                        for (usuario i : lista) {%>
                             <option value="<%=i.getIdUsuario()%>"><%=i.getNombre()%> </option>
                             <%
                                 }
@@ -66,15 +67,18 @@
                         </select>
 
                     </div>
-                    
-                      <label>id estado</label>
+                     
+  
+
+                      
                       <div class="col-sm-6">
-               
+
                         <%
                             estadosDAO miestadoDAO = new estadosDAO();
                             ArrayList<estados>  listaestado = miestadoDAO.ConsultarListadoEstados("");
                         %> 
                         <select name="txtEstado">
+                             <option value="">--seleccione el estado-- </option>
                             <%
                         for (estados i : listaestado) {%>
                             <option value="<%=i.getIdEstado()%>"><%=i.getNombre()%> </option>
@@ -84,7 +88,7 @@
                         </select>
 
                     </div>
-                        
+
                        <div>     
                     <label>fecha</label>
                     <input type="text" name="txtFecha">

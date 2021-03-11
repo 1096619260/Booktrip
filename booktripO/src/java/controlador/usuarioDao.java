@@ -16,6 +16,29 @@ import modelo.usuario;
 
 public class usuarioDao {
 
+    public usuarioDao(String email, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public usuarioDao() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+public int loguear(usuario log1) throws ClassNotFoundException, SQLException {
+        PreparedStatement pst;
+        ResultSet rs;
+        int cont=0;
+        int nivel=0;
+        
+        String sql = "select idRol usuarios  where email = '" + log1.getEmail()+ "' and password =md5 '" + log1.getPassword()+ "'";
+                  
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()) {
+                nivel = rs.getInt(1);
+            }
+            con.close();
+        return nivel;
+    } 
     //consultar
     
     public usuario consultarUsuario(String email, String password) {
@@ -285,5 +308,45 @@ public class usuarioDao {
 
     }
 
-   
+    public ArrayList<usuario>ConsultarListadoUsuarios(String criterio){
+        ArrayList<usuario>milista =new ArrayList<usuario>();
+        
+        usuario miU;
+        Conexion  miConexion= new Conexion();
+        Connection nuevaCon;
+        nuevaCon= miConexion.getConn();
+        
+        try{
+            Statement sentencia = nuevaCon.createStatement();
+    
+            String Query="select idUsuario, idTipoDocumento, numDocu, idRol, nombre, apellido, "
+                    + "direccion, telefono, fechaNacimiento, email, password " 
+                    + " from usuarios where nombre like '%"+ 
+                    criterio +"%' ORDER BY nombre;";
+           
+            ResultSet rs=sentencia.executeQuery(Query);
+          
+            while (rs.next()) {                
+              miU= new usuario();
+              miU.setIdUsuario(rs.getInt(1));
+             miU.setIdTipoDocumento(rs.getInt(2));
+              miU.setNumDocu(rs.getInt(3));
+               miU.setIdRol(rs.getInt(4));
+                miU.setNombre(rs.getString(5));
+                miU.setApellido(rs.getString(6));
+                miU.setDireccion(rs.getString(7));
+                miU.setTelefono(rs.getInt(8));
+                 miU.setFechaNacimiento(rs.getString(9));
+                 miU.setEmail(rs.getString(10));
+                 miU.setPassword(rs.getString(11));
+                   milista.add(miU);
+          
+            }
+              return  milista;
+              }catch (Exception e){
+           System.out.println("Error el a consulta solicitud"+e.getMessage());
+              return  milista;
+                
+        }
+     }
 }

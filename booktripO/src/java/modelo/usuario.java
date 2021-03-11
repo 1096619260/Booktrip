@@ -10,9 +10,7 @@ public class usuario {
     public usuario() {
     }
 
-    public usuario(String email, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     public int getIdUsuario() {
         return idUsuario;
