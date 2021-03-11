@@ -3,6 +3,7 @@ package org.apache.jsp.vista.Dashboard.estado;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import controlador.estadosDAO;
 
 public final class add_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -41,6 +42,13 @@ public final class add_jsp extends org.apache.jasper.runtime.HttpJspBase
       _jspx_out = out;
       _jspx_resourceInjector = (org.glassfish.jsp.api.ResourceInjector) application.getAttribute("com.sun.appserv.jsp.resource.injector");
 
+
+/* Evitamos que la página se guarde en el caché del navegador y en los proxys */
+response.setHeader("Cache-Control","no-store"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader("Expires", 0); // prevents caching at the proxy server
+
+      out.write("\r\n");
       out.write("\r\n");
       out.write("\r\n");
       out.write("<!DOCTYPE html>\r\n");
@@ -49,17 +57,20 @@ public final class add_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n");
       out.write("        <title>JSP Page</title>\r\n");
       out.write("        <!-- CSS only -->\r\n");
-      out.write("        <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/estiloValidacion.css\">\r\n");
+      out.write("          <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/estilosBooktri.css\">\r\n");
       out.write("        <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1\" crossorigin=\"anonymous\">\r\n");
       out.write("    </head>\r\n");
-      out.write("    <body>\r\n");
+      out.write("    <body >\r\n");
       out.write("    <center>\r\n");
-      out.write("        <div class=\"container\" style=\"background: #4d80e4\">\r\n");
+      out.write("        <div class=\"principal\">\r\n");
+      out.write("        <div class=\"container principal\" style=\"background: #4d8e4\">\r\n");
       out.write("            \r\n");
       out.write("        <div class=\"container  col-md-6 mt-5 bg-light form-group\">\r\n");
       out.write("            <h3>Agregar nuevo estado</h3>\r\n");
       out.write("            <hr>\r\n");
       out.write("            <br>\r\n");
+      out.write("           \r\n");
+      out.write("        \r\n");
       out.write("            <form id=\"formularioEstado\" action=\"/booktripO/controllerEstado\"\r\n");
       out.write("                  method=\"POST\" onsubmit=\"return validarEstado()\">\r\n");
       out.write("                <div col-md-6>\r\n");
@@ -75,7 +86,7 @@ public final class add_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            </form>\r\n");
       out.write("           \r\n");
       out.write("         </div>\r\n");
-      out.write("          \r\n");
+      out.write("          </div>\r\n");
       out.write("    </center>\r\n");
       out.write("    <script src=\"../js/jquery-1.11.0.min.js\"></script>\r\n");
       out.write("    <script src=\"../js/validaciones.js\"</script>\r\n");

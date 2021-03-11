@@ -35,6 +35,7 @@
                     ArrayList<tipoinmuebles> listatipo = mitipoDAO.ConsultarListadoTipos("");
                 %> 
                 <select name="txtTipo">
+                     <option value="${dato.getNombre()}">--seleccione el tipo de inmueble </option>
                     <%
                                 for (tipoinmuebles i : listatipo) {%>
                     <option value="<%=i.getIdTipo()%>"><%=i.getNombre()%> </option>
@@ -52,6 +53,7 @@
                     ArrayList<departamento> listadepartamento = midepartamentoDAO.ConsularListaDepartamento("");
                 %> 
                 <select name="txtDepartamento">
+                     <option value="${dato.getIdDepartamento()}">--seleccione el departamento </option>
                     <%
                                 for (departamento i : listadepartamento) {%>
                     <option value="<%=i.getIdDepartamento()%>"><%=i.getNombre()%> </option>
@@ -61,15 +63,15 @@
                 </select>
 
             </div>
-            <label>id usuario</label>
 
             <div class="col-sm-6">
-
+ <option value="">--selecione el usuario</option>
                 <%
                     usuarioDao miusuarioDAO = new usuarioDao();
                     ArrayList<usuario> listausuario = miusuarioDAO.ListadoUsuarios("");
                 %> 
                 <select name="txtUsuario">
+                    
                     <%
                                 for (usuario i : listausuario) {%>
                     <option value="<%=i.getIdUsuario()%>"><%=i.getNombre()%> </option>
@@ -87,6 +89,7 @@
                     ArrayList<estados> listaestado = miestadoDAO.ConsultarListadoEstados("");
                 %> 
                 <select name="txtEstado">
+                     <option value="${dato.getIdEstado()}">--seleccione el estado </option>
                     <%
                                 for (estados i : listaestado) {%>
                     <option value="<%=i.getIdEstado()%>"><%=i.getNombre()%> </option>

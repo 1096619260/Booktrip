@@ -69,6 +69,7 @@ public class inmueblesDAO {
         }
         return pe;
     }
+    
 
     public void agregar(inmuebles p) {
         String sql = "insert into inmuebles(idTipo, idDepartamento, idUsuario, idEstado, nombre, direccion, capacidad, descripcion,"
@@ -127,7 +128,24 @@ public class inmueblesDAO {
         }
 
     }
-     
+     public List buscar(String texto) {
+        String sql ="select * from inmuebles where idInmueble LIKE'%"+texto+"%'or nombre LIKE'%"+texto+"%'";
+      List<inmuebles> lista= new ArrayList<>();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                inmuebles pe= new inmuebles();
+                pe.setIdInmueble(rs.getInt("idInmueble"));
+                pe.setNombre(rs.getString("nombre"));
+                 lista.add(pe);
+                
+            }
+        } catch (Exception e) {
+        }
+        return lista;
+    }
         public ArrayList<inmuebles> ConsultarListadoInmueble(String criterio) {
         ArrayList<inmuebles> milistainmueble = new ArrayList<inmuebles>();
 

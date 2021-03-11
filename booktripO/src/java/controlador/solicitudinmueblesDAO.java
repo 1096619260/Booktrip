@@ -110,6 +110,25 @@ public class solicitudinmueblesDAO {
         }
 
     }
+    
+    public List buscar(String texto) {
+        String sql ="select * from solicitudinmuebles where idSolicitud LIKE'%"+texto+"%'or fecha LIKE'%"+texto+"%'";
+      List<solicitudinmuebles> lista= new ArrayList<>();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                solicitudinmuebles pe= new solicitudinmuebles();
+                pe.setIdSolicitud(rs.getInt("idSolicitud"));
+                pe.setFecha(rs.getString("fecha"));
+                 lista.add(pe);
+                
+            }
+        } catch (Exception e) {
+        }
+        return lista;
+    }
      ////////////////////////////////////////////////////////////////////77
      public ArrayList<solicitudinmuebles>ConsultarListadoSolicitudInmueble(String criterio){
         ArrayList<solicitudinmuebles>milistasolicitud =new ArrayList<solicitudinmuebles>();

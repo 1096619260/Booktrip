@@ -66,6 +66,13 @@ tipoinmuebles p=new tipoinmuebles();
                 dao.delete(idd);
                 request.getRequestDispatcher("controllerTipoInmueble?accion=Listar").forward(request, response);
                 break;
+                case "Buscar":
+                    String dato = request.getParameter("txtBuscar");
+                 List<tipoinmuebles> list = dao.buscar(dato);
+                    request.setAttribute("lista", list);
+                    request.getRequestDispatcher("vista/Dashboard/listaTipoInmueble.jsp").forward(request, response);
+
+                    break;
             default:
                 request.getRequestDispatcher("controllerTipoInmueble?accion=Listar").forward(request, response);;
         }

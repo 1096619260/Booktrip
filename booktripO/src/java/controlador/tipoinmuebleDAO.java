@@ -125,6 +125,23 @@ public class tipoinmuebleDAO {
 
     }
    
-
+public List buscar(String texto) {
+        String sql ="select * from tipoinmuebles where idTipo LIKE'%"+texto+"%'or nombre LIKE'%"+texto+"%'";
+      List<tipoinmuebles> lista= new ArrayList<>();
+        try {
+            con = c.getConn();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                tipoinmuebles pe= new tipoinmuebles();
+                pe.setIdTipo(rs.getInt("idTipo"));
+                pe.setNombre(rs.getString("nombre"));
+                 lista.add(pe);
+                
+            }
+        } catch (Exception e) {
+        }
+        return lista;
+    }
    
 }

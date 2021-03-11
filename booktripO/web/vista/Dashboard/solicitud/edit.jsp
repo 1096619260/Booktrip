@@ -33,6 +33,7 @@
                             ArrayList<inmuebles>  listainmueble = miinmuebleDAO.ConsultarListadoInmueble("");
                         %> 
                         <select name="txtInmueble">
+                             <option value="">--selecione el inmubele-- </option>
                             <%
                         for (inmuebles i : listainmueble) {%>
                             <option value="<%=i.getIdInmueble()%>"><%=i.getNombre()%> </option>
@@ -42,7 +43,7 @@
                         </select>
 
                     </div>
-           <!-- <input type="text" name="txtInmueble" value="${dato.getIdInmueble()}">-->
+          
             <label>id usuario</label>
              <div class="col-sm-6">
                
@@ -51,6 +52,7 @@
                             ArrayList<usuario>  listausuario = miusuarioDAO.ListadoUsuarios("");
                         %> 
                         <select name="txtUsuario">
+                              <option value="">--selecione el usuario-- </option>
                             <%
                         for (usuario i : listausuario) {%>
                             <option value="<%=i.getIdUsuario()%>"><%=i.getNombre()%> </option>
@@ -70,6 +72,7 @@
                             ArrayList<estados>  listaestado = miestadoDAO.ConsultarListadoEstados("");
                         %> 
                         <select name="txtEstado">
+                              <option value="">--selecione el inmubele-- </option>
                             <%
                         for (estados i : listaestado) {%>
                             <option value="<%=i.getIdEstado()%>"><%=i.getNombre()%> </option>
