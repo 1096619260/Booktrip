@@ -49,7 +49,7 @@
                 </select>
 
             </div>
-
+              
             <div class="col-sm-6">
 
                 <%
@@ -67,27 +67,23 @@
                 </select>
 
             </div>
-            
+                 <div class="col-sm-6">
+               
+                        <%
+                            usuarioDao miusuarioDAO = new usuarioDao();
+                            ArrayList<usuario>  listausuario = miusuarioDAO.ConsultarListadoUsuarios("");
+                        %> 
+                        <select name="txtUsuario">
+                              <option value="">--selecione el usuario-- </option>
+                            <%
+                        for (usuario i : listausuario) {%>
+                            <option value="<%=i.getIdUsuario()%>"><%=i.getNombre()%> </option>
+                            <%
+                                }
+                            %>
+                        </select>
 
-            <div class="col-sm-6">
-
-                <%
-                    usuarioDao miusuarioDAO = new usuarioDao();
-                    ArrayList<usuario> listausuario = miusuarioDAO.ListadoUsuarios("");
-                %> 
-                <select name="txtUsuario">
-                      <option value="">--seleccione el usuario </option>
-                    <%
-                                for (usuario i : listausuario) {%>
-                    <option value="<%=i.getIdUsuario()%>"><%=i.getNombre()%> </option>
-                    <%
-                        }
-                    %>
-                </select>
-
-            </div>
-
-            <label>id estado</label>
+                    </div>
             <div class="col-sm-6">
 
                 <%

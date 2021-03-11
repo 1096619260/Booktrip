@@ -32,36 +32,33 @@
         <form action="/booktripO/controllerSolicitud" method="POST" onsubmit="return validarSolicitud()">
             <label>id inmueble</label>
 
-            
-           <div class="col-sm-6">
-
-                <%
-                    tipoinmuebleDAO mitipoDAO = new tipoinmuebleDAO();
-                    ArrayList<tipoinmuebles> listatipo = mitipoDAO.ConsultarListadoTipos("");
-                %> 
-                <select name="txtTipo">
-                     <option value="">--seleccione el tipo de inmueble </option>
-                    <%
-                                for (tipoinmuebles i : listatipo) {%>
-                    <option value="<%=i.getIdTipo()%>"><%=i.getNombre()%> </option>
-                    <%
-                        }
-                    %>
-                </select>
-
-            </div>
-                    <label>id usuario</label>
-                   
-                     <div class="col-sm-6">
+          <div class="col-sm-6">
                
                         <%
-                            usuarioDao miusuarioDAO = new usuarioDao();
-                            ArrayList<usuario>  listausuario = miusuarioDAO.ListadoUsuarios("");
+                            inmueblesDAO miinmuebleDAO = new inmueblesDAO();
+                            ArrayList<inmuebles>  listainmueble = miinmuebleDAO.ConsultarListadoInmueble("");
+                        %> 
+                        <select name="txtInmueble">
+                             <option value="">--selecione el inmubele-- </option>
+                            <%
+                        for (inmuebles i : listainmueble) {%>
+                            <option value="<%=i.getIdInmueble()%>"><%=i.getNombre()%> </option>
+                            <%
+                                }
+                            %>
+                        </select>
+
+                    </div>
+                 <div class="col-sm-6">
+               
+                        <%
+                            usuarioDao DAO = new usuarioDao();
+                            ArrayList<usuario>  lista = DAO.ConsultarListadoUsuarios("");
                         %> 
                         <select name="txtUsuario">
-                             <option value="">--seleccione el usuario-- </option>
+                             <option value="">--selecione el usuario-- </option>
                             <%
-                        for (usuario i : listausuario) {%>
+                        for (usuario i : lista) {%>
                             <option value="<%=i.getIdUsuario()%>"><%=i.getNombre()%> </option>
                             <%
                                 }
@@ -69,10 +66,12 @@
                         </select>
 
                     </div>
-                    
-                      <label>id estado</label>
+                     
+  
+
+                      
                       <div class="col-sm-6">
-               
+
                         <%
                             estadosDAO miestadoDAO = new estadosDAO();
                             ArrayList<estados>  listaestado = miestadoDAO.ConsultarListadoEstados("");
@@ -88,7 +87,7 @@
                         </select>
 
                     </div>
-                        
+
                        <div>     
                     <label>fecha</label>
                     <input type="text" name="txtFecha">
