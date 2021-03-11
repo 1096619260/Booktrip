@@ -110,6 +110,7 @@ public class controllerInmueble extends HttpServlet {
                  List<inmuebles> list = dao.buscar(dato);
                     request.setAttribute("lista", list);
                     request.getRequestDispatcher("vista/Propietario/listaInmueble.jsp").forward(request, response);
+                     break;
             default:
                 request.getRequestDispatcher("controllerInmueble?accion=Listar").forward(request, response);
                 ;
