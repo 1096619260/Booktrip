@@ -25,6 +25,7 @@
         <div class="fondo-estado container my-10" style="background: #4d80e4">
              <div class="container  col-md-6 mt-5 bg-light">
         <h3>Agregar Nueva Solicitud</h3>
+        <h3>Esto es una prueba</h3>
         <hr>
         <br>
         <form action="/booktripO/controllerSolicitud" method="POST">
