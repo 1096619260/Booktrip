@@ -41,6 +41,8 @@ public class login extends HttpServlet {
                 usuarioDao userC = new usuarioDao();
                 usuario user = new usuario();
                 user = userC.consultarUsuario(email, password);
+                String nombre;
+              
 
                 if (user == null) {
                     System.out.println(email);
@@ -49,50 +51,18 @@ public class login extends HttpServlet {
                     out.println("window.location.href='/booktripO/vista/login.jsp';");
                     out.println("</script>");
                 } else {
+                    HttpSession session = request.getSession();
+                     session.setAttribute("copiaU", userC);
+                    request.getSession().setAttribute("email", email);
                     System.out.println(user.getPassword());
                     System.out.println(password);
                     
-        int res=0;
-        Conexion c = new Conexion();
-            usuarioDao op = new usuarioDao(email, password);
-            c.getConn();
-            usuarioDao l=null;
-            if (request.getParameter("btnIngresar")!=null ) {
-                email=request.getParameter("email");
-                password=request.getParameter("password");
-                l = new usuarioDao(email, password);
-                
-                HttpSession sesion = request.getSession();
-                switch(op.loguear(user)) {
-                    case 1:
-                        sesion.setAttribute("user", email);
-                        sesion.setAttribute("nivel", 1);
-                        response.sendRedirect("vista/Dashboard/indexDashboard.jsp");
-                     break;
-                    
-                     case 2:
-                        sesion.setAttribute("user", email);
-                        sesion.setAttribute("nivel", 2);
-                        response.sendRedirect("vista/Propietario/indexPropietario.jsp");
-                     break;
-                          case 3:
-                        sesion.setAttribute("user", email);
-                        sesion.setAttribute("nivel", 3);
-                        response.sendRedirect("vista/Viajero/indexViajero.jsp");
-                     break;
-                     
-                     default:
-                         response.sendRedirect("error.jsp");
-                      break;   
-                }
-            
-                
-            }
+        
         
 //////////////////////////////////////////////////////////
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('" + "Bienvenido: " + user.getNombre() + "  " + user.getApellido() + "');");
-                    out.println("window.location.href='/booktripOvista/Dashboard/usuario/add.jsp';");
+                    out.println("window.location.href='/booktripO/vista/Dashboard/indexDashboard.jsp';");
                     out.println("</script>");
 
                 }

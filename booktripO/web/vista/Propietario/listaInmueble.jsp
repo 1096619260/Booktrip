@@ -59,7 +59,9 @@
                               <td style="padding-left:25px;">${dato.getCapacidad()}</td>
                                <td style="padding-left:25px;">${dato.getDescripcion()}</td>
                                 <td style="padding-left:25px;">${dato.getPrecio()}</td>
-                                 <td style="padding-left:25px;">${dato.getAdjunto()}</td>
+                                <td style="padding-left:25px;"> <img src="${dato.getAdjunto()}" height="50px" width="50px"/></td>
+                   
+
                             <td style="padding-left:25px;">
                                 <form action="/booktripO/controllerInmueble" method="POST">
                                     <input type="hidden" name="id" value="${dato.getIdInmueble()}">

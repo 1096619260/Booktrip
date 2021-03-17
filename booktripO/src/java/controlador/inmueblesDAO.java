@@ -1,8 +1,12 @@
 package controlador;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,9 +75,11 @@ public class inmueblesDAO {
     }
     
 
-    public void agregar(inmuebles p) {
+    public void agregar(inmuebles p) throws FileNotFoundException, SQLException {
         String sql = "insert into inmuebles(idTipo, idDepartamento, idUsuario, idEstado, nombre, direccion, capacidad, descripcion,"
                 + " precio, adjunto)values(?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+       
+
         try {
             con = c.getConn();
             ps = con.prepareStatement(sql);

@@ -121,9 +121,11 @@
                 <label>Precio</label>
                 <input type="text" name="txtPrecio">
             </div>  
+                
+                
                 <div class="col-sm-6">
                 <label>Adjunto</label>
-                <input type="text" name="txtAdjunto">
+                <input type="file" name="txtAdjunto">
             </div>  
 
             <input type="submit" name="accion" value="Guardar" class="btn-primary btn-block">

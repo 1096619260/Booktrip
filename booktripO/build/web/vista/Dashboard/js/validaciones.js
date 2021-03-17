@@ -1,4 +1,4 @@
-alert("Bienvenidos a BookTrip");
+alert("Bienvenidos a BookTrip probando people");
 
 
 
