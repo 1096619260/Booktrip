@@ -12,11 +12,17 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Dashboard/estado/add.jsp</file>
-            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/src/java/servlet/controllerSolicitud.java</file>
-            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Dashboard/listaSolicitud.jsp</file>
-            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Dashboard/js/validaciones.js</file>
-            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Dashboard/solicitud/add.jsp</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/login.jsp</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Dashboard/listadoEstado4.jsp</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Dashboard/listaEstado.jsp</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Propietario/inmueble/add.jsp</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Dashboard/indexListaEstado.jsp</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Dashboard/indexDashboard.jsp</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Propietario/listaInmueble.jsp</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/src/java/servlet/controllerInmueble.java</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/src/java/controlador/inmueblesDAO.java</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/src/java/servlet/controllerEstado.java</file>
+            <file>file:/C:/Users/oscar%20sanabria/Documents/GitHub/Booktrip/booktripO/web/vista/Dashboard/js/script.js</file>
         </group>
     </open-files>
 </project-private>

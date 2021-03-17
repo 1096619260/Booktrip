@@ -16,13 +16,7 @@ import modelo.usuario;
 
 public class usuarioDao {
 
-    public usuarioDao(String email, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public usuarioDao() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 public int loguear(usuario log1) throws ClassNotFoundException, SQLException {
         PreparedStatement pst;
         ResultSet rs;

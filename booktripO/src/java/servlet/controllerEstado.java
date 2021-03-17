@@ -58,7 +58,6 @@ public class controllerEstado extends HttpServlet {
                     int ide = Integer.parseInt(request.getParameter("id"));
                     estados res = dao.listarId(ide);
                     request.setAttribute("dato", res);
-                    request.getRequestDispatcher("vista/Dashboard/estado/edit.jsp").forward(request, response);
                     break;
                 case "Actualizar":
                     int id = Integer.parseInt(request.getParameter("id"));
@@ -67,7 +66,7 @@ public class controllerEstado extends HttpServlet {
                     p.setNombre(nom1);
                     dao.update(p);
                     HttpSession sesion = request.getSession();
-                    request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("booktripO/vista/Dashboard/indexListaEstado.jsp").forward(request, response);
                     break;
                 case "Delete":
                     int idd = Integer.parseInt(request.getParameter("id"));
@@ -78,9 +77,10 @@ public class controllerEstado extends HttpServlet {
                     String dato = request.getParameter("txtBuscar");
                  List<estados> list = dao.buscar(dato);
                     request.setAttribute("lista", list);
-                    request.getRequestDispatcher("vista/Dashboard/listaEstado.jsp").forward(request, response);
+                    request.getRequestDispatcher("vista/Dashboard/indexListaEstado.jsp").forward(request, response);
 
                     break;
+                    
                 default:
                     request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
                     ;

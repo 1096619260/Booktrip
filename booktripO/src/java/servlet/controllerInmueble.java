@@ -6,15 +6,25 @@
 package servlet;
 
 import controlador.inmueblesDAO;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.inmuebles;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -27,10 +37,10 @@ public class controllerInmueble extends HttpServlet {
     inmueblesDAO dao = new inmueblesDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, FileNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
 
-         String accion = request.getParameter("accion");
+        String accion = request.getParameter("accion");
         switch (accion) {
             case "Listar":
                 List<inmuebles> lista = dao.listar();
@@ -41,6 +51,7 @@ public class controllerInmueble extends HttpServlet {
                 request.getRequestDispatcher("vista/Propietario/inmueble/add.jsp").forward(request, response);
                 break;
             case "Guardar":
+
                 int tipo = Integer.parseInt(request.getParameter("txtTipo"));
                 int departamento = Integer.parseInt(request.getParameter("txtDepartamento"));
                 int usuario = Integer.parseInt(request.getParameter("txtUsuario"));
@@ -51,7 +62,26 @@ public class controllerInmueble extends HttpServlet {
                 String descripcion = request.getParameter("txtDescripcion");
                 int precio = Integer.parseInt(request.getParameter("txtPrecio"));
                 String adjunto = request.getParameter("txtAdjunto");
+                ArrayList<String> lis = new ArrayList<>();
                 
+                try {
+                    FileItemFactory file = new DiskFileItemFactory();
+                    ServletFileUpload fileUpload = new ServletFileUpload(file);
+                    List items = fileUpload.parseRequest(request);
+                    for (int i = 0; i < items.size(); i++) {
+                        FileItem fileItem = (FileItem) items.get(i);
+                        if (!fileItem.isFormField()) {
+                            File f = new File("C:\\imagenes\\" + fileItem.getName());
+                            fileItem.write(f);
+                            p.setAdjunto(f.getAbsolutePath());
+                        } else {
+                            lis.add(fileItem.getString());
+                        }
+                    }
+                    p.setAdjunto(lis.get(0));
+
+                } catch (Exception e) {
+                }
                 p.setIdTipo(tipo);
                 p.setIdDepartamento(departamento);
                 p.setIdUsuario(usuario);
@@ -73,18 +103,18 @@ public class controllerInmueble extends HttpServlet {
                 request.getRequestDispatcher("vista/Propietario/inmueble/edit.jsp").forward(request, response);
                 break;
             case "Actualizar":
-                 int id2=Integer.parseInt(request.getParameter("id"));
-                  int tipo1=Integer.parseInt(request.getParameter("txtTipo"));
-                int departamento1=Integer.parseInt(request.getParameter("txtDepartamento"));
-                int usuario1=Integer.parseInt(request.getParameter("txtUsuario"));
-                int estado1=Integer.parseInt(request.getParameter("txtEstado"));
-                String nombre1=request.getParameter("txtNombre");
-                 String direccion1 = request.getParameter("txtDireccion");
+                int id2 = Integer.parseInt(request.getParameter("id"));
+                int tipo1 = Integer.parseInt(request.getParameter("txtTipo"));
+                int departamento1 = Integer.parseInt(request.getParameter("txtDepartamento"));
+                int usuario1 = Integer.parseInt(request.getParameter("txtUsuario"));
+                int estado1 = Integer.parseInt(request.getParameter("txtEstado"));
+                String nombre1 = request.getParameter("txtNombre");
+                String direccion1 = request.getParameter("txtDireccion");
                 int capacidad1 = Integer.parseInt(request.getParameter("txtCapacidad"));
                 String descripcion1 = request.getParameter("txtDescripcion");
                 int precio1 = Integer.parseInt(request.getParameter("txtPrecio"));
                 String adjunto1 = request.getParameter("txtAdjunto");
-                 p.setIdInmueble(id2);
+                p.setIdInmueble(id2);
                 p.setIdTipo(tipo1);
                 p.setIdDepartamento(departamento1);
                 p.setIdUsuario(usuario1);
@@ -95,8 +125,7 @@ public class controllerInmueble extends HttpServlet {
                 p.setDescripcion(descripcion1);
                 p.setPrecio(precio1);
                 p.setAdjunto(adjunto1);
-           
-               
+
                 dao.update(p);
                 request.getRequestDispatcher("controllerInmueble?accion=Listar").forward(request, response);
                 break;
@@ -105,17 +134,16 @@ public class controllerInmueble extends HttpServlet {
                 dao.delete(idd);
                 request.getRequestDispatcher("controllerInmueble?accion=Listar").forward(request, response);
                 break;
-                case "Buscar":
-                    String dato = request.getParameter("txtBuscar");
-                 List<inmuebles> list = dao.buscar(dato);
-                    request.setAttribute("lista", list);
-                    request.getRequestDispatcher("vista/Propietario/listaInmueble.jsp").forward(request, response);
-                     break;
+            case "Buscar":
+                String dato = request.getParameter("txtBuscar");
+                List<inmuebles> list = dao.buscar(dato);
+                request.setAttribute("lista", list);
+                request.getRequestDispatcher("vista/Propietario/listaInmueble.jsp").forward(request, response);
+                break;
             default:
                 request.getRequestDispatcher("controllerInmueble?accion=Listar").forward(request, response);
                 ;
         }
-
 
     }
 
@@ -130,8 +158,12 @@ public class controllerInmueble extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException, FileNotFoundException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(controllerInmueble.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -144,8 +176,12 @@ public class controllerInmueble extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException, FileNotFoundException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(controllerInmueble.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
