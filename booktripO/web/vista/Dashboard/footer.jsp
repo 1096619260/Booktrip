@@ -29,7 +29,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Quieres cerrar la sesion?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true">?</span>
           </button>
                 </div>
                 <div class="modal-body">Seleccione salir si estas listo para cerrar la sesion actual</div>
@@ -67,6 +67,55 @@
     <script src="js/script.js"></script>
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/gestionarSolicitudes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    
+    <script src="http://webapplayers.com/inspinia_admin-v2.9.4/js/jquery-3.1.1.min.js"></script>
+    <script src="http://webapplayers.com/inspinia_admin-v2.9.4/js/popper.min.js"></script>
+    <script src="http://webapplayers.com/inspinia_admin-v2.9.4/js/bootstrap.js"></script>
+    <script src="http://webapplayers.com/inspinia_admin-v2.9.4/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="http://webapplayers.com/inspinia_admin-v2.9.4/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script src="http://webapplayers.com/inspinia_admin-v2.9.4/js/plugins/dataTables/datatables.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="http://webapplayers.com/inspinia_admin-v2.9.4/js/inspinia.js"></script>
+    <script src="http://webapplayers.com/inspinia_admin-v2.9.4/js/plugins/pace/pace.min.js"></script>
+ 
+    <!-- Page-Level Scripts -->
+    <script>
+
+        // Upgrade button class name
+        $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
+
+        $(document).ready(function(){
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy'},
+                    {extend: 'csv'},
+                    {extend: 'excel', title: 'ExampleFile'},
+                    {extend: 'pdf', title: 'ExampleFile'},
+
+                    {extend: 'print',
+                     customize: function (win){
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                    }
+                    }
+                ]
+
+            });
+
+        });
+
+    </script>
+
 </body>
 
 </html>

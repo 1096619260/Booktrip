@@ -28,36 +28,38 @@ public class controllerEstado extends HttpServlet {
     estados p = new estados();
     estadosDAO dao = new estadosDAO();
     
+    String listar="booktripO/vista/Dashboard/indexListaEstado.jsp";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
             String accion = request.getParameter("accion");
-
+ String acceso="";
             switch (accion) {
 
                 case "Listar":
                     List<estados> lista = dao.listar();
                     request.setAttribute("lista", lista);
-                    request.getRequestDispatcher("vista/Dashboard/listaEstado.jsp").forward(request, response);
+                    request.getRequestDispatcher("vista/Dashboard/indexListaEstado.jsp").forward(request, response);
                     break;
                 case "Nuevo":
-                    request.getRequestDispatcher("vista/Dashboard/estado/add.jsp").forward(request, response);
+                   
                     break;
                 case "Guardar":
                     String nom = request.getParameter("txtNom");
                     p.setNombre(nom);
                     dao.agregar(p);
                     HttpSession session = request.getSession();
-                    session.setAttribute("copiaU", dao);
-                    request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
+                    acceso=listar;
 
                     break;
                 case "Editar":
                     int ide = Integer.parseInt(request.getParameter("id"));
                     estados res = dao.listarId(ide);
                     request.setAttribute("dato", res);
+                    request.getRequestDispatcher("vista/Dashboard/editEstado.jsp ").forward(request, response);
                     break;
                 case "Actualizar":
                     int id = Integer.parseInt(request.getParameter("id"));
@@ -66,10 +68,10 @@ public class controllerEstado extends HttpServlet {
                     p.setNombre(nom1);
                     dao.update(p);
                     HttpSession sesion = request.getSession();
-                    request.getRequestDispatcher("booktripO/vista/Dashboard/indexListaEstado.jsp").forward(request, response);
+                    request.getRequestDispatcher("vista/Dashboard/indexListaEstado.jsp").forward(request, response);
                     break;
                 case "Delete":
-                    int idd = Integer.parseInt(request.getParameter("id"));
+                    int idd = Integer.parseInt(request.getParameter("ide"));
                     dao.delete(idd);
                     request.getRequestDispatcher("controllerEstado?accion=Listar").forward(request, response);
                     break;
